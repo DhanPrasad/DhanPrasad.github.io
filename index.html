@@ -3,43 +3,228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Danny | Mechanical Engineer</title>
+  <title>Dhan Prasad Pradhan | Mechanical Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── Hamburger Menu ── */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background 0.2s;
+      background: none;
+      border: none;
+    }
+    .hamburger:hover { background: var(--accent-lt); }
+    .hamburger .bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.open .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Side Drawer ── */
+    .drawer-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.18);
+      z-index: 200;
+      backdrop-filter: blur(2px);
+    }
+    .drawer-overlay.open { display: block; }
+    .drawer {
+      position: fixed; top: 0; right: -280px;
+      width: 260px; height: 100vh;
+      background: #fff;
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      padding: 64px 0 32px;
+      transition: right 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .drawer.open { right: 0; }
+    .drawer-close {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; cursor: pointer;
+      font-size: 1.3rem; color: var(--muted); padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .drawer-close:hover { background: var(--bg-soft); }
+    .drawer-name {
+      padding: 0 28px 24px;
+      font-weight: 800; font-size: 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .drawer-name span { color: var(--accent); }
+    .drawer nav ul {
+      list-style: none; padding: 20px 0; flex: 1;
+    }
+    .drawer nav ul li a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 28px;
+      font-size: 0.95rem; font-weight: 600;
+      color: var(--text); text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .drawer nav ul li a:hover {
+      background: var(--accent-lt); color: var(--accent);
+    }
+    .drawer nav ul li a .di { font-size: 1rem; width: 20px; }
+    .drawer-footer {
+      padding: 20px 28px 0;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 12px;
+    }
+    .drawer-footer a {
+      color: var(--muted); transition: color 0.2s;
+    }
+    .drawer-footer a:hover { color: var(--accent); }
+
+    /* ── Hero improvements ── */
+    .hero-badge-row {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-lt); color: var(--accent);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+      padding: 5px 12px; border-radius: 99px;
+    }
+    .hero-badge.grey {
+      background: #f0f0ee; color: var(--muted);
+    }
+    .hero-badge svg { flex-shrink: 0; }
+
+    .hero-page h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+    }
+    .hero-divider {
+      width: 40px; height: 3px;
+      background: var(--accent); border-radius: 99px;
+      margin: 28px 0;
+    }
+    .hero-highlights {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .highlight-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 8px 14px; font-size: 0.82rem; font-weight: 500; color: var(--text);
+    }
+    .highlight-pill svg { color: var(--accent); flex-shrink: 0; }
+  </style>
 </head>
 <body>
 
+<!-- ── Nav: hamburger only ── -->
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">danny<span>.</span></a>
-    <ul class="nav-links">
-      <li><a href="about.html">About</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="ongoing.html">Ongoing</a></li>
-      <li><a href="skills.html">Skills</a></li>
-      <li><a href="blog.html">Learnings</a></li>
-      <li><a href="contact.html" class="nav-cta">Contact</a></li>
-    </ul>
+    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
   </div>
 </nav>
 
+<!-- ── Drawer overlay ── -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<!-- ── Side Drawer ── -->
+<div class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose">✕</button>
+  <div class="drawer-name">Dhan Prasad<span>.</span></div>
+  <nav>
+    <ul>
+      <li><a href="index.html"><span class="di">🏠</span> Home</a></li>
+      <li><a href="about.html"><span class="di">👤</span> About</a></li>
+      <li><a href="projects.html"><span class="di">🔧</span> Projects</a></li>
+      <li><a href="ongoing.html"><span class="di">⚡</span> Ongoing</a></li>
+      <li><a href="skills.html"><span class="di">🛠️</span> Skills</a></li>
+      <li><a href="blog.html"><span class="di">📝</span> Learnings</a></li>
+      <li><a href="contact.html"><span class="di">✉️</span> Contact</a></li>
+    </ul>
+  </nav>
+  <div class="drawer-footer">
+    <a href="https://www.linkedin.com/in/dhanpradhan/" target="_blank" title="LinkedIn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://github.com/DhanPrasad" target="_blank" title="GitHub">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+    </a>
+    <a href="mailto:nabinpr777@gmail.com" title="Email">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ── Hero ── -->
 <main class="hero-page">
   <div class="container">
-    <div class="hero-tag">Mechanical Engineer</div>
-    <h1>Hi, I'm <span class="accent">Danny</span>.<br/>I build things that work.</h1>
+
+    <!-- Status badges -->
+    <div class="hero-badge-row">
+      <span class="hero-badge">
+        <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#2d7a4f"/></svg>
+        MS Mechanical Engineering · Graduating Fall 2026
+      </span>
+      <span class="hero-badge grey">📍 Nepal</span>
+    </div>
+
+    <h1>Hi, I'm <span class="accent">Dhan Prasad Pradhan</span>.<br/>I design, simulate &amp; build.</h1>
+
+    <div class="hero-divider"></div>
+
     <p class="hero-sub">
-      Mechanical engineer passionate about design, simulation, and the intersection of
-      hardware and software. I document what I build and what I learn.
+      Mechanical engineer specializing in <strong>mechanical design, CAD modelling,</strong> and
+      <strong>robotics &amp; mechatronics</strong>. Currently finishing my MS in Mechanical Engineering
+      and documenting everything I build and learn along the way.
     </p>
+
+    <!-- Key highlights -->
+    <div class="hero-highlights">
+      <div class="highlight-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Mechanical Design & CAD
+      </div>
+      <div class="highlight-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        Robotics & Mechatronics
+      </div>
+      <div class="highlight-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Open to Opportunities
+      </div>
+    </div>
+
     <div class="hero-cta">
       <a href="projects.html" class="btn btn-primary">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         View Projects
       </a>
+      <a href="https://www.linkedin.com/in/dhanpradhan/" target="_blank" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
       <a href="contact.html" class="btn btn-outline">Get in Touch</a>
     </div>
 
+    <!-- Page navigation cards -->
     <div class="page-grid">
       <a href="about.html" class="page-card">
         <div class="page-card-icon">👤</div>
@@ -62,7 +247,7 @@
       <a href="skills.html" class="page-card">
         <div class="page-card-icon">🛠️</div>
         <h3>Skills</h3>
-        <p>Tools, software & engineering methods</p>
+        <p>CAD, robotics, simulation & dev tools</p>
         <span class="page-card-arrow">→</span>
       </a>
       <a href="blog.html" class="page-card">
@@ -78,6 +263,7 @@
         <span class="page-card-arrow">→</span>
       </a>
     </div>
+
   </div>
 </main>
 
@@ -86,6 +272,34 @@
     Built with HTML · Hosted on GitHub Pages · <span class="year"></span>
   </div>
 </footer>
+
 <script src="main.js"></script>
+<script>
+  // Hamburger / drawer logic
+  const btn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const closeBtn = document.getElementById('drawerClose');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    btn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    btn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  // Close on Escape key
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+</script>
 </body>
 </html>
