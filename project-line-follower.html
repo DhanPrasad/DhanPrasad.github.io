@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>hammerHead — Maze Solving Robot | Dhan Prasad Pradhan</title>
+  <meta name="description" content="hammerHead — a maze solving line follower robot. Arduino Nano, 5-channel IR array, TB6612FNG driver and N20 gear motors, with left-hand rule junction logic over a PID line following loop."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="ongoing.html">Ongoing</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="blog.html">Learnings</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- ── Header ── -->
+    <div class="proj-header">
+      <a href="projects.html" class="proj-back">← All projects</a>
+      <div class="page-label">Project 01 · Robotics &amp; Mechatronics</div>
+      <h1>hammerHead — Maze Solving Robot</h1>
+      <p class="lede">
+        A differential-drive robot that navigates an unknown line maze on its own. A 5-channel IR
+        array reads the track, a PID loop keeps the robot centred on the line, and a decision layer
+        above it resolves junctions by the left-hand rule, reverses out of dead ends, and confirms
+        the finish before stopping. Built on an Arduino Nano with a TB6612FNG driver and N20 gear
+        motors.
+      </p>
+      <div class="proj-actions">
+        <a href="#demo" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Watch it solve
+        </a>
+        <a href="https://github.com/DhanPrasad" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          Source code
+        </a>
+        <a href="#downloads" class="btn btn-outline">Files &amp; CAD</a>
+      </div>
+    </div>
+
+    <!-- ── At a glance ── -->
+    <div class="facts-grid">
+      <div class="fact">
+        <div class="fact-label">Controller</div>
+        <div class="fact-value">Arduino Nano</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Sensing</div>
+        <div class="fact-value">5-ch IR array</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Navigation</div>
+        <div class="fact-value">Left-hand rule</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Drive</div>
+        <div class="fact-value">2 × N20 gear motor</div>
+      </div>
+    </div>
+
+    <!-- ── Overview ── -->
+    <section class="proj-section">
+      <h2 id="overview">Introduction</h2>
+      <p class="sec-note">Two problems in one robot — staying on the line, and choosing where to go.</p>
+
+      <p>
+        Most line followers do one thing: sit on a closed loop and stay centred. <strong>hammerHead</strong>
+        has to do that <em>and</em> decide, at every branch, which way to go — with no map of the maze
+        and no memory of having been there before. Those are two genuinely different problems, and
+        keeping them separate is the whole design of the firmware.
+      </p>
+      <p>
+        The lower layer is continuous control: read the line position, compute the error, and apply a
+        PID correction to the two wheel speeds. It runs every cycle and does one job — hold the line.
+        The upper layer is discrete: each cycle it classifies what the sensor array is looking at, and
+        if that pattern is something other than plain line, it <strong>interrupts</strong> the PID loop
+        and executes a manoeuvre instead — take the left branch, U-turn out of a dead end, or stop at
+        the finish.
+      </p>
+      <p>
+        Splitting it this way means the PID gains can be tuned once against straight line-following
+        behaviour and then left alone, while the navigation logic is developed and debugged
+        independently. It also means a failure is easy to localise: wobbling on a straight is a gains
+        problem, taking the wrong branch is a decision-layer problem.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/line-follower/img/hero.jpg" alt="hammerHead maze solving robot on the maze"/>
+        <div class="ph">
+          <div class="ph-icon">📷</div>
+          <div class="ph-title">Hero photo — assembled robot</div>
+          <div class="ph-path">assets/projects/line-follower/img/hero.jpg</div>
+        </div>
+        <figcaption><b>Fig. 1</b> — hammerHead on the maze.</figcaption>
+      </figure>
+
+      <h3>Design objectives</h3>
+      <ul class="bullets">
+        <li><strong>Solve an unknown maze</strong> — reach the finish without prior knowledge of the layout.</li>
+        <li><strong>Deterministic decisions</strong> — the same junction always produces the same choice, so a failed run is reproducible and therefore debuggable.</li>
+        <li><strong>Reliable tracking</strong> — no loss of line on the tightest curve between junctions.</li>
+        <li><strong>No false finishes</strong> — a wide junction must never be mistaken for the goal.</li>
+        <li><strong>Recoverable</strong> — able to reverse out of any dead end and continue.</li>
+        <li><strong>Serviceable</strong> — sensor board and driver mounted so either can be swapped without a full teardown.</li>
+      </ul>
+    </section>
+
+    <!-- ── Demo video ── -->
+    <section class="proj-section">
+      <h2 id="demo">Demonstration</h2>
+      <p class="sec-note">hammerHead running the maze.</p>
+
+      <div class="video-wrap">
+        <iframe
+          src="https://drive.google.com/file/d/1LPNstxpcstuuuH6R45-bRv7dXnlx1s5d/preview"
+          allow="autoplay"
+          allowfullscreen
+          title="hammerHead maze solving robot — demonstration run"></iframe>
+      </div>
+      <p class="code-caption">
+        Hosted on Google Drive.
+        <a href="https://drive.google.com/file/d/1LPNstxpcstuuuH6R45-bRv7dXnlx1s5d/view" target="_blank" rel="noopener">Open in a new tab →</a>
+      </p>
+
+      <div class="callout">
+        <p>
+          <strong>What to watch for:</strong> replace this with a short guide to the run — where the
+          first junction is, which dead end it backs out of, and the moment it confirms the finish.
+          Timestamps help a lot here.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Hardware ── -->
+    <section class="proj-section">
+      <h2 id="hardware">Hardware setup</h2>
+      <p class="sec-note">Bill of materials and why each part was chosen.</p>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Subsystem</th>
+            <th>Component</th>
+            <th>Why this part</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Controller</td>
+            <td>Arduino Nano <span class="mono">(ATmega328P)</span></td>
+            <td>Small footprint, 8 analog inputs — the full array reads directly with no multiplexer. 16 MHz leaves plenty of headroom for the control loop plus the decision logic.</td>
+          </tr>
+          <tr>
+            <td>Line sensor</td>
+            <td>5-channel IR reflectance array</td>
+            <td>Does double duty: the weighted average gives continuous position for PID, and the raw pattern across all five channels classifies junctions, dead ends and the finish.</td>
+          </tr>
+          <tr>
+            <td>Motor driver</td>
+            <td>TB6612FNG dual H-bridge</td>
+            <td>MOSFET output stage — roughly 0.1 V drop versus ~1.5 V on an L298N. Crucially it also handles the rapid full reversals a U-turn demands without overheating.</td>
+          </tr>
+          <tr>
+            <td>Actuators</td>
+            <td>2 × N20 micro metal gear motor</td>
+            <td>High torque density in a tiny package, and the metal gearbox survives the direction reversals that both PID correction and U-turns demand.</td>
+          </tr>
+          <tr>
+            <td>Gear ratio</td>
+            <td><span class="todo">e.g. 1:100 · confirm</span></td>
+            <td>Sets the speed/torque trade-off. Fill in your actual ratio and no-load RPM.</td>
+          </tr>
+          <tr>
+            <td>Wheels</td>
+            <td><span class="todo">dia. × width · confirm</span></td>
+            <td>Wheel diameter converts motor RPM into ground speed and sets the achievable turn radius.</td>
+          </tr>
+          <tr>
+            <td>Power</td>
+            <td><span class="todo">e.g. 2S Li-ion 7.4 V · confirm</span></td>
+            <td>Must hold voltage under the current spike when both motors reverse simultaneously.</td>
+          </tr>
+          <tr>
+            <td>Chassis</td>
+            <td><span class="todo">3D printed / acrylic · confirm</span></td>
+            <td>Rigid enough that the sensor-to-axle distance does not flex during cornering.</td>
+          </tr>
+          <tr>
+            <td>Caster</td>
+            <td><span class="todo">ball caster / skid · confirm</span></td>
+            <td>Third contact point — low friction so it does not fight the differential drive or resist a spin turn.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p>
+          <strong>Why TB6612FNG over the usual L298N:</strong> on N20 motors running at 6 V, the
+          L298N's bipolar output stage wastes around 1.5 V as heat — a quarter of the supply gone
+          before the motor sees it. The TB6612FNG uses MOSFETs and drops roughly 0.1 V, so the motors
+          get nearly full battery voltage, the driver stays cool without a heatsink, and low-speed
+          control near the PWM deadband is far more predictable. On a maze solver that matters twice
+          over, because every junction turn is a low-speed manoeuvre.
+        </p>
+      </div>
+
+      <h3>Wiring</h3>
+      <p>
+        The sensor array is read on the analog inputs, the driver takes two PWM channels plus
+        direction pins, and the motor supply is kept on a separate rail from the logic supply with a
+        common ground. Replace the pin numbers below with your actual assignments.
+      </p>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Nano pin</th>
+            <th>Goes to</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Sensor 1–5</td><td class="mono">A0 – A4</td><td>IR array analog outputs</td></tr>
+          <tr><td>PWMA / PWMB</td><td class="mono">D5 / D6</td><td>TB6612FNG speed inputs</td></tr>
+          <tr><td>AIN1 / AIN2</td><td class="mono">D7 / D8</td><td>Left motor direction</td></tr>
+          <tr><td>BIN1 / BIN2</td><td class="mono">D9 / D10</td><td>Right motor direction</td></tr>
+          <tr><td>STBY</td><td class="mono">D4</td><td>Driver standby — held high to enable</td></tr>
+          <tr><td>VM</td><td class="mono">—</td><td>Battery positive (motor rail)</td></tr>
+          <tr><td>VCC</td><td class="mono">5V</td><td>Driver logic supply</td></tr>
+        </tbody>
+      </table>
+
+      <figure class="figure">
+        <img src="assets/projects/line-follower/img/wiring.png" alt="Wiring diagram of the hammerHead electronics"/>
+        <div class="ph">
+          <div class="ph-icon">🔌</div>
+          <div class="ph-title">Wiring diagram</div>
+          <div class="ph-path">assets/projects/line-follower/img/wiring.png</div>
+        </div>
+        <figcaption><b>Fig. 2</b> — Electrical schematic: Nano, sensor array, TB6612FNG and motor rail.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ── Sensing ── -->
+    <section class="proj-section">
+      <h2 id="sensing">Line sensing</h2>
+      <p class="sec-note">The same five readings answer two different questions.</p>
+
+      <p>
+        Each channel is an IR emitter–phototransistor pair. Over white surface most of the emitted
+        light returns and the reading is low; over the black line it is absorbed and the reading is
+        high. Raw values vary with ambient light, surface finish and ride height, so every channel is
+        <strong>calibrated at startup</strong>: the robot sweeps across the line, records the minimum
+        and maximum seen by each sensor, and afterwards normalises every reading to 0–1000.
+      </p>
+
+      <h3>Question 1 — where is the line?</h3>
+      <p>
+        For the PID loop, the five normalised values are collapsed into a single
+        <strong>weighted position</strong>. Multiplying each sensor value by its index and dividing by
+        the sum gives a continuous estimate of where the line sits under the array — including
+        positions between two sensors, which is what allows smooth proportional correction instead of
+        bang-bang switching.
+      </p>
+
+      <div class="code-block"><pre><code><span class="c">// Weighted average of the 5 calibrated channels.</span>
+<span class="c">// Returns 0..4000; 2000 means the line is dead centre.</span>
+<span class="k">int</span> <span class="n">readLinePosition</span>() {
+  <span class="k">long</span> weighted = 0, total = 0;
+
+  <span class="k">for</span> (<span class="k">uint8_t</span> i = 0; i &lt; NUM_SENSORS; i++) {
+    <span class="k">int</span> v = <span class="n">calibratedRead</span>(i);      <span class="c">// 0..1000</span>
+    <span class="k">if</span> (v &lt; NOISE_FLOOR) v = 0;      <span class="c">// reject background</span>
+    weighted += (<span class="k">long</span>)v * (i * 1000);
+    total    += v;
+  }
+
+  <span class="k">if</span> (total == 0) <span class="k">return</span> lastPosition;  <span class="c">// nothing seen — hold last known</span>
+
+  lastPosition = weighted / total;
+  <span class="k">return</span> lastPosition;
+}</code></pre></div>
+      <p class="code-caption">Representative excerpt — the authoritative version lives in the GitHub repository.</p>
+
+      <h3>Question 2 — what am I standing on?</h3>
+      <p>
+        For the decision layer, the same readings are thresholded to a 5-bit black/white pattern. Four
+        patterns matter, and everything else is treated as ordinary line following:
+      </p>
+
+      <table class="spec-table">
+        <thead>
+          <tr><th>Pattern</th><th>Meaning</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">11111</td>
+            <td>All five on black — either a wide junction or the finish pad</td>
+            <td>Ambiguous — must be resolved by driving forward and resampling</td>
+          </tr>
+          <tr>
+            <td class="mono">00000</td>
+            <td>All five on white — the line has ended</td>
+            <td>Dead end → U-turn</td>
+          </tr>
+          <tr>
+            <td class="mono">111xx / xx111</td>
+            <td>Line continues plus a branch to one side</td>
+            <td>Junction → apply priority rule</td>
+          </tr>
+          <tr>
+            <td class="mono">00100</td>
+            <td>Centred on the line</td>
+            <td>Normal PID following</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <p>
+          <strong>The ambiguity that causes most maze-solver failures:</strong> a T-junction and the
+          finish pad look identical the instant the array crosses them — all five sensors read black.
+          They can only be told apart by <em>what happens next</em>. This is why the flowchart's finish
+          branch drives forward a short distance and resamples before committing: if line reappears,
+          it was a junction; if the array is still fully black, it is the goal. Getting this wrong in
+          either direction is fatal — stop early and the maze is unsolved, miss it and the robot drives
+          off the far edge.
+        </p>
+      </div>
+
+      <p>
+        The second detail that mattered was <strong>sensor ride height</strong>. A few millimetres too
+        high and the IR spots overlap, so adjacent channels stop discriminating — the position estimate
+        goes mushy and, worse, junction patterns become unreliable. Too low and the robot scrapes on any
+        surface imperfection. Record the height you settled on; it is the most
+        reproducibility-critical dimension in the build.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/line-follower/img/sensor-array.jpg" alt="Close-up of the 5-channel IR sensor array mounted at the front of the chassis"/>
+        <div class="ph">
+          <div class="ph-icon">📷</div>
+          <div class="ph-title">Sensor array mounting</div>
+          <div class="ph-path">assets/projects/line-follower/img/sensor-array.jpg</div>
+        </div>
+        <figcaption><b>Fig. 3</b> — The 5-channel array on its front mount, showing the ride height.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ── Control ── -->
+    <section class="proj-section">
+      <h2 id="control">Control strategy</h2>
+      <p class="sec-note">A discrete decision layer sitting on top of a continuous PID loop.</p>
+
+      <p>
+        Every cycle runs the same sequence: read the sensors, test for the three special cases in
+        priority order, and if none of them fire, fall through to PID line following. The ordering is
+        deliberate — finish is checked first because stopping is irreversible, then junctions, then
+        dead ends.
+      </p>
+
+      <div class="code-block"><pre><code><span class="c">// --- Main cycle: decision layer, then control layer ---</span>
+<span class="n">readSensors</span>();
+
+<span class="k">if</span> (<span class="n">allOnBlack</span>()) {              <span class="c">// finish or wide junction?</span>
+  <span class="n">driveForward</span>(CONFIRM_MM);        <span class="c">// resolve by resampling</span>
+  <span class="n">readSensors</span>();
+  <span class="k">if</span> (<span class="n">allOnBlack</span>()) { <span class="n">stopMotors</span>(); <span class="k">return</span>; }   <span class="c">// FINISH</span>
+}
+
+<span class="k">if</span> (<span class="n">junctionDetected</span>()) {        <span class="c">// Left &gt; Straight &gt; Right</span>
+  <span class="n">handleJunction</span>();
+  <span class="k">return</span>;
+}
+
+<span class="k">if</span> (<span class="n">allOnWhite</span>()) {              <span class="c">// dead end</span>
+  <span class="n">turnBack</span>();                     <span class="c">// 180° U-turn</span>
+  <span class="k">return</span>;
+}
+
+<span class="c">// --- Nothing special: PID line following ---</span>
+<span class="k">int</span> error = <span class="n">readLinePosition</span>() - SETPOINT;
+
+integral    = <span class="n">constrain</span>(integral + error, -I_LIMIT, I_LIMIT);  <span class="c">// anti-windup</span>
+<span class="k">int</span> derivative = error - lastError;
+lastError   = error;
+
+<span class="k">int</span> correction = (Kp * error) + (Ki * integral) + (Kd * derivative);
+
+<span class="n">driveMotors</span>(<span class="n">constrain</span>(BASE_SPEED + correction, -MAX_PWM, MAX_PWM),
+            <span class="n">constrain</span>(BASE_SPEED - correction, -MAX_PWM, MAX_PWM));</code></pre></div>
+      <p class="code-caption">Representative excerpt — see the repository for the complete implementation.</p>
+
+      <h3>Junction priority — the left-hand rule</h3>
+      <p>
+        At every junction hammerHead takes the leftmost available option:
+        <strong>Left &gt; Straight &gt; Right</strong>. This is the left-hand wall-following rule, and
+        it is not an arbitrary preference — for any <em>simply connected</em> maze (one with no
+        detached island walls and no closed loops), consistently hugging one wall is
+        <strong>guaranteed to reach the exit</strong>. It may traverse the entire maze doing it, but
+        it cannot get permanently stuck.
+      </p>
+      <p>
+        The cost is that it is a <em>blind</em> algorithm — it stores nothing, learns nothing, and will
+        walk into every dead end the maze offers. That is the trade: no memory, no map, no
+        localisation, and correspondingly almost no RAM, in exchange for a guaranteed but
+        non-optimal path.
+      </p>
+      <ul class="bullets">
+        <li><strong>Left available</strong> → turn left, always, even if straight ahead is clear.</li>
+        <li><strong>No left, straight available</strong> → continue forward.</li>
+        <li><strong>No left, no straight</strong> → turn right.</li>
+        <li><strong>None of the above</strong> → dead end, U-turn.</li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          <strong>Why the turn must overshoot the junction:</strong> the sensor array sits ahead of the
+          drive axle, so the moment it detects a branch the wheels have not reached it yet. The turn
+          routine has to drive forward by the sensor lead distance first, pivot, then hand control
+          back to PID. Get this offset wrong and the robot pivots early, clips the corner, and loses
+          the line — which then looks like a dead end and triggers a spurious U-turn.
+        </p>
+      </div>
+
+      <h3>PID tuning procedure</h3>
+      <p>
+        The gains are tuned on a plain looped track first, with the maze logic disabled — there is no
+        point tuning a controller while a decision layer keeps interrupting it.
+      </p>
+      <ol class="bullets">
+        <li><strong>Ki = Kd = 0.</strong> Raise Kp until the robot follows the line but oscillates steadily.</li>
+        <li><strong>Add Kd</strong> until the oscillation damps out. Typically an order of magnitude larger than Kp, because the derivative of a per-loop error is a small number.</li>
+        <li><strong>Add Ki last</strong>, only if there is a visible steady offset to one side. Clamp it — on a maze the error is never meant to be steady, and an unbounded integral winds up on every turn.</li>
+        <li><strong>Raise BASE_SPEED</strong> and repeat — gains that work at low speed will not hold at high speed.</li>
+        <li><strong>Re-enable the maze logic</strong> and verify junctions are still detected cleanly at the new speed.</li>
+      </ol>
+
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Final value</th>
+            <th>Effect of increasing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">Kp</td><td><span class="todo">fill in</span></td><td>Sharper correction, more oscillation</td></tr>
+          <tr><td class="mono">Ki</td><td><span class="todo">fill in</span></td><td>Removes steady bias, risks windup</td></tr>
+          <tr><td class="mono">Kd</td><td><span class="todo">fill in</span></td><td>Damps overshoot, amplifies sensor noise</td></tr>
+          <tr><td class="mono">BASE_SPEED</td><td><span class="todo">fill in</span></td><td>Faster solve, less margin for junction detection</td></tr>
+          <tr><td class="mono">Loop period</td><td><span class="todo">fill in (ms)</span></td><td>Must be constant for Kd to be meaningful</td></tr>
+          <tr><td class="mono">CONFIRM_MM</td><td><span class="todo">fill in</span></td><td>Forward distance before confirming a finish</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Software ── -->
+    <section class="proj-section">
+      <h2 id="software">Software architecture</h2>
+      <p class="sec-note">Program flow and function structure.</p>
+
+      <p>
+        The firmware is written in Arduino C++ and organised as a calibration phase followed by a
+        fixed-period cycle. The flowchart shows the runtime decision order; the call graph shows how
+        the functions depend on each other.
+      </p>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/line-follower/img/flowchart.png" alt="Program flowchart of the hammerHead maze solving firmware"/>
+          <div class="ph">
+            <div class="ph-icon">🔀</div>
+            <div class="ph-title">Program flowchart</div>
+            <div class="ph-path">img/flowchart.png</div>
+          </div>
+          <figcaption><b>Fig. 4</b> — Decision order: finish → junction → dead end → PID follow → motor control.</figcaption>
+        </figure>
+
+        <figure class="figure">
+          <img src="assets/projects/line-follower/img/callgraph.png" alt="Function call graph of the hammerHead firmware"/>
+          <div class="ph">
+            <div class="ph-icon">🕸️</div>
+            <div class="ph-title">Call graph</div>
+            <div class="ph-path">img/callgraph.png</div>
+          </div>
+          <figcaption><b>Fig. 5</b> — Function call hierarchy and dependencies.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Program structure</h3>
+      <ul class="bullets">
+        <li><strong>setup()</strong> — configure pins, enable the driver, run the sensor calibration sweep.</li>
+        <li><strong>calibrate()</strong> — sweep across the line, capture per-channel min/max.</li>
+        <li><strong>readSensors()</strong> — sample all five channels, normalise, threshold to a B/W pattern.</li>
+        <li><strong>allOnBlack() / allOnWhite()</strong> — pattern tests for the finish and dead-end branches.</li>
+        <li><strong>confirmFinish()</strong> — drive forward, resample, disambiguate finish from junction.</li>
+        <li><strong>junctionDetected()</strong> — identify which branches exist at the current node.</li>
+        <li><strong>handleJunction()</strong> — apply Left &gt; Straight &gt; Right and execute the turn.</li>
+        <li><strong>turnBack()</strong> — 180° pivot to reverse out of a dead end.</li>
+        <li><strong>readLinePosition()</strong> — weighted position for the PID loop.</li>
+        <li><strong>computePID()</strong> — error, clamped integral, derivative, weighted sum.</li>
+        <li><strong>driveMotors()</strong> — map signed speeds onto TB6612FNG direction pins and PWM.</li>
+        <li><strong>loop()</strong> — enforce the fixed cycle period and chain the above in priority order.</li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          <strong>Source code:</strong> the full Arduino sketch is on GitHub —
+          <a href="https://github.com/DhanPrasad" target="_blank" rel="noopener">github.com/DhanPrasad</a>.
+          Replace this link with the direct repository URL once the code is pushed.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Mechanical ── -->
+    <section class="proj-section">
+      <h2 id="mechanical">Mechanical design &amp; assembly</h2>
+      <p class="sec-note">Chassis layout, geometry, and the CAD model.</p>
+
+      <p>
+        The chassis was modelled in CAD before anything was cut, so that the sensor offset, wheelbase
+        and centre of mass could be set deliberately rather than discovered afterwards. On a maze
+        solver the geometry is not just a handling question — it directly determines whether junctions
+        are detected correctly.
+      </p>
+      <ul class="bullets">
+        <li><strong>Array width</strong> — must span wider than the line so that a side branch actually lands under an outer sensor. Too narrow and junctions are simply invisible.</li>
+        <li><strong>Sensor lead distance</strong> — how far ahead of the drive axle the array sits. This is the distance every junction turn must compensate for, so it needs to be a known, fixed number.</li>
+        <li><strong>Wheelbase and track width</strong> — set the minimum turn radius, and whether the robot can pivot in place cleanly for a U-turn.</li>
+        <li><strong>Centre of mass</strong> — kept low and biased toward the drive axle so the wheels stay loaded and do not slip during a pivot.</li>
+      </ul>
+
+      <figure class="figure">
+        <img src="assets/projects/line-follower/img/assembly-render.png" alt="CAD assembly render of hammerHead"/>
+        <div class="ph">
+          <div class="ph-icon">🧩</div>
+          <div class="ph-title">CAD assembly render</div>
+          <div class="ph-path">assets/projects/line-follower/img/assembly-render.png</div>
+        </div>
+        <figcaption><b>Fig. 6</b> — Full CAD assembly showing chassis, motor mounts, sensor bracket and electronics deck.</figcaption>
+      </figure>
+
+      <figure class="figure">
+        <img src="assets/projects/line-follower/img/exploded.png" alt="Exploded view of the hammerHead assembly"/>
+        <div class="ph">
+          <div class="ph-icon">🪛</div>
+          <div class="ph-title">Exploded view</div>
+          <div class="ph-path">assets/projects/line-follower/img/exploded.png</div>
+        </div>
+        <figcaption><b>Fig. 7</b> — Exploded view / assembly sequence.</figcaption>
+      </figure>
+
+      <table class="spec-table">
+        <thead>
+          <tr><th>Dimension</th><th>Value</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Overall L × W × H</td><td><span class="todo">fill in</span></td><td>Footprint</td></tr>
+          <tr><td>Wheelbase</td><td><span class="todo">fill in</span></td><td>Axle to caster</td></tr>
+          <tr><td>Track width</td><td><span class="todo">fill in</span></td><td>Wheel centre to centre</td></tr>
+          <tr><td>Sensor array width</td><td><span class="todo">fill in</span></td><td>Outer sensor to outer sensor — sets junction detection</td></tr>
+          <tr><td>Sensor lead</td><td><span class="todo">fill in</span></td><td>Array ahead of drive axle — turn compensation</td></tr>
+          <tr><td>Sensor ride height</td><td><span class="todo">fill in</span></td><td>Critical for channel discrimination</td></tr>
+          <tr><td>Mass (with battery)</td><td><span class="todo">fill in</span></td><td>Affects achievable acceleration</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Track ── -->
+    <section class="proj-section">
+      <h2 id="track">The maze</h2>
+      <p class="sec-note">The layout hammerHead was developed and validated against.</p>
+
+      <figure class="figure">
+        <img src="assets/projects/line-follower/img/path-layout.png" alt="Layout of the line maze"/>
+        <div class="ph">
+          <div class="ph-icon">🛣️</div>
+          <div class="ph-title">Maze / path layout</div>
+          <div class="ph-path">assets/projects/line-follower/img/path-layout.png</div>
+        </div>
+        <figcaption><b>Fig. 8</b> — Maze layout showing junctions, dead ends and the finish pad.</figcaption>
+      </figure>
+
+      <p>
+        Describe the maze here: line width, surface material, overall dimensions, number of junctions
+        and dead ends, tightest curve radius, and the size of the finish pad. Two properties matter
+        most for whether the left-hand rule is guaranteed to work — whether the maze is
+        <strong>simply connected</strong> (no closed loops), and whether the finish pad is
+        distinguishable from the widest junction.
+      </p>
+    </section>
+
+    <!-- ── Results ── -->
+    <section class="proj-section">
+      <h2 id="results">Results &amp; reflections</h2>
+      <p class="sec-note">What worked, what did not, and what I would change.</p>
+
+      <table class="spec-table">
+        <thead>
+          <tr><th>Metric</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Solve time</td><td><span class="todo">fill in</span></td></tr>
+          <tr><td>Junctions handled correctly</td><td><span class="todo">e.g. 12/12</span></td></tr>
+          <tr><td>Dead ends recovered</td><td><span class="todo">fill in</span></td></tr>
+          <tr><td>False finishes</td><td><span class="todo">fill in</span></td></tr>
+          <tr><td>Completion rate</td><td><span class="todo">e.g. 9/10 runs</span></td></tr>
+          <tr><td>Top stable speed</td><td><span class="todo">fill in</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>What I would do differently</h3>
+      <ul class="bullets">
+        <li><strong>Add path optimisation.</strong> The biggest single upgrade: record the turn sequence on the first run, then simplify it by collapsing every dead-end excursion (<span class="mono">L,B,L → S</span> and similar substitutions). The second run then drives the shortest path directly. This is the standard follow-up to a left-hand-rule solver and needs no extra hardware.</li>
+        <li><strong>Wheel encoders</strong> — closed-loop wheel speed would make the turn and confirm-forward distances repeatable as the battery discharges, instead of drifting with voltage.</li>
+        <li><strong>Wider sensor array</strong> — more channels would give earlier and less ambiguous junction detection, and shrink the finish-versus-junction grey zone.</li>
+        <li><strong>Serial telemetry</strong> — log position error and detected pattern over serial and plot it, rather than tuning and debugging by eye.</li>
+        <li><strong>Dedicated 5 V regulator</strong> for logic, so the current spike from a U-turn cannot brown out the Nano mid-decision.</li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          <strong>Biggest lesson:</strong> replace this with the one thing that surprised you most —
+          those are the sentences readers and interviewers actually remember.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Downloads ── -->
+    <section class="proj-section">
+      <h2 id="downloads">Files &amp; downloads</h2>
+      <p class="sec-note">Drawings, datasheets and CAD.</p>
+
+      <div class="dl-grid">
+        <a href="https://github.com/DhanPrasad" target="_blank" rel="noopener" class="dl-card">
+          <span class="dl-icon">💻</span>
+          <span>
+            <span class="dl-name">Arduino source code</span>
+            <span class="dl-sub">GitHub repository</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/docs/motor-n20-datasheet.pdf" class="dl-card">
+          <span class="dl-icon">📄</span>
+          <span>
+            <span class="dl-name">N20 motor datasheet</span>
+            <span class="dl-sub">docs/motor-n20-datasheet.pdf</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/docs/tb6612fng-datasheet.pdf" class="dl-card">
+          <span class="dl-icon">📄</span>
+          <span>
+            <span class="dl-name">TB6612FNG datasheet</span>
+            <span class="dl-sub">docs/tb6612fng-datasheet.pdf</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/docs/path-layout.pdf" class="dl-card">
+          <span class="dl-icon">🛣️</span>
+          <span>
+            <span class="dl-name">Maze layout drawing</span>
+            <span class="dl-sub">docs/path-layout.pdf</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/docs/flowchart.pdf" class="dl-card">
+          <span class="dl-icon">🔀</span>
+          <span>
+            <span class="dl-name">Program flowchart</span>
+            <span class="dl-sub">docs/flowchart.pdf</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/docs/callgraph.pdf" class="dl-card">
+          <span class="dl-icon">🕸️</span>
+          <span>
+            <span class="dl-name">Call graph</span>
+            <span class="dl-sub">docs/callgraph.pdf</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/cad/line-follower-assembly.step" class="dl-card">
+          <span class="dl-icon">🧩</span>
+          <span>
+            <span class="dl-name">CAD assembly (STEP)</span>
+            <span class="dl-sub">cad/line-follower-assembly.step</span>
+          </span>
+        </a>
+        <a href="assets/projects/line-follower/cad/line-follower-parts.zip" class="dl-card">
+          <span class="dl-icon">🖨️</span>
+          <span>
+            <span class="dl-name">Printable parts (STL)</span>
+            <span class="dl-sub">cad/line-follower-parts.zip</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <div class="proj-footer-nav">
+      <a href="projects.html" class="btn btn-outline">← All projects</a>
+      <a href="contact.html" class="btn btn-primary">Questions? Get in touch</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    Built with HTML · Hosted on GitHub Pages · <span class="year"></span>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>

@@ -31,6 +31,14 @@ if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
 if (overlay) overlay.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
+// Project figures: fall back to a labelled placeholder when the image
+// file has not been added to the repo yet.
+document.querySelectorAll('.figure img').forEach(img => {
+  const flag = () => img.closest('.figure')?.classList.add('missing');
+  img.addEventListener('error', flag);
+  if (img.complete && img.naturalWidth === 0) flag();
+});
+
 // Animate progress bars into view (ongoing page)
 const bars = document.querySelectorAll('.progress-fill');
 if (bars.length) {
