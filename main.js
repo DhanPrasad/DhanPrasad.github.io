@@ -1,9 +1,9 @@
 // Set current year in footer
 document.querySelectorAll('.year').forEach(el => el.textContent = new Date().getFullYear());
 
-// Highlight active drawer link based on current page
+// Highlight the current page in the nav (and drawer, if present)
 const page = location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.drawer nav ul li a').forEach(link => {
+document.querySelectorAll('.nav-links a, .drawer nav ul li a').forEach(link => {
   if (link.getAttribute('href') === page) link.classList.add('active');
 });
 
