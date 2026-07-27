@@ -4,138 +4,665 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dhan Prasad Pradhan | Mechanical Engineer</title>
-  <meta name="description" content="Dhan Prasad Pradhan — Mechanical Engineer specializing in mechanical design, CAD modelling, and robotics &amp; mechatronics. MS Mechanical Engineering, Fall 2026."/>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --bg-soft:   #f7f7f5;
+      --border:    #e8e8e4;
+      --text:      #1a1a1a;
+      --text-muted:#666;
+      --accent:    #2d7a4f;
+      --accent-lt: #e8f5ee;
+      --accent-md: #4caf7d;
+      --font:      'Inter', system-ui, -apple-system, sans-serif;
+      --mono:      'JetBrains Mono', 'Fira Code', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .inner {
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 860px; margin: 0 auto; padding: 0 28px; height: 56px;
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1rem; letter-spacing: -0.3px;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* ── Hero ── */
+    #hero {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--accent-lt);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+    }
+    #hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    #hero h1 .name { color: var(--accent); }
+    #hero p.tagline {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 36px;
+    }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; border-radius: 8px;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff; border: none;
+    }
+    .btn-primary:hover { background: #256040; text-decoration: none; color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+    /* ── Section Base ── */
+    section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: 1.65rem; font-weight: 800; letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 0.925rem;
+      margin-bottom: 48px; max-width: 520px;
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: start;
+    }
+    .about-text p { color: var(--text-muted); margin-bottom: 16px; font-size: 0.95rem; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .stat-card {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px 18px;
+    }
+    .stat-card .num {
+      font-size: 1.75rem; font-weight: 800; color: var(--accent); letter-spacing: -1px;
+    }
+    .stat-card .label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .skill-group {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 22px 20px;
+    }
+    .skill-group h4 {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--accent); margin-bottom: 14px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 6px; padding: 4px 10px;
+      font-size: 0.78rem; font-family: var(--mono); color: var(--text);
+    }
+
+    /* ── Projects ── */
+    .projects-list { display: flex; flex-direction: column; gap: 20px; }
+    .project-card {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 12px; padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;
+    }
+    .project-card:hover {
+      border-color: var(--accent-md);
+      box-shadow: 0 4px 24px rgba(45,122,79,0.08);
+    }
+    .project-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .project-card p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px; }
+    .project-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .tag {
+      background: var(--accent-lt); color: var(--accent);
+      border-radius: 6px; padding: 3px 10px;
+      font-size: 0.73rem; font-weight: 600;
+    }
+    .tag-grey {
+      background: #f0f0ee; color: var(--text-muted);
+      border-radius: 6px; padding: 3px 10px;
+      font-size: 0.73rem; font-weight: 500;
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600; color: var(--accent);
+      white-space: nowrap;
+    }
+    .project-link svg { flex-shrink: 0; }
+
+    /* ── Ongoing ── */
+    .ongoing-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .ongoing-card {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 10px; padding: 22px 20px;
+    }
+    .ongoing-card .status-dot {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.72rem; font-weight: 600; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+    .ongoing-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .ongoing-card p { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 14px; }
+    .progress-bar {
+      height: 4px; background: var(--border); border-radius: 99px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: var(--accent); border-radius: 99px;
+      transition: width 1s ease;
+    }
+    .progress-label {
+      font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; text-align: right;
+    }
+
+    /* ── Blog ── */
+    .blog-list { display: flex; flex-direction: column; gap: 0; }
+    .blog-item {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      align-items: center; gap: 20px;
+      padding: 20px 0; border-bottom: 1px solid var(--border);
+    }
+    .blog-item:last-child { border-bottom: none; }
+    .blog-date {
+      font-size: 0.75rem; font-family: var(--mono);
+      color: var(--text-muted); white-space: nowrap;
+    }
+    .blog-item h4 { font-size: 0.95rem; font-weight: 600; }
+    .blog-item p { font-size: 0.83rem; color: var(--text-muted); margin-top: 4px; }
+    .blog-arrow {
+      color: var(--text-muted); font-size: 1.1rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .blog-item:hover .blog-arrow { color: var(--accent); transform: translateX(4px); }
+    .blog-item:hover h4 { color: var(--accent); }
+
+    /* ── Contact / Footer ── */
+    #contact {
+      padding: 72px 0 56px; text-align: center; border-top: 1px solid var(--border);
+    }
+    #contact h2 { font-size: 1.65rem; font-weight: 800; margin-bottom: 12px; }
+    #contact p { color: var(--text-muted); margin-bottom: 32px; }
+    .social-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 18px; border-radius: 8px;
+      border: 1.5px solid var(--border); font-size: 0.84rem; font-weight: 600;
+      color: var(--text); transition: all 0.2s;
+    }
+    .social-btn:hover {
+      border-color: var(--accent); color: var(--accent); text-decoration: none;
+    }
+    footer {
+      text-align: center; padding: 24px 0;
+      font-size: 0.78rem; color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .blog-item { grid-template-columns: 1fr; gap: 6px; }
+      .blog-date { font-size: 0.7rem; }
+      .project-card { grid-template-columns: 1fr; }
+    }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
+<!-- ── Navigation ── -->
 <nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+  <div class="inner">
+    <span class="nav-logo">dpp<span>.</span></span>
     <ul class="nav-links">
-      <li><a href="about.html">About</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="ongoing.html">Ongoing</a></li>
-      <li><a href="skills.html">Skills</a></li>
-      <li><a href="blog.html">Learnings</a></li>
-      <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#ongoing">Ongoing</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#blog">Learnings</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
 </nav>
 
-<main>
+<!-- ── Hero ── -->
+<section id="hero">
   <div class="container">
-
-    <!-- ── Hero ── -->
-    <section class="hero-page">
-      <div class="hero-tag">Mechanical Engineer</div>
-      <h1>Hi, I'm <span class="accent">Dhan Prasad Pradhan</span>.<br/>I design, simulate &amp; build.</h1>
-      <p class="hero-sub">
-        Mechanical engineer specializing in mechanical design, CAD modelling, and robotics
-        &amp; mechatronics. Currently finishing my MS in Mechanical Engineering (graduating
-        Fall 2026) and documenting everything I build and learn along the way.
-      </p>
-      <div class="hero-cta">
-        <a href="projects.html" class="btn btn-primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          View Projects
-        </a>
-        <a href="https://www.linkedin.com/in/dhanpradhan/" target="_blank" rel="noopener" class="btn btn-outline">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          LinkedIn
-        </a>
-        <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-      </div>
-    </section>
-
-    <!-- ── Featured project ── -->
-    <div class="home-sec">
-      <div class="page-label">Featured</div>
-      <h2>Latest build</h2>
+    <div class="hero-tag">Mechanical Engineer</div>
+    <h1>Hi, I'm <span class="name">Dhan Prasad Pradhan</span>.<br/>I design, simulate &amp; build.</h1>
+    <p class="tagline">
+      Mechanical engineer specializing in mechanical design, CAD modelling, and robotics &amp; mechatronics.
+      Currently finishing my MS in Mechanical Engineering (graduating Fall 2026) and documenting
+      everything I build and learn along the way.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        View Projects
+      </a>
+      <a href="https://www.linkedin.com/in/dhanpradhan/" target="_blank" class="btn btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
     </div>
+  </div>
+</section>
 
-    <div class="projects-list home-featured">
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="section-title">A bit about me</div>
+    <p class="section-sub">Engineer by training, problem-solver by nature.</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm <strong>Dhan Prasad Pradhan</strong>, a Mechanical Engineer specializing in
+          mechanical design, CAD modelling, and robotics &amp; mechatronics. I'm currently
+          completing my MS in Mechanical Engineering, graduating Fall 2026.
+        </p>
+        <p>
+          I enjoy working on projects that require both analytical rigor and creative thinking —
+          from CAD models and FEA simulations to physical prototypes and robotic systems.
+        </p>
+        <p>
+          Beyond the lab and workshop, I explore programming, automation, and how software tools
+          can enhance engineering workflows. I believe great engineers never stop learning —
+          so I write about everything I figure out.
+        </p>
+        <p>
+          Based in <strong>Nepal</strong>. Open to collaborations, internships, and interesting
+          engineering challenges.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="num">10+</div>
+          <div class="label">Projects Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">MS</div>
+          <div class="label">Mech. Eng. · Fall 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">5+</div>
+          <div class="label">Tools & Software</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">∞</div>
+          <div class="label">Things to Learn</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Projects</div>
+    <div class="section-title">Things I've built</div>
+    <p class="section-sub">A selection of engineering projects — design, fabrication, and analysis.</p>
+    <div class="projects-list">
+
       <div class="project-card">
         <div>
-          <h3>hammerHead — Maze Solving Robot</h3>
-          <p>Autonomous robot that solves an unknown line maze. A PID loop keeps it centred on the line while a decision layer above resolves junctions by the left-hand rule, U-turns out of dead ends, and confirms the finish before stopping. Arduino Nano, 5-channel IR array, TB6612FNG driver, N20 gear motors.</p>
+          <h3>Suspension Design Optimization</h3>
+          <p>Analyzed and optimized a double-wishbone suspension geometry for a lightweight EV prototype using FEA and dynamic simulation. Reduced component stress by 22% while cutting weight.</p>
           <div class="project-meta">
-            <span class="tag">Robotics</span>
-            <span class="tag">Control</span>
-            <span class="tag">Algorithms</span>
-            <span class="tag-grey">Arduino C++</span>
-            <span class="tag-grey">CAD</span>
+            <span class="tag">FEA</span>
+            <span class="tag">CAD</span>
+            <span class="tag-grey">SolidWorks</span>
+            <span class="tag-grey">ANSYS</span>
           </div>
         </div>
-        <a href="project-line-follower.html" class="project-link">
-          Read case study
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <a href="#" class="project-link">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
       </div>
+
+      <div class="project-card">
+        <div>
+          <h3>Heat Exchanger CFD Study</h3>
+          <p>Designed and simulated a shell-and-tube heat exchanger for an HVAC application. Used computational fluid dynamics to evaluate flow distribution and thermal efficiency under varying load conditions.</p>
+          <div class="project-meta">
+            <span class="tag">CFD</span>
+            <span class="tag">Thermal</span>
+            <span class="tag-grey">ANSYS Fluent</span>
+            <span class="tag-grey">Python</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <h3>3D-Printed Robotic Gripper</h3>
+          <p>Designed an underactuated compliant gripper with 3 fingers capable of grasping irregular objects. Fabricated via FDM printing with TPU flexures. Integrated with Arduino for control.</p>
+          <div class="project-meta">
+            <span class="tag">Robotics</span>
+            <span class="tag">Fabrication</span>
+            <span class="tag-grey">Fusion 360</span>
+            <span class="tag-grey">Arduino</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <h3>Structural Load Analysis Tool</h3>
+          <p>Built a Python script to automate cross-section property calculations and beam deflection analysis for standard structural profiles. Outputs plots and CSV reports for quick design review.</p>
+          <div class="project-meta">
+            <span class="tag">Automation</span>
+            <span class="tag">Structures</span>
+            <span class="tag-grey">Python</span>
+            <span class="tag-grey">Matplotlib</span>
+          </div>
+        </div>
+        <a href="#" class="project-link">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
     </div>
-
-    <!-- ── Explore ── -->
-    <div class="home-sec">
-      <div class="page-label">Explore</div>
-      <h2>Around the site</h2>
-    </div>
-
-    <div class="page-grid">
-
-      <a href="about.html" class="page-card">
-        <div class="page-card-icon">👋</div>
-        <h3>About</h3>
-        <p>Who I am, what I'm studying, and what I like working on.</p>
-        <div class="page-card-arrow">→</div>
-      </a>
-
-      <a href="projects.html" class="page-card">
-        <div class="page-card-icon">🛠️</div>
-        <h3>Projects</h3>
-        <p>Completed builds and analyses — design, fabrication, simulation.</p>
-        <div class="page-card-arrow">→</div>
-      </a>
-
-      <a href="ongoing.html" class="page-card">
-        <div class="page-card-icon">⚙️</div>
-        <h3>Ongoing</h3>
-        <p>What I'm actively building and researching right now.</p>
-        <div class="page-card-arrow">→</div>
-      </a>
-
-      <a href="skills.html" class="page-card">
-        <div class="page-card-icon">🧰</div>
-        <h3>Skills</h3>
-        <p>CAD, simulation, programming, fabrication — the toolkit.</p>
-        <div class="page-card-arrow">→</div>
-      </a>
-
-      <a href="blog.html" class="page-card">
-        <div class="page-card-icon">📝</div>
-        <h3>Learnings</h3>
-        <p>Write-ups of things I figured out, documented so I don't forget.</p>
-        <div class="page-card-arrow">→</div>
-      </a>
-
-      <a href="contact.html" class="page-card">
-        <div class="page-card-icon">✉️</div>
-        <h3>Contact</h3>
-        <p>Collaborations, internships, or just engineering talk.</p>
-        <div class="page-card-arrow">→</div>
-      </a>
-
-    </div>
-
   </div>
-</main>
+</section>
+
+<!-- ── Ongoing ── -->
+<section id="ongoing">
+  <div class="container">
+    <div class="section-label">Ongoing</div>
+    <div class="section-title">Work in progress</div>
+    <p class="section-sub">Live projects I'm actively building or researching.</p>
+    <div class="ongoing-grid">
+
+      <div class="ongoing-card">
+        <div class="status-dot"><div class="dot"></div> Active</div>
+        <h4>DIY CNC Mill Build</h4>
+        <p>Designing and assembling a small-format CNC milling machine from scratch — mechanical, electronics, and firmware.</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+        <div class="progress-label">55% complete</div>
+      </div>
+
+      <div class="ongoing-card">
+        <div class="status-dot"><div class="dot"></div> Active</div>
+        <h4>Personal Website (GitHub Pages)</h4>
+        <p>Building and iterating this portfolio site — you're looking at it.</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+        <div class="progress-label">80% complete</div>
+      </div>
+
+      <div class="ongoing-card">
+        <div class="status-dot"><div class="dot"></div> Research</div>
+        <h4>FEA with Python (FEniCSx)</h4>
+        <p>Learning open-source finite element analysis using FEniCSx to move beyond proprietary tools.</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+        <div class="progress-label">30% complete</div>
+      </div>
+
+      <div class="ongoing-card">
+        <div class="status-dot"><div class="dot"></div> Planning</div>
+        <h4>Thermal Camera Add-on</h4>
+        <p>Prototyping a low-cost thermal imaging attachment for predictive maintenance using MLX90640 sensor array.</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
+        <div class="progress-label">15% complete</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Skills ── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Skills</div>
+    <div class="section-title">Tech & tools</div>
+    <p class="section-sub">My engineering toolkit — software, methods, and languages.</p>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <h4>CAD / Modelling</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">SolidWorks</span>
+          <span class="skill-tag">Fusion 360</span>
+          <span class="skill-tag">AutoCAD</span>
+          <span class="skill-tag">Onshape</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Simulation</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">ANSYS</span>
+          <span class="skill-tag">ANSYS Fluent</span>
+          <span class="skill-tag">MATLAB</span>
+          <span class="skill-tag">Simulink</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Programming</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">MATLAB</span>
+          <span class="skill-tag">C++ (Arduino)</span>
+          <span class="skill-tag">Bash</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Fabrication</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">FDM 3D Printing</span>
+          <span class="skill-tag">Machining</span>
+          <span class="skill-tag">Welding (MIG)</span>
+          <span class="skill-tag">Laser Cutting</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Analysis</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">FEA</span>
+          <span class="skill-tag">CFD</span>
+          <span class="skill-tag">GD&amp;T</span>
+          <span class="skill-tag">DFM</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Dev Tools</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Jupyter</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Blog / Learnings ── -->
+<section id="blog">
+  <div class="container">
+    <div class="section-label">Engineering Learnings</div>
+    <div class="section-title">Notes & write-ups</div>
+    <p class="section-sub">Things I figured out — documented so I (and maybe you) don't forget.</p>
+    <div class="blog-list">
+
+      <div class="blog-item">
+        <div class="blog-date">2025 / 04</div>
+        <div>
+          <h4>Why your FEA mesh is probably wrong</h4>
+          <p>Lessons from mesh convergence studies and what "good enough" actually means in practice.</p>
+        </div>
+        <span class="blog-arrow">→</span>
+      </div>
+
+      <div class="blog-item">
+        <div class="blog-date">2025 / 02</div>
+        <div>
+          <h4>Automating boring engineering tasks with Python</h4>
+          <p>How I saved hours of manual spreadsheet work using pandas and matplotlib for load reporting.</p>
+        </div>
+        <span class="blog-arrow">→</span>
+      </div>
+
+      <div class="blog-item">
+        <div class="blog-date">2024 / 11</div>
+        <div>
+          <h4>Understanding tolerances: GD&amp;T for real parts</h4>
+          <p>A practical breakdown of geometric dimensioning and why it matters when you hand off drawings to a machinist.</p>
+        </div>
+        <span class="blog-arrow">→</span>
+      </div>
+
+      <div class="blog-item">
+        <div class="blog-date">2024 / 08</div>
+        <div>
+          <h4>What I learned building a 3D printer from scratch</h4>
+          <p>CoreXY kinematics, PID tuning, and the five things I'd do differently the second time around.</p>
+        </div>
+        <span class="blog-arrow">→</span>
+      </div>
+
+      <div class="blog-item">
+        <div class="blog-date">2024 / 05</div>
+        <div>
+          <h4>Getting started with CFD — a beginner's honest guide</h4>
+          <p>What the tutorials don't tell you about setting up boundary conditions and interpreting residuals.</p>
+        </div>
+        <span class="blog-arrow">→</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h2>Let's connect</h2>
+    <p>Whether it's a project, collaboration, or just engineering talk — my inbox is open.</p>
+    <div class="social-row">
+      <a href="mailto:nabinpr777@gmail.com" class="social-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email
+      </a>
+      <a href="https://github.com/DhanPrasad" target="_blank" class="social-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/dhanpradhan/" target="_blank" class="social-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="resume.pdf" class="social-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
+      </a>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="container">
-    Built with HTML · Hosted on GitHub Pages · <span class="year"></span>
+    Built with HTML · Hosted on GitHub Pages · <span id="year"></span>
   </div>
 </footer>
-<script src="main.js"></script>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
