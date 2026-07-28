@@ -277,26 +277,6 @@
         positions between two sensors, which is what allows smooth proportional correction instead of
         bang-bang switching.
       </p>
-
-      <div class="code-block"><pre><code><span class="c">// Weighted average of the 5 calibrated channels.</span>
-<span class="c">// Returns 0..4000; 2000 means the line is dead centre.</span>
-<span class="k">int</span> <span class="n">readLinePosition</span>() {
-  <span class="k">long</span> weighted = 0, total = 0;
-
-  <span class="k">for</span> (<span class="k">uint8_t</span> i = 0; i &lt; NUM_SENSORS; i++) {
-    <span class="k">int</span> v = <span class="n">calibratedRead</span>(i);      <span class="c">// 0..1000</span>
-    <span class="k">if</span> (v &lt; NOISE_FLOOR) v = 0;      <span class="c">// reject background</span>
-    weighted += (<span class="k">long</span>)v * (i * 1000);
-    total    += v;
-  }
-
-  <span class="k">if</span> (total == 0) <span class="k">return</span> lastPosition;  <span class="c">// nothing seen — hold last known</span>
-
-  lastPosition = weighted / total;
-  <span class="k">return</span> lastPosition;
-}</code></pre></div>
-      <p class="code-caption">Representative excerpt — the authoritative version lives in the GitHub repository.</p>
-
       <h3>Question 2 — what am I standing on?</h3>
       <p>
         For the decision layer, the same readings are thresholded to a 5-bit black/white pattern. Four
