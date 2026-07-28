@@ -262,11 +262,13 @@
       <p class="sec-note">The same five readings answer two different questions.</p>
 
       <p>
-        Each channel is an IR emitter–phototransistor pair. Over white surface most of the emitted
-        light returns and the reading is low; over the black line it is absorbed and the reading is
-        high (internal resistance of photodiode). When sensor reads other than black, sensor reads
-        higher value (>=500) and around 8 to 10 for the black line. Therefore sensors are assigned
-        0 or white line (> threshold = 500) and 1 for black line (less than threshold).
+        Each IR sensor has an LED that generates infrared light, which strikes the surface below and reflections
+        back to a receiver. The amount of reflected light depends on surface color: black surface absorbs most IR
+        and reflects less, whereas white surface reflects more. The receiving photodiode gets different amounts of
+        light based on the surface, and its resistance varies inversely with light intensity-higher IR light produces
+        lower resistance. The arduino reads this as an anlog value, compares it against a threshold, and formats it
+        as a binary digit: 1 = Black line detected, 0 = White surface. For example, when the robot is centered directly
+        over the black line, the five sensors read 11011.
       </p>
 
       <h3>Question 1 — where is the line?</h3>
