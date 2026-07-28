@@ -264,9 +264,9 @@
       <p>
         Each channel is an IR emitter–phototransistor pair. Over white surface most of the emitted
         light returns and the reading is low; over the black line it is absorbed and the reading is
-        high. Raw values vary with ambient light, surface finish and ride height, so every channel is
-        <strong>calibrated at startup</strong>: the robot sweeps across the line, records the minimum
-        and maximum seen by each sensor, and afterwards normalises every reading to 0–1000.
+        high (internal resistance of photodiode). When sensor reads other than black, sensor reads
+        higher value (>=500) and around 8 to 10 for the black line. Therefore sensors are assigned
+        0 or white line (> threshold = 500) and 1 for black line (less than threshold).
       </p>
 
       <h3>Question 1 — where is the line?</h3>
