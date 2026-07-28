@@ -287,22 +287,22 @@
         </thead>
         <tbody>
           <tr>
-            <td class="mono">11111</td>
+            <td class="mono">00000</td>
             <td>All five on black — either a wide junction or the finish pad</td>
             <td>Ambiguous — must be resolved by driving forward and resampling</td>
           </tr>
           <tr>
-            <td class="mono">00000</td>
+            <td class="mono">11111</td>
             <td>All five on white — the line has ended</td>
             <td>Dead end → U-turn</td>
           </tr>
           <tr>
             <td class="mono">111xx / xx111</td>
-            <td>Line continues plus a branch to one side</td>
-            <td>Junction → apply priority rule</td>
+            <td>Line continues left/Right</td>
+            <td>Take required turn</td>
           </tr>
           <tr>
-            <td class="mono">00100</td>
+            <td class="mono">11011</td>
             <td>Centred on the line</td>
             <td>Normal PID following</td>
           </tr>
@@ -325,8 +325,7 @@
         The second detail that mattered was <strong>sensor ride height</strong>. A few millimetres too
         high and the IR spots overlap, so adjacent channels stop discriminating — the position estimate
         goes mushy and, worse, junction patterns become unreliable. Too low and the robot scrapes on any
-        surface imperfection. Record the height you settled on; it is the most
-        reproducibility-critical dimension in the build.
+        surface imperfection. Here, hammerHead is built with sensors at exactly 3 mm from path surface.
       </p>
 
       <figure class="figure">
