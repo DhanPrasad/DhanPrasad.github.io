@@ -342,8 +342,6 @@
     <!-- ── Control ── -->
     <section class="proj-section">
       <h2 id="control">Control strategy</h2>
-      <p class="sec-note">A discrete decision layer sitting on top of a continuous PID loop.</p>
-
       <p>
         Every cycle runs the same sequence: read the sensors, test for the three special cases in
         priority order, and if none of them fire, fall through to PID line following. The ordering is
@@ -404,24 +402,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td class="mono">Kp</td><td><span class="todo">fill in</span></td><td>Sharper correction, more oscillation</td></tr>
-          <tr><td class="mono">Ki</td><td><span class="todo">fill in</span></td><td>Removes steady bias, risks windup</td></tr>
-          <tr><td class="mono">Kd</td><td><span class="todo">fill in</span></td><td>Damps overshoot, amplifies sensor noise</td></tr>
-          <tr><td class="mono">BASE_SPEED</td><td><span class="todo">fill in</span></td><td>Faster solve, less margin for junction detection</td></tr>
-          <tr><td class="mono">Loop period</td><td><span class="todo">fill in (ms)</span></td><td>Must be constant for Kd to be meaningful</td></tr>
-          <tr><td class="mono">CONFIRM_MM</td><td><span class="todo">fill in</span></td><td>Forward distance before confirming a finish</td></tr>
+          <tr><td class="mono">Kp</td><td><span>50</span></td><td>Sharper correction, more oscillation</td></tr>
+          <tr><td class="mono">Ki</td><td><span>0.0</span></td><td>Removes steady bias, risks windup</td></tr>
+          <tr><td class="mono">Kd</td><td><span>5</span></td><td>Damps overshoot, amplifies sensor noise</td></tr>
+          <tr><td class="mono">baseSpeed</td><td><span>150</span></td><td>Faster solve, less margin for junction detection</td></tr>
         </tbody>
       </table>
     </section>
 
     <!-- ── Software ── -->
     <section class="proj-section">
-      <h2 id="software">Software architecture</h2>
-      <p class="sec-note">Program flow and function structure.</p>
-
+      <h2 id="software">Code Structure</h2>
       <p>
-        The firmware is written in Arduino C++ and organised as a calibration phase followed by a
-        fixed-period cycle. The flowchart shows the runtime decision order; the call graph shows how
+        The firmware is written in Arduino C++.The flowchart shows the runtime decision order; the call graph shows how
         the functions depend on each other.
       </p>
 
@@ -450,17 +443,14 @@
       <h3>Program structure</h3>
       <ul class="bullets">
         <li><strong>setup()</strong> — configure pins, enable the driver, run the sensor calibration sweep.</li>
-        <li><strong>calibrate()</strong> — sweep across the line, capture per-channel min/max.</li>
         <li><strong>readSensors()</strong> — sample all five channels, normalise, threshold to a B/W pattern.</li>
-        <li><strong>allOnBlack() / allOnWhite()</strong> — pattern tests for the finish and dead-end branches.</li>
-        <li><strong>confirmFinish()</strong> — drive forward, resample, disambiguate finish from junction.</li>
+        <li><strong>allBlack() / allWhite()</strong> — pattern tests for the finish and dead-end branches.</li>
+        <li><strong>finishDetected()</strong> — drive forward, resample, disambiguate finish from junction.</li>
         <li><strong>junctionDetected()</strong> — identify which branches exist at the current node.</li>
         <li><strong>handleJunction()</strong> — apply Left &gt; Straight &gt; Right and execute the turn.</li>
         <li><strong>turnBack()</strong> — 180° pivot to reverse out of a dead end.</li>
-        <li><strong>readLinePosition()</strong> — weighted position for the PID loop.</li>
-        <li><strong>computePID()</strong> — error, clamped integral, derivative, weighted sum.</li>
-        <li><strong>driveMotors()</strong> — map signed speeds onto TB6612FNG direction pins and PWM.</li>
-        <li><strong>loop()</strong> — enforce the fixed cycle period and chain the above in priority order.</li>
+        <li><strong>followLine()</strong> — error, clamped integral, derivative, weighted sum.</li>
+        <li><strong>motorControl()</strong> — map signed speeds onto TB6612FNG direction pins and PWM.</li>
       </ul>
 
       <div class="callout">
