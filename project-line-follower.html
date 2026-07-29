@@ -350,39 +350,6 @@
         deliberate — finish is checked first because stopping is irreversible, then junctions, then
         dead ends.
       </p>
-
-      <div class="code-block"><pre><code><span class="c">// --- Main cycle: decision layer, then control layer ---</span>
-<span class="n">readSensors</span>();
-
-<span class="k">if</span> (<span class="n">allOnBlack</span>()) {              <span class="c">// finish or wide junction?</span>
-  <span class="n">driveForward</span>(CONFIRM_MM);        <span class="c">// resolve by resampling</span>
-  <span class="n">readSensors</span>();
-  <span class="k">if</span> (<span class="n">allOnBlack</span>()) { <span class="n">stopMotors</span>(); <span class="k">return</span>; }   <span class="c">// FINISH</span>
-}
-
-<span class="k">if</span> (<span class="n">junctionDetected</span>()) {        <span class="c">// Left &gt; Straight &gt; Right</span>
-  <span class="n">handleJunction</span>();
-  <span class="k">return</span>;
-}
-
-<span class="k">if</span> (<span class="n">allOnWhite</span>()) {              <span class="c">// dead end</span>
-  <span class="n">turnBack</span>();                     <span class="c">// 180° U-turn</span>
-  <span class="k">return</span>;
-}
-
-<span class="c">// --- Nothing special: PID line following ---</span>
-<span class="k">int</span> error = <span class="n">readLinePosition</span>() - SETPOINT;
-
-integral    = <span class="n">constrain</span>(integral + error, -I_LIMIT, I_LIMIT);  <span class="c">// anti-windup</span>
-<span class="k">int</span> derivative = error - lastError;
-lastError   = error;
-
-<span class="k">int</span> correction = (Kp * error) + (Ki * integral) + (Kd * derivative);
-
-<span class="n">driveMotors</span>(<span class="n">constrain</span>(BASE_SPEED + correction, -MAX_PWM, MAX_PWM),
-            <span class="n">constrain</span>(BASE_SPEED - correction, -MAX_PWM, MAX_PWM));</code></pre></div>
-      <p class="code-caption">Representative excerpt — see the repository for the complete implementation.</p>
-
       <h3>Junction priority — the left-hand rule</h3>
       <p>
         At every junction hammerHead takes the leftmost available option:
