@@ -3,8 +3,10 @@ document.querySelectorAll('.year').forEach(el => el.textContent = new Date().get
 
 // Highlight the current page in the nav (and drawer, if present)
 const page = location.pathname.split('/').pop() || 'index.html';
+// Project detail pages (project-*.html) highlight the Projects link
+const activePage = page.startsWith('project-') ? 'projects.html' : page;
 document.querySelectorAll('.nav-links a, .drawer nav ul li a').forEach(link => {
-  if (link.getAttribute('href') === page) link.classList.add('active');
+  if (link.getAttribute('href') === activePage) link.classList.add('active');
 });
 
 // Hamburger / drawer logic (shared across all pages)
