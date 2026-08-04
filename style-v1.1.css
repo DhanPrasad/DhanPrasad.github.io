@@ -199,6 +199,59 @@ nav {
 .stat-card .num { font-size: 1.75rem; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
 .stat-card .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
 
+/* ── About Page: "Outside the Lab" ── */
+.beyond { border-top: 1px solid var(--border); }
+.beyond-header { padding: 56px 0 4px; }
+.beyond-header h2 {
+  font-size: clamp(1.5rem, 3.2vw, 1.9rem); font-weight: 800;
+  letter-spacing: -0.5px; margin-bottom: 10px;
+}
+.beyond-header .lede { color: var(--muted); font-size: 0.98rem; max-width: 560px; }
+
+/* Intro block: text beside a single photo, alternating sides */
+.intro-block {
+  display: grid; grid-template-columns: 1.25fr 1fr;
+  gap: 32px; align-items: center;
+  padding: 44px 0;
+  border-bottom: 1px solid var(--border);
+}
+.intro-block:last-of-type { border-bottom: none; }
+.intro-block.flip .ib-text { order: 2; }
+.intro-block.flip .ib-media { order: 1; }
+.ib-text h3 { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 4px; }
+.ib-text .kicker {
+  display: block; font-family: var(--mono); font-size: 0.72rem;
+  color: var(--accent); margin-bottom: 12px;
+}
+.ib-text p { color: var(--muted); font-size: 0.94rem; margin-bottom: 12px; }
+.ib-text p:last-child { margin-bottom: 0; }
+.ib-text .more {
+  display: inline-block; margin-top: 6px;
+  font-size: 0.82rem; font-weight: 600; color: var(--accent);
+}
+.ib-media .figure { margin: 0; }
+.ib-media .figure.missing .ph { min-height: 210px; }
+
+/* Philosophy */
+.philosophy { padding: 44px 0; border-bottom: 1px solid var(--border); }
+.philosophy h3 { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 4px; }
+.philosophy .kicker {
+  display: block; font-family: var(--mono); font-size: 0.72rem;
+  color: var(--accent); margin-bottom: 14px;
+}
+.philosophy p { color: var(--muted); font-size: 0.94rem; margin-bottom: 14px; max-width: 660px; }
+.reading { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.book {
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 18px; flex: 1 1 240px;
+}
+.book .bk-label {
+  font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 5px;
+}
+.book .bk-title { font-size: 0.9rem; font-weight: 700; line-height: 1.4; }
+.book .bk-author { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
 /* ── Projects Page ── */
 .projects-list { display: flex; flex-direction: column; gap: 18px; }
 .project-card {
@@ -441,6 +494,9 @@ footer { text-align: center; padding: 28px 0; font-size: 0.78rem; color: var(--m
 @media (max-width: 640px) {
   .page-grid { grid-template-columns: 1fr 1fr; }
   .about-grid { grid-template-columns: 1fr; }
+  .intro-block { grid-template-columns: 1fr; gap: 22px; padding: 34px 0; }
+  .intro-block.flip .ib-text { order: 1; }
+  .intro-block.flip .ib-media { order: 2; }
   .blog-item { grid-template-columns: 1fr; gap: 4px; }
   .project-card { grid-template-columns: 1fr; }
   .nav-inner { gap: 12px; }
