@@ -61,9 +61,10 @@ nav {
   color: var(--accent); font-weight: 600;
   background: var(--accent-lt); border-radius: 7px;
 }
-/* V1.1: .nav-cta intentionally has no styling of its own — the Contact
-   link is styled by the shared .nav-links a rules above. The class is
-   left in the HTML so it can be restyled later without editing pages. */
+/* V1.1: the Contact link has no special styling. The old .nav-cta class
+   (permanent green box) was removed from both this stylesheet and the
+   HTML, so Contact is styled by the shared .nav-links a rules above and
+   only shows the green box when it is the active page. */
 
 /* Home section heading */
 .home-sec { margin-bottom: 18px; }
