@@ -500,22 +500,6 @@
         <figcaption><b>Fig. 7</b> — Exploded view / assembly sequence.</figcaption>
       </figure>
 
-      <table class="spec-table">
-        <thead>
-          <tr><th>Dimension</th><th>Value</th><th>Note</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Overall L × W × H</td><td><span class="todo">fill in</span></td><td>Footprint</td></tr>
-          <tr><td>Wheelbase</td><td><span class="todo">fill in</span></td><td>Axle to caster</td></tr>
-          <tr><td>Track width</td><td><span class="todo">fill in</span></td><td>Wheel centre to centre</td></tr>
-          <tr><td>Sensor array width</td><td><span class="todo">fill in</span></td><td>Outer sensor to outer sensor — sets junction detection</td></tr>
-          <tr><td>Sensor lead</td><td><span class="todo">fill in</span></td><td>Array ahead of drive axle — turn compensation</td></tr>
-          <tr><td>Sensor ride height</td><td><span class="todo">fill in</span></td><td>Critical for channel discrimination</td></tr>
-          <tr><td>Mass (with battery)</td><td><span class="todo">fill in</span></td><td>Affects achievable acceleration</td></tr>
-        </tbody>
-      </table>
-    </section>
-
     <!-- ── Track ── -->
     <section class="proj-section">
       <h2 id="track">The maze</h2>
@@ -531,51 +515,7 @@
         <figcaption><b>Fig. 8</b> — Maze layout showing junctions, dead ends and the finish pad.</figcaption>
       </figure>
 
-      <p>
-        Describe the maze here: line width, surface material, overall dimensions, number of junctions
-        and dead ends, tightest curve radius, and the size of the finish pad. Two properties matter
-        most for whether the left-hand rule is guaranteed to work — whether the maze is
-        <strong>simply connected</strong> (no closed loops), and whether the finish pad is
-        distinguishable from the widest junction.
-      </p>
     </section>
-
-    <!-- ── Results ── -->
-    <section class="proj-section">
-      <h2 id="results">Results &amp; reflections</h2>
-      <p class="sec-note">What worked, what did not, and what I would change.</p>
-
-      <table class="spec-table">
-        <thead>
-          <tr><th>Metric</th><th>Result</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Solve time</td><td><span class="todo">fill in</span></td></tr>
-          <tr><td>Junctions handled correctly</td><td><span class="todo">e.g. 12/12</span></td></tr>
-          <tr><td>Dead ends recovered</td><td><span class="todo">fill in</span></td></tr>
-          <tr><td>False finishes</td><td><span class="todo">fill in</span></td></tr>
-          <tr><td>Completion rate</td><td><span class="todo">e.g. 9/10 runs</span></td></tr>
-          <tr><td>Top stable speed</td><td><span class="todo">fill in</span></td></tr>
-        </tbody>
-      </table>
-
-      <h3>What I would do differently</h3>
-      <ul class="bullets">
-        <li><strong>Add path optimisation.</strong> The biggest single upgrade: record the turn sequence on the first run, then simplify it by collapsing every dead-end excursion (<span class="mono">L,B,L → S</span> and similar substitutions). The second run then drives the shortest path directly. This is the standard follow-up to a left-hand-rule solver and needs no extra hardware.</li>
-        <li><strong>Wheel encoders</strong> — closed-loop wheel speed would make the turn and confirm-forward distances repeatable as the battery discharges, instead of drifting with voltage.</li>
-        <li><strong>Wider sensor array</strong> — more channels would give earlier and less ambiguous junction detection, and shrink the finish-versus-junction grey zone.</li>
-        <li><strong>Serial telemetry</strong> — log position error and detected pattern over serial and plot it, rather than tuning and debugging by eye.</li>
-        <li><strong>Dedicated 5 V regulator</strong> for logic, so the current spike from a U-turn cannot brown out the Nano mid-decision.</li>
-      </ul>
-
-      <div class="callout">
-        <p>
-          <strong>Biggest lesson:</strong> replace this with the one thing that surprised you most —
-          those are the sentences readers and interviewers actually remember.
-        </p>
-      </div>
-    </section>
-
     <!-- ── Downloads ── -->
     <section class="proj-section">
       <h2 id="downloads">Files &amp; downloads</h2>
