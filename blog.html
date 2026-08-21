@@ -24,60 +24,53 @@
   </div>
 </nav>
 
+<!--
+  ══════════════════════════════════════════════════════════
+  POST INDEX — headlines only. Each row links to its own page.
+
+  TO ADD A POST:
+    1. Copy one <a class="blog-item"> block.
+    2. Set href to the new page (e.g. post-fea-meshing.html).
+    3. Set the date, headline and one-liner.
+    4. Create the page — duplicate post-astronomy.html and
+       replace its body.
+
+  The "draft" class greys a row out and disables its link, so
+  you can list something before it's written without creating
+  a dead link. Remove the class when the page exists.
+
+  Newest post goes at the top.
+  ══════════════════════════════════════════════════════════
+-->
+
 <main>
   <div class="container">
     <div class="page-header">
       <div class="page-label">Engineering Learnings</div>
-      <h1>Notes & write-ups</h1>
+      <h1>Notes &amp; write-ups</h1>
       <p>Things I figured out — documented so I (and maybe you) don't forget.</p>
     </div>
 
     <div class="blog-list">
 
-      <div class="blog-item">
-        <div class="blog-date">2025 / 04</div>
+      <a class="blog-item" href="post-astronomy.html">
+        <div class="blog-date">08 / 20 / 2026</div>
         <div>
-          <h4>Why your FEA mesh is probably wrong</h4>
-          <p>Lessons from mesh convergence studies and what "good enough" actually means in practice.</p>
+          <h4>What did I see on the Moon with an SLT 130 telescope?</h4>
+          <p>A first proper look at the terminator — craters, ridges, and how much detail a 130 mm reflector actually resolves.</p>
         </div>
         <span class="blog-arrow">→</span>
-      </div>
+      </a>
 
-      <div class="blog-item">
-        <div class="blog-date">2025 / 02</div>
+      <!-- ══ TEMPLATE — copy for each new post. Remove "draft" when live. ══ -->
+      <a class="blog-item draft" href="#">
+        <div class="blog-date"><span class="todo">MM / DD / YYYY</span></div>
         <div>
-          <h4>Automating boring engineering tasks with Python</h4>
-          <p>How I saved hours of manual spreadsheet work using pandas and matplotlib for load reporting.</p>
+          <h4><span class="todo">Headline — write it as a question or a claim, not a topic</span></h4>
+          <p><span class="todo">One line that makes someone want to click.</span></p>
         </div>
         <span class="blog-arrow">→</span>
-      </div>
-
-      <div class="blog-item">
-        <div class="blog-date">2024 / 11</div>
-        <div>
-          <h4>Understanding tolerances: GD&T for real parts</h4>
-          <p>A practical breakdown of geometric dimensioning and why it matters when you hand off drawings to a machinist.</p>
-        </div>
-        <span class="blog-arrow">→</span>
-      </div>
-
-      <div class="blog-item">
-        <div class="blog-date">2024 / 08</div>
-        <div>
-          <h4>What I learned building a 3D printer from scratch</h4>
-          <p>CoreXY kinematics, PID tuning, and the five things I'd do differently the second time around.</p>
-        </div>
-        <span class="blog-arrow">→</span>
-      </div>
-
-      <div class="blog-item">
-        <div class="blog-date">2024 / 05</div>
-        <div>
-          <h4>Getting started with CFD — a beginner's honest guide</h4>
-          <p>What the tutorials don't tell you about setting up boundary conditions and interpreting residuals.</p>
-        </div>
-        <span class="blog-arrow">→</span>
-      </div>
+      </a>
 
     </div>
   </div>

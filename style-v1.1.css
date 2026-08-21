@@ -287,21 +287,157 @@ nav {
 .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .skill-tag { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 0.78rem; font-family: var(--mono); color: var(--text); }
 
+/* ── Learnings index: draft entries (greyed, not yet clickable) ── */
+.blog-item.draft { opacity: 0.55; pointer-events: none; }
+
+/* ── Post page: back link ── */
+.post-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; font-weight: 600; color: var(--muted);
+  margin-bottom: 20px;
+}
+.post-back:hover { color: var(--accent); text-decoration: none; }
+
+/* ══════════════════════════════════════════════════════════
+   Astronomy gallery (post-astronomy.html)
+   ══════════════════════════════════════════════════════════ */
+.astro-intro { color: var(--muted); font-size: 0.94rem; max-width: 640px; margin-bottom: 36px; }
+
+.astro-gallery {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px;
+}
+.astro-card {
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.astro-card:hover { border-color: var(--accent-md); box-shadow: 0 4px 24px rgba(45,122,79,0.08); }
+
+/* Image area — fixed ratio so the grid stays tidy whatever you upload */
+.astro-shot {
+  position: relative; margin: 0;
+  aspect-ratio: 4 / 3; background: #10131a;
+  cursor: zoom-in; overflow: hidden;
+}
+.astro-shot img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; transition: transform 0.35s ease;
+}
+.astro-card:hover .astro-shot img { transform: scale(1.04); }
+.astro-shot .zoom-hint {
+  position: absolute; right: 10px; bottom: 10px;
+  background: rgba(0,0,0,0.55); color: #fff;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.03em;
+  padding: 3px 9px; border-radius: 99px;
+  opacity: 0; transition: opacity 0.2s; pointer-events: none;
+}
+.astro-card:hover .astro-shot .zoom-hint { opacity: 1; }
+
+/* Placeholder when the photo isn't in the repo yet */
+.astro-shot .ph { display: none; }
+.astro-shot.missing img { display: none; }
+.astro-shot.missing { cursor: default; background: var(--bg-soft); }
+.astro-shot.missing .zoom-hint { display: none; }
+.astro-shot.missing .ph {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; width: 100%; height: 100%; padding: 20px;
+  border-bottom: 1.5px dashed var(--border); text-align: center;
+}
+.astro-shot.missing .ph .ph-icon { font-size: 1.5rem; opacity: 0.5; }
+.astro-shot.missing .ph .ph-title { font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.astro-shot.missing .ph .ph-path {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--muted);
+  background: #fff; border: 1px solid var(--border); border-radius: 5px;
+  padding: 3px 8px; word-break: break-all;
+}
+
+.astro-body { padding: 20px 22px 18px; display: flex; flex-direction: column; flex: 1; }
+.astro-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-bottom: 6px;
+}
+.astro-head h3 { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.2px; }
+.astro-when { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.astro-note { font-size: 0.87rem; color: var(--muted); margin-bottom: 14px; flex: 1; }
+
+/* Expandable detail */
+.astro-more { border-top: 1px solid var(--border); padding-top: 12px; }
+.astro-more summary {
+  cursor: pointer; list-style: none;
+  font-size: 0.78rem; font-weight: 700; color: var(--accent);
+  display: flex; align-items: center; gap: 6px;
+}
+.astro-more summary::-webkit-details-marker { display: none; }
+.astro-more summary::after {
+  content: '+'; font-size: 0.95rem; font-weight: 700; line-height: 1;
+}
+.astro-more[open] summary::after { content: '−'; }
+.astro-more summary:hover { text-decoration: underline; }
+.astro-specs { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 12px; }
+.astro-specs td { padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
+.astro-specs td:first-child { color: var(--text); font-weight: 600; white-space: nowrap; padding-right: 14px; width: 40%; }
+.astro-specs tr:last-child td { border-bottom: none; }
+.astro-write { font-size: 0.86rem; color: var(--muted); margin-top: 12px; }
+
+/* ── Lightbox ── */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(8,10,14,0.94);
+  align-items: center; justify-content: center;
+  padding: 56px 64px;
+}
+.lightbox.open { display: flex; }
+.lb-figure { margin: 0; max-width: 100%; max-height: 100%; text-align: center; }
+.lb-figure img {
+  max-width: 100%; max-height: calc(100vh - 150px);
+  object-fit: contain; border-radius: 6px; display: block; margin: 0 auto;
+}
+.lb-caption { color: #d8dde3; font-size: 0.85rem; margin-top: 14px; }
+.lb-caption b { color: #fff; font-weight: 700; }
+.lb-caption .lb-sub { display: block; color: #9aa3ad; font-size: 0.76rem; margin-top: 4px; }
+.lb-btn {
+  position: absolute; background: rgba(255,255,255,0.08); border: none;
+  color: #fff; cursor: pointer; border-radius: 50%;
+  width: 42px; height: 42px; font-size: 1.2rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.lb-btn:hover { background: rgba(255,255,255,0.2); }
+.lb-close { top: 18px; right: 18px; font-size: 1.4rem; }
+.lb-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
+.lb-counter {
+  position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
+  color: #9aa3ad; font-family: var(--mono); font-size: 0.74rem;
+}
+
+@media (max-width: 760px) {
+  .astro-gallery { grid-template-columns: 1fr; }
+  .lightbox { padding: 52px 12px; }
+  .lb-prev { left: 6px; }
+  .lb-next { right: 6px; }
+}
+
 /* ── Blog Page ── */
 .blog-list { display: flex; flex-direction: column; }
 .blog-item {
-  display: grid; grid-template-columns: 90px 1fr 24px;
+  display: grid; grid-template-columns: 118px 1fr 24px;
   align-items: center; gap: 20px;
   padding: 22px 0; border-bottom: 1px solid var(--border);
   cursor: pointer; transition: background 0.15s;
 }
 .blog-item:last-child { border-bottom: none; }
-.blog-date { font-size: 0.75rem; font-family: var(--mono); color: var(--muted); }
+/* 118px fits a full MM / DD / YYYY date on one line */
+.blog-date { font-size: 0.75rem; font-family: var(--mono); color: var(--muted); white-space: nowrap; }
 .blog-item h4 { font-size: 0.95rem; font-weight: 600; transition: color 0.2s; }
 .blog-item p { font-size: 0.83rem; color: var(--muted); margin-top: 4px; }
 .blog-arrow { color: var(--muted); font-size: 1rem; transition: color 0.2s, transform 0.2s; }
 .blog-item:hover .blog-arrow { color: var(--accent); transform: translateX(4px); }
 .blog-item:hover h4 { color: var(--accent); }
+/* Rows are links to their post pages */
+a.blog-item { color: inherit; }
+a.blog-item:hover { text-decoration: none; }
 
 /* ── Contact Page ── */
 .contact-wrap { max-width: 560px; }

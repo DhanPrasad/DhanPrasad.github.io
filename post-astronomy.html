@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Things I've pointed a telescope at | Dhan Prasad Pradhan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style-v1.1.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="ongoing.html">Ongoing</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="blog.html">Learnings</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!--
+  ══════════════════════════════════════════════════════════
+  POST PAGE — astronomy
+
+  Photos go in:  assets/about/astronomy/
+    moon.jpg · jupiter.jpg · saturn.jpg
+    mars.jpg · venus.jpg · extra.jpg
+
+  EXTENSIONS MATTER: these all expect .jpg. If your file is
+  .jpeg, rename it or change the src. A mismatch is exactly
+  why the telescope photo didn't show on the About page.
+
+  Every amber <span class="todo"> is yours to replace.
+  Clicking a photo opens it full-screen; arrow keys move
+  between shots, Esc closes.
+
+  To add an object, copy a whole <article class="astro-card">
+  block and change the name, path and notes.
+  ══════════════════════════════════════════════════════════
+-->
+
+<main>
+  <div class="container">
+
+    <a href="blog.html" class="post-back">← All learnings</a>
+
+    <div class="page-header">
+      <div class="page-label">Astronomy</div>
+      <h1>Things I've pointed a telescope at</h1>
+      <p>Photographs from my own sessions, with notes on how each one was captured.</p>
+    </div>
+
+    <p class="astro-intro">
+      <span class="todo">Two or three sentences introducing the collection — when you started, what you're shooting with, what you're chasing next. Left blank deliberately: I'm not going to invent a setup you don't own.</span>
+    </p>
+
+    <div class="astro-gallery">
+
+      <!-- ── Moon ── -->
+      <article class="astro-card">
+        <figure class="astro-shot" data-title="The Moon" data-sub="Replace with capture details">
+          <img src="assets/about/astronomy/moon.jpg" alt="The Moon"/>
+          <span class="zoom-hint">Click to enlarge</span>
+          <div class="ph">
+            <div class="ph-icon">🌙</div>
+            <div class="ph-title">Moon photo</div>
+            <div class="ph-path">assets/about/astronomy/moon.jpg</div>
+          </div>
+        </figure>
+        <div class="astro-body">
+          <div class="astro-head">
+            <h3>The Moon</h3>
+            <span class="astro-when"><span class="todo">YYYY / MM</span></span>
+          </div>
+          <p class="astro-note"><span class="todo">One or two lines — which phase, what stood out along the terminator, why you kept this frame.</span></p>
+          <details class="astro-more">
+            <summary>Capture details</summary>
+            <table class="astro-specs">
+              <tr><td>Telescope</td><td><span class="todo">make / aperture</span></td></tr>
+              <tr><td>Mount</td><td><span class="todo">tracked or manual</span></td></tr>
+              <tr><td>Camera</td><td><span class="todo">phone / DSLR / planetary cam</span></td></tr>
+              <tr><td>Capture</td><td><span class="todo">exposure, frame count</span></td></tr>
+              <tr><td>Processing</td><td><span class="todo">stacking + software</span></td></tr>
+            </table>
+            <p class="astro-write"><span class="todo">Optional: the one thing that was hard about this shot, and what you'd do differently.</span></p>
+          </details>
+        </div>
+      </article>
+
+      <!-- ── Jupiter ── -->
+      <article class="astro-card">
+        <figure class="astro-shot" data-title="Jupiter" data-sub="Replace with capture details">
+          <img src="assets/about/astronomy/jupiter.jpg" alt="Jupiter"/>
+          <span class="zoom-hint">Click to enlarge</span>
+          <div class="ph">
+            <div class="ph-icon">🪐</div>
+            <div class="ph-title">Jupiter photo</div>
+            <div class="ph-path">assets/about/astronomy/jupiter.jpg</div>
+          </div>
+        </figure>
+        <div class="astro-body">
+          <div class="astro-head">
+            <h3>Jupiter</h3>
+            <span class="astro-when"><span class="todo">YYYY / MM</span></span>
+          </div>
+          <p class="astro-note"><span class="todo">One or two lines — were the cloud bands visible? Any Galilean moons in frame? How was the seeing?</span></p>
+          <details class="astro-more">
+            <summary>Capture details</summary>
+            <table class="astro-specs">
+              <tr><td>Telescope</td><td><span class="todo">make / aperture</span></td></tr>
+              <tr><td>Mount</td><td><span class="todo">tracked or manual</span></td></tr>
+              <tr><td>Camera</td><td><span class="todo">phone / DSLR / planetary cam</span></td></tr>
+              <tr><td>Capture</td><td><span class="todo">video length, frame rate</span></td></tr>
+              <tr><td>Processing</td><td><span class="todo">stacking + software</span></td></tr>
+            </table>
+            <p class="astro-write"><span class="todo">Optional: what was hard, what you'd change.</span></p>
+          </details>
+        </div>
+      </article>
+
+      <!-- ── Saturn ── -->
+      <article class="astro-card">
+        <figure class="astro-shot" data-title="Saturn" data-sub="Replace with capture details">
+          <img src="assets/about/astronomy/saturn.jpg" alt="Saturn"/>
+          <span class="zoom-hint">Click to enlarge</span>
+          <div class="ph">
+            <div class="ph-icon">🪐</div>
+            <div class="ph-title">Saturn photo</div>
+            <div class="ph-path">assets/about/astronomy/saturn.jpg</div>
+          </div>
+        </figure>
+        <div class="astro-body">
+          <div class="astro-head">
+            <h3>Saturn</h3>
+            <span class="astro-when"><span class="todo">YYYY / MM</span></span>
+          </div>
+          <p class="astro-note"><span class="todo">One or two lines — ring tilt, whether the Cassini division showed, how hard focus was.</span></p>
+          <details class="astro-more">
+            <summary>Capture details</summary>
+            <table class="astro-specs">
+              <tr><td>Telescope</td><td><span class="todo">make / aperture</span></td></tr>
+              <tr><td>Mount</td><td><span class="todo">tracked or manual</span></td></tr>
+              <tr><td>Camera</td><td><span class="todo">phone / DSLR / planetary cam</span></td></tr>
+              <tr><td>Capture</td><td><span class="todo">video length, frame rate</span></td></tr>
+              <tr><td>Processing</td><td><span class="todo">stacking + software</span></td></tr>
+            </table>
+            <p class="astro-write"><span class="todo">Optional: what was hard, what you'd change.</span></p>
+          </details>
+        </div>
+      </article>
+
+      <!-- ── Mars ── -->
+      <article class="astro-card">
+        <figure class="astro-shot" data-title="Mars" data-sub="Replace with capture details">
+          <img src="assets/about/astronomy/mars.jpg" alt="Mars"/>
+          <span class="zoom-hint">Click to enlarge</span>
+          <div class="ph">
+            <div class="ph-icon">🔴</div>
+            <div class="ph-title">Mars photo</div>
+            <div class="ph-path">assets/about/astronomy/mars.jpg</div>
+          </div>
+        </figure>
+        <div class="astro-body">
+          <div class="astro-head">
+            <h3>Mars</h3>
+            <span class="astro-when"><span class="todo">YYYY / MM</span></span>
+          </div>
+          <p class="astro-note"><span class="todo">One or two lines — apparent size, any surface detail, near opposition or not.</span></p>
+          <details class="astro-more">
+            <summary>Capture details</summary>
+            <table class="astro-specs">
+              <tr><td>Telescope</td><td><span class="todo">make / aperture</span></td></tr>
+              <tr><td>Mount</td><td><span class="todo">tracked or manual</span></td></tr>
+              <tr><td>Camera</td><td><span class="todo">phone / DSLR / planetary cam</span></td></tr>
+              <tr><td>Capture</td><td><span class="todo">video length, frame rate</span></td></tr>
+              <tr><td>Processing</td><td><span class="todo">stacking + software</span></td></tr>
+            </table>
+            <p class="astro-write"><span class="todo">Optional: what was hard, what you'd change.</span></p>
+          </details>
+        </div>
+      </article>
+
+      <!-- ── Venus ── -->
+      <article class="astro-card">
+        <figure class="astro-shot" data-title="Venus" data-sub="Replace with capture details">
+          <img src="assets/about/astronomy/venus.jpg" alt="Venus"/>
+          <span class="zoom-hint">Click to enlarge</span>
+          <div class="ph">
+            <div class="ph-icon">✨</div>
+            <div class="ph-title">Venus photo</div>
+            <div class="ph-path">assets/about/astronomy/venus.jpg</div>
+          </div>
+        </figure>
+        <div class="astro-body">
+          <div class="astro-head">
+            <h3>Venus</h3>
+            <span class="astro-when"><span class="todo">YYYY / MM</span></span>
+          </div>
+          <p class="astro-note"><span class="todo">One or two lines — which phase, time of day, how you handled the brightness.</span></p>
+          <details class="astro-more">
+            <summary>Capture details</summary>
+            <table class="astro-specs">
+              <tr><td>Telescope</td><td><span class="todo">make / aperture</span></td></tr>
+              <tr><td>Mount</td><td><span class="todo">tracked or manual</span></td></tr>
+              <tr><td>Camera</td><td><span class="todo">phone / DSLR / planetary cam</span></td></tr>
+              <tr><td>Capture</td><td><span class="todo">exposure, frame count</span></td></tr>
+              <tr><td>Processing</td><td><span class="todo">stacking + software</span></td></tr>
+            </table>
+            <p class="astro-write"><span class="todo">Optional: what was hard, what you'd change.</span></p>
+          </details>
+        </div>
+      </article>
+
+      <!-- ── Spare slot ── -->
+      <article class="astro-card">
+        <figure class="astro-shot" data-title="Object name" data-sub="Replace with capture details">
+          <img src="assets/about/astronomy/extra.jpg" alt="Astronomy capture"/>
+          <span class="zoom-hint">Click to enlarge</span>
+          <div class="ph">
+            <div class="ph-icon">🌌</div>
+            <div class="ph-title">Spare slot</div>
+            <div class="ph-path">assets/about/astronomy/extra.jpg</div>
+          </div>
+        </figure>
+        <div class="astro-body">
+          <div class="astro-head">
+            <h3><span class="todo">Object name</span></h3>
+            <span class="astro-when"><span class="todo">YYYY / MM</span></span>
+          </div>
+          <p class="astro-note"><span class="todo">Spare card. Rename it for whatever you capture next — a conjunction, an eclipse, a deep-sky object.</span></p>
+          <details class="astro-more">
+            <summary>Capture details</summary>
+            <table class="astro-specs">
+              <tr><td>Telescope</td><td><span class="todo">make / aperture</span></td></tr>
+              <tr><td>Mount</td><td><span class="todo">tracked or manual</span></td></tr>
+              <tr><td>Camera</td><td><span class="todo">phone / DSLR / planetary cam</span></td></tr>
+              <tr><td>Capture</td><td><span class="todo">exposure, frame count</span></td></tr>
+              <tr><td>Processing</td><td><span class="todo">stacking + software</span></td></tr>
+            </table>
+            <p class="astro-write"><span class="todo">Optional notes.</span></p>
+          </details>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="proj-footer-nav">
+      <a href="blog.html" class="post-back">← All learnings</a>
+      <a href="contact.html" class="post-back">Get in touch →</a>
+    </div>
+
+  </div>
+</main>
+
+<!-- ── Lightbox (populated by main.js) ── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <span class="lb-counter" id="lbCounter"></span>
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next">&#8250;</button>
+  <figure class="lb-figure">
+    <img id="lbImg" src="" alt=""/>
+    <figcaption class="lb-caption" id="lbCaption"></figcaption>
+  </figure>
+</div>
+
+<footer>
+  <div class="container">
+    Built with HTML · Hosted on GitHub Pages · <span class="year"></span>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
