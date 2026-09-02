@@ -145,12 +145,12 @@ nav {
 }
 .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 520px; }
 .page-header-logos { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; flex-shrink: 0; }
-.uni-row { display: flex; align-items: center; gap: 10px; }
+.uni-row { display: flex; align-items: center; gap: 14px; }
 .uni-icon {
-  display: inline-block; width: 34px; height: 34px; flex-shrink: 0;
-  background-repeat: no-repeat; border-radius: 6px;
+  display: inline-block; width: 100px; height: 100px; flex-shrink: 0;
+  background-repeat: no-repeat; border-radius: 10px;
 }
-.uni-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.uni-name { font-size: 1rem; font-weight: 600; color: var(--text); }
 
 /* ── Buttons ── */
 .btn {
