@@ -133,6 +133,7 @@ nav {
   padding: 64px 0 40px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 56px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; flex-wrap: wrap;
 }
 .page-label {
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
@@ -143,6 +144,8 @@ nav {
   letter-spacing: -0.5px; margin-bottom: 10px;
 }
 .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 520px; }
+.page-header-logos { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; flex-shrink: 0; }
+.page-header-logos img { height: 56px; width: auto; object-fit: contain; }
 
 /* ── Buttons ── */
 .btn {
@@ -198,15 +201,6 @@ nav {
 .stat-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px; }
 .stat-card .num { font-size: 1.75rem; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
 .stat-card .label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
-
-.university-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-.university-item {
-  display: flex; align-items: center; gap: 12px;
-  background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px;
-  padding: 12px 16px;
-}
-.university-item img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
-.university-item .uni-name { font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.3; }
 
 /* ── About Page: "Outside the Lab" ── */
 .beyond { border-top: 1px solid var(--border); }
@@ -639,6 +633,8 @@ footer { text-align: center; padding: 28px 0; font-size: 0.78rem; color: var(--m
 @media (max-width: 640px) {
   .page-grid { grid-template-columns: 1fr 1fr; }
   .about-grid { grid-template-columns: 1fr; }
+  .page-header-logos { flex-direction: row; align-items: flex-start; flex-wrap: wrap; }
+  .page-header-logos img { height: 44px; }
   .intro-block { grid-template-columns: 1fr; gap: 22px; padding: 34px 0; }
   .intro-block.flip .ib-text { order: 1; }
   .intro-block.flip .ib-media { order: 2; }
