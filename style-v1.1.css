@@ -133,7 +133,7 @@ nav {
   padding: 64px 0 40px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 56px;
-  display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; flex-wrap: wrap;
 }
 .page-label {
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
@@ -145,12 +145,12 @@ nav {
 }
 .page-header p { color: var(--muted); font-size: 0.95rem; max-width: 520px; }
 .page-header-logos { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex-shrink: 0; }
-.uni-row { display: flex; align-items: center; gap: 14px; }
+.uni-row { display: flex; align-items: center; gap: 10px; }
 .uni-icon {
-  display: inline-block; width: 50px; height: 50px; flex-shrink: 0;
-  background-repeat: no-repeat; border-radius: 10px;
+  display: inline-block; width: 26px; height: 26px; flex-shrink: 0;
+  background-repeat: no-repeat; border-radius: 5px;
 }
-.uni-name { font-size: 1rem; font-weight: 600; color: var(--text); }
+.uni-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
 
 /* ── Buttons ── */
 .btn {
