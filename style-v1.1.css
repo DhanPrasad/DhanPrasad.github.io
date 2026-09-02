@@ -147,8 +147,8 @@ nav {
 .page-header-logos { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; flex-shrink: 0; }
 .uni-row { display: flex; align-items: center; gap: 10px; }
 .uni-icon {
-  display: inline-block; width: 26px; height: 26px; flex-shrink: 0;
-  background-repeat: no-repeat; border-radius: 5px;
+  display: inline-block; width: 42px; height: 42px; flex-shrink: 0;
+  background-repeat: no-repeat; border-radius: 7px;
 }
 .uni-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
 
