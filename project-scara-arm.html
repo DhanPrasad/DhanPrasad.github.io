@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SCARA 2D Robotic Arm — Mechatronics Case Study | Dhan Prasad Pradhan</title>
-  <meta name="description" content="A 2-DOF SCARA arm built end-to-end: SolidWorks CAD, Simscape Multibody dynamics, hand-derived FK/IK, closed-loop PID control, and live Arduino hardware deployment — tracing circle, rectangle, heart and happy-face trajectories."/>
+  <meta name="description" content="A 2-DOF SCARA arm built end-to-end: SolidWorks CAD, Simscape Multibody dynamics, hand-derived FK/IK, closed-loop PID control, and live Arduino hardware deployment — tracing circle, rectangle and heart trajectories."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style-v1.1.css"/>
@@ -96,7 +96,7 @@
           <tr><td>Control architecture</td><td>2 independent PID loops, torque-actuated Simscape revolute joints; target angle from inverse kinematics, actual angle from the Simscape model</td></tr>
           <tr><td>Host ↔ target link</td><td>External mode over serial, COM13 @ 115200 baud — live monitoring/tuning without reflashing</td></tr>
           <tr><td>Actuation output</td><td>Simulink Arduino Servo Write blocks, Pin 5 (shoulder), Pin 6 (elbow)</td></tr>
-          <tr><td>Trajectory library</td><td>Heart, Rectangle, Circle, Happy Face (switch-selectable in Simulink)</td></tr>
+          <tr><td>Trajectory library</td><td>Heart, Rectangle, Circle (switch-selectable in Simulink)</td></tr>
           <tr><td>Rotation convention</td><td>Counter-clockwise (CCW) is positive</td></tr>
         </tbody>
       </table>
@@ -157,16 +157,16 @@
 
       <div class="figure-grid">
         <figure class="figure">
-          <img src="assets/projects/SCARA/docs/fk_ik_derivation.pdf" alt="Hand-derived forward kinematics for the 2-DOF SCARA arm"/>
+          <img src="assets/projects/SCARA/img/fk_derivation.jpg" alt="Hand-derived forward kinematics for the 2-DOF SCARA arm"/>
           <div class="ph">
             <div class="ph-icon">✏️</div>
             <div class="ph-title">Forward kinematics — hand derivation</div>
-            <div class="ph-path">assets/projects/SCARA/docs/fk_ik_derivation.pdf</div>
+            <div class="ph-path">assets/projects/SCARA/img/fk_derivation.jpg</div>
           </div>
           <figcaption><b>Fig. 2</b> — Forward kinematics: joint angles → pen-tip position.</figcaption>
         </figure>
 
-<!--        <figure class="figure">
+        <figure class="figure">
           <img src="assets/projects/SCARA/img/ik_derivation.jpg" alt="Hand-derived inverse kinematics for the 2-DOF SCARA arm"/>
           <div class="ph">
             <div class="ph-icon">✏️</div>
@@ -175,7 +175,7 @@
           </div>
           <figcaption><b>Fig. 3</b> — Inverse kinematics: target position → joint angles, including domain clamping and solution-branch selection.</figcaption>
         </figure>
-      </div>-->
+      </div>
     </section>
 
     <!-- ── Arm Linkage & Part Design ── -->
@@ -204,11 +204,11 @@
       </table>
 
       <figure class="figure">
-        <img src="assets/projects/SCARA/img/cad_final_render.gif" alt="Final SolidWorks CAD render of the SCARA arm assembly"/>
+        <img src="assets/projects/SCARA/img/cad_final_render.png" alt="Final SolidWorks CAD render of the SCARA arm assembly"/>
         <div class="ph">
           <div class="ph-icon">🧩</div>
           <div class="ph-title">Final CAD render</div>
-          <div class="ph-path">assets/projects/SCARA/img/cad_final_render.gif</div>
+          <div class="ph-path">assets/projects/SCARA/img/cad_final_render.png</div>
         </div>
         <figcaption><b>Fig. 4</b> — Final SolidWorks assembly: base, Link 1, Link 2, and servo mounts.</figcaption>
       </figure>
@@ -291,7 +291,7 @@
     <!-- ── MATLAB/Simulink Model, Part II ── -->
     <section class="proj-section">
       <h2 id="simulink-2">MATLAB/Simulink model, part II — closing the loop</h2>
-      <p class="sec-note">Torque actuation, real geometry, four trajectory shapes, and a PID gain problem traced back to the plant.</p>
+      <p class="sec-note">Torque actuation, real geometry, three trajectory shapes, and a PID gain problem traced back to the plant.</p>
 
       <p>
         With the kinematics validated, the next step was to stop prescribing the joints' motion
@@ -306,8 +306,8 @@
         labeled <span class="mono">Real Part RBT</span> in the final diagram for exactly that reason.
       </p>
       <p>
-        The final architecture also generalized past a single test path: four trajectory generators —
-        Heart, Rectangle, Circle, and Happy Face — each built as a MATLAB Function block, feed into a
+        The final architecture also generalized past a single test path: three trajectory generators —
+        Heart, Rectangle, and Circle — each built as a MATLAB Function block, feed into a
         manual switch so any one of them can be selected as the commanded path. That signal goes into
         inverse kinematics, through the two PID loops and the Real Part RBT, and back out through
         forward kinematics so the actual traced path (<span class="mono">xt</span>,
@@ -319,13 +319,13 @@
       </p>
 
       <figure class="figure">
-        <img src="assets/projects/SCARA/img/full_simulink_model_pid.png" alt="Full Simulink model: 4-shape switch, inverse kinematics, dual PID, Real Part RBT, forward kinematics, logging"/>
+        <img src="assets/projects/SCARA/img/full_simulink_model_pid.png" alt="Full Simulink model: 3-shape switch, inverse kinematics, dual PID, Real Part RBT, forward kinematics, logging"/>
         <div class="ph">
           <div class="ph-icon">🧠</div>
           <div class="ph-title">Full closed-loop Simulink model</div>
           <div class="ph-path">assets/projects/SCARA/img/full_simulink_model_pid.png</div>
         </div>
-        <figcaption><b>Fig. 7</b> — 4-shape switch → IK → dual PID → Real Part RBT → FK → logging/scope.</figcaption>
+        <figcaption><b>Fig. 7</b> — 3-shape switch → IK → dual PID → Real Part RBT → FK → logging/scope.</figcaption>
       </figure>
 
       <h3>Debugging a six-figure PID gain</h3>
@@ -420,18 +420,18 @@
     <!-- ── Results ── -->
     <section class="proj-section">
       <h2 id="results">Results</h2>
-      <p class="sec-note">Commanded vs. actual pen-tip path and joint-angle history, for each of the four trajectories.</p>
+      <p class="sec-note">Commanded vs. actual pen-tip path and joint-angle history, for each of the three trajectories.</p>
 
       <p>
-        With the closed loop working, I ran all four trajectories — Heart, Rectangle, Circle, Happy
-        Face — and logged both the commanded pen-tip path (from inverse kinematics) and the actual path
-        (from the dynamic simulation) so I could overlay them directly, along with the shoulder and
-        elbow joint-angle histories behind each one.
+        With the closed loop working, I ran all three trajectories — Heart, Rectangle, Circle — and
+        logged both the commanded pen-tip path (from inverse kinematics) and the actual path (from the
+        dynamic simulation) so I could overlay them directly, along with the shoulder and elbow
+        joint-angle histories behind each one.
       </p>
 
       <h3>Circle</h3>
       <p>
-        This is the strongest result of the four. The actual path sits almost exactly on top of the
+        This is the strongest result of the three. The actual path sits almost exactly on top of the
         commanded one for the full loop, with one small, localized exception: right where the arm
         passes closest to full extension, the actual path breaks into a small hook-shaped deviation
         before rejoining the circle. That's the kinematic singularity showing up exactly where the math
@@ -537,33 +537,6 @@
           <figcaption><b>Fig. 15</b> — Joint response around the cusp reversal.</figcaption>
         </figure>
       </div>
-<!--
-      <h3>Happy face</h3>
-      <p>
-        Not yet run through the same commanded-vs-actual comparison — data pending. Once collected, it
-        joins this set alongside the other three shapes.
-      </p>
-
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/SCARA/img/happy_commanded_vs_actual.png" alt="Happy face trajectory: commanded vs actual pen-tip path"/>
-          <div class="ph">
-            <div class="ph-icon">📊</div>
-            <div class="ph-title">Happy face — commanded vs. actual</div>
-            <div class="ph-path">assets/projects/SCARA/img/happy_commanded_vs_actual.png</div>
-          </div>
-          <figcaption><b>Fig. 16</b> — Pending.</figcaption>
-        </figure>
-        <figure class="figure">
-          <img src="assets/projects/SCARA/img/happy_joint_angles.png" alt="Happy face trajectory: shoulder and elbow joint angle history"/>
-          <div class="ph">
-            <div class="ph-icon">📈</div>
-            <div class="ph-title">Happy face — joint angles</div>
-            <div class="ph-path">assets/projects/SCARA/img/happy_joint_angles.png</div>
-          </div>
-          <figcaption><b>Fig. 17</b> — Pending.</figcaption>
-        </figure>
-      </div>
 
       <div class="callout">
         <p>
@@ -575,7 +548,7 @@
           generator), not something to chase with more PID tuning.
         </p>
       </div>
-    </section>-->
+    </section>
 
     <!-- ── Lessons Learned ── -->
     <section class="proj-section">
@@ -597,7 +570,7 @@
         The immediate next steps are the corner-blending / cusp-easing fix at the trajectory-generation
         level (confirmed necessary by the rectangle and heart results above) and getting real position
         feedback from the physical servos into the loop, since right now the PID trusts the simulated
-        joint angle rather than a measured one. Beyond that: expanding past the current four-shape
+        joint angle rather than a measured one. Beyond that: expanding past the current three-shape
         library, and possibly adding a third degree of freedom so the arm isn't confined to a single
         horizontal plane.
       </p>
