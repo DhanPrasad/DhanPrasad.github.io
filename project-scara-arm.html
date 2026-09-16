@@ -155,27 +155,13 @@
         function.
       </p>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/SCARA/img/fk_derivation.jpg" alt="Hand-derived forward kinematics for the 2-DOF SCARA arm"/>
-          <div class="ph">
-            <div class="ph-icon">✏️</div>
-            <div class="ph-title">Forward kinematics — hand derivation</div>
-            <div class="ph-path">assets/projects/SCARA/img/fk_derivation.jpg</div>
-          </div>
-          <figcaption><b>Fig. 2</b> — Forward kinematics: joint angles → pen-tip position.</figcaption>
-        </figure>
-
-        <figure class="figure">
-          <img src="assets/projects/SCARA/img/ik_derivation.jpg" alt="Hand-derived inverse kinematics for the 2-DOF SCARA arm"/>
-          <div class="ph">
-            <div class="ph-icon">✏️</div>
-            <div class="ph-title">Inverse kinematics — hand derivation</div>
-            <div class="ph-path">assets/projects/SCARA/img/ik_derivation.jpg</div>
-          </div>
-          <figcaption><b>Fig. 3</b> — Inverse kinematics: target position → joint angles, including domain clamping and solution-branch selection.</figcaption>
-        </figure>
+      <div style="position:relative; width:100%; height:640px; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--bg-soft); margin-bottom:8px;">
+        <iframe src="https://drive.google.com/file/d/18x6yy9cuW7jvoY1D7S1l29cmi0y6wLgc/preview" title="Hand-derived forward and inverse kinematics" style="position:absolute; inset:0; width:100%; height:100%; border:0;"></iframe>
       </div>
+      <p class="code-caption">
+        Hand-derived forward and inverse kinematics —
+        <a href="https://drive.google.com/file/d/18x6yy9cuW7jvoY1D7S1l29cmi0y6wLgc/view?usp=sharing" target="_blank" rel="noopener">open the PDF in a new tab ↗</a>
+      </p>
     </section>
 
     <!-- ── Arm Linkage & Part Design ── -->
@@ -210,7 +196,7 @@
           <div class="ph-title">Final CAD render</div>
           <div class="ph-path">assets/projects/SCARA/img/cad_final_render.png</div>
         </div>
-        <figcaption><b>Fig. 4</b> — Final SolidWorks assembly: base, Link 1, Link 2, and servo mounts.</figcaption>
+        <figcaption><b>Fig. 2</b> — Final SolidWorks assembly: base, Link 1, Link 2, and servo mounts.</figcaption>
       </figure>
 
       <figure class="figure">
@@ -220,7 +206,7 @@
           <div class="ph-title">Simscape Multibody Explorer render</div>
           <div class="ph-path">assets/projects/SCARA/img/simscape_3d_render.png</div>
         </div>
-        <figcaption><b>Fig. 5</b> — The real imported geometry the physics runs on, lightening holes and CoM markers visible.</figcaption>
+        <figcaption><b>Fig. 3</b> — The real imported geometry the physics runs on, lightening holes and CoM markers visible.</figcaption>
       </figure>
     </section>
 
@@ -284,7 +270,7 @@
           <div class="ph-title">Simscape rigid body tree</div>
           <div class="ph-path">assets/projects/SCARA/img/rbt_model_diagram.png</div>
         </div>
-        <figcaption><b>Fig. 6</b> — Base → Shoulder → Link 1 → Elbow → Link 2, built frame by frame.</figcaption>
+        <figcaption><b>Fig. 4</b> — Base → Shoulder → Link 1 → Elbow → Link 2, built frame by frame.</figcaption>
       </figure>
     </section>
 
@@ -325,7 +311,7 @@
           <div class="ph-title">Full closed-loop Simulink model</div>
           <div class="ph-path">assets/projects/SCARA/img/full_simulink_model_pid.png</div>
         </div>
-        <figcaption><b>Fig. 7</b> — 3-shape switch → IK → dual PID → Real Part RBT → FK → logging/scope.</figcaption>
+        <figcaption><b>Fig. 5</b> — 3-shape switch → IK → dual PID → Real Part RBT → FK → logging/scope.</figcaption>
       </figure>
 
       <h3>Debugging a six-figure PID gain</h3>
@@ -413,7 +399,7 @@
           <div class="ph-title">Hardware wiring diagram</div>
           <div class="ph-path">assets/projects/SCARA/img/arduino_wiring_diagram.png</div>
         </div>
-        <figcaption><b>Fig. 8</b> — Arduino Nano, two MG996R servos on Pin 5/6, buck-converter servo power rail with shared ground.</figcaption>
+        <figcaption><b>Fig. 6</b> — Arduino Nano, two MG996R servos on Pin 5/6, buck-converter servo power rail with shared ground.</figcaption>
       </figure>
     </section>
 
@@ -449,7 +435,7 @@
             <div class="ph-title">Circle — commanded vs. actual</div>
             <div class="ph-path">assets/projects/SCARA/img/circle_commanded_vs_actual.png</div>
           </div>
-          <figcaption><b>Fig. 9</b> — Deviation localized to the full-extension singularity.</figcaption>
+          <figcaption><b>Fig. 7</b> — Deviation localized to the full-extension singularity.</figcaption>
         </figure>
         <figure class="figure">
           <img src="assets/projects/SCARA/img/circle_joint_angles.png" alt="Circle trajectory: shoulder and elbow joint angle history"/>
@@ -458,7 +444,7 @@
             <div class="ph-title">Circle — joint angles</div>
             <div class="ph-path">assets/projects/SCARA/img/circle_joint_angles.png</div>
           </div>
-          <figcaption><b>Fig. 10</b> — Smooth, sinusoidal joint motion for both joints.</figcaption>
+          <figcaption><b>Fig. 8</b> — Smooth, sinusoidal joint motion for both joints.</figcaption>
         </figure>
       </div>
 
@@ -469,7 +455,7 @@
           <div class="ph-title">Proof-it-works clip — circle</div>
           <div class="ph-path">assets/projects/SCARA/img/demo_circle_clip.gif</div>
         </div>
-        <figcaption><b>Fig. 11</b> — The arm physically drawing the circle, the cleanest tracking result.</figcaption>
+        <figcaption><b>Fig. 9</b> — The arm physically drawing the circle, the cleanest tracking result.</figcaption>
       </figure>
 
       <h3>Rectangle</h3>
@@ -493,7 +479,7 @@
             <div class="ph-title">Rectangle — commanded vs. actual</div>
             <div class="ph-path">assets/projects/SCARA/img/rectangle_commanded_vs_actual.png</div>
           </div>
-          <figcaption><b>Fig. 12</b> — ~13 mm overshoot past the bottom edge, with a recovery loop.</figcaption>
+          <figcaption><b>Fig. 10</b> — ~13 mm overshoot past the bottom edge, with a recovery loop.</figcaption>
         </figure>
         <figure class="figure">
           <img src="assets/projects/SCARA/img/rectangle_joint_angles.png" alt="Rectangle trajectory: shoulder and elbow joint angle history"/>
@@ -502,7 +488,7 @@
             <div class="ph-title">Rectangle — joint angles</div>
             <div class="ph-path">assets/projects/SCARA/img/rectangle_joint_angles.png</div>
           </div>
-          <figcaption><b>Fig. 13</b> — Sharper initial transient than the circle's.</figcaption>
+          <figcaption><b>Fig. 11</b> — Sharper initial transient than the circle's.</figcaption>
         </figure>
       </div>
 
@@ -525,7 +511,7 @@
             <div class="ph-title">Heart — commanded vs. actual</div>
             <div class="ph-path">assets/projects/SCARA/img/heart_commanded_vs_actual.png</div>
           </div>
-          <figcaption><b>Fig. 14</b> — Small loop at the top-center cusp; otherwise tracks well.</figcaption>
+          <figcaption><b>Fig. 12</b> — Small loop at the top-center cusp; otherwise tracks well.</figcaption>
         </figure>
         <figure class="figure">
           <img src="assets/projects/SCARA/img/heart_joint_angles.png" alt="Heart trajectory: shoulder and elbow joint angle history"/>
@@ -534,7 +520,7 @@
             <div class="ph-title">Heart — joint angles</div>
             <div class="ph-path">assets/projects/SCARA/img/heart_joint_angles.png</div>
           </div>
-          <figcaption><b>Fig. 15</b> — Joint response around the cusp reversal.</figcaption>
+          <figcaption><b>Fig. 13</b> — Joint response around the cusp reversal.</figcaption>
         </figure>
       </div>
 
