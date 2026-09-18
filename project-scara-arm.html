@@ -553,12 +553,11 @@
       <h2 id="next">What's next</h2>
 
       <p>
-        The immediate next steps are the corner-blending / cusp-easing fix at the trajectory-generation
-        level (confirmed necessary by the rectangle and heart results above) and getting real position
-        feedback from the physical servos into the loop, since right now the PID trusts the simulated
-        joint angle rather than a measured one. Beyond that: expanding past the current three-shape
-        library, and possibly adding a third degree of freedom so the arm isn't confined to a single
-        horizontal plane.
+        I originally planned to improve this arm by taking angular position feedback from the servo motors of both joints. But it turned out to be a more arduous task and would add even more
+        complexity. So, I decided to leave it for next time, since my priority is understanding how the arm works. In the upcoming version, I will be working with more precise serial servo
+        motors </strong>(HX0HM)</strong>. These motors have their own PID control loop, which ensures the servo runs precisely. Besides this feature, I found that they can communicate with the PC directly and
+        much faster, at a baud rate of 1,000,000. This removes the delay and helps me understand my code and Simulink blocks more clearly. Therefore, I believe this will add more value to the
+        project, which is why it's my next step — after that, my focus will shift back to addressing the PWM servo and feedback.
       </p>
     </section>
 
