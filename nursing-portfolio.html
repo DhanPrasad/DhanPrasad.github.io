@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nursing Student Portfolio &amp; MCQ Practice</title>
+<style>
+:root{
+  --bg:#f6f8fa; --card:#ffffff; --text:#1c2733; --muted:#5b6b7a;
+  --accent:#0e7c66; --accent-dark:#095c4c; --border:#e1e7ec;
+  --correct:#1b8a4c; --wrong:#c0392b; --chip:#eaf4f1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1417; --card:#171e22; --text:#e7edf0; --muted:#9fb0ba;
+    --accent:#2fbf96; --accent-dark:#25a483; --border:#2a3338; --chip:#1c2b28;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1417; --card:#171e22; --text:#e7edf0; --muted:#9fb0ba;
+  --accent:#2fbf96; --accent-dark:#25a483; --border:#2a3338; --chip:#1c2b28;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.5;
+}
+header{
+  position:sticky; top:0; top:env(safe-area-inset-top,0px);
+  background:var(--card); border-bottom:1px solid var(--border);
+  padding:14px 20px; padding-top:calc(14px + env(safe-area-inset-top,0px));
+  display:flex; justify-content:space-between; align-items:center; z-index:10;
+}
+header .brand{font-weight:700; font-size:1.05rem;}
+nav{display:flex; gap:6px;}
+nav button{
+  background:none; border:none; color:var(--muted); font-size:.92rem;
+  padding:8px 12px; border-radius:8px; cursor:pointer;
+}
+nav button.active, nav button:hover{background:var(--chip); color:var(--accent-dark);}
+main{max-width:760px; margin:0 auto; padding:24px 18px 60px;}
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:14px;
+  padding:24px; margin-bottom:18px;
+}
+h1{font-size:1.7rem; margin:0 0 6px;}
+h2{font-size:1.2rem; margin:0 0 10px;}
+.tag{color:var(--accent-dark); font-weight:600; font-size:.85rem; text-transform:uppercase; letter-spacing:.04em;}
+.muted{color:var(--muted);}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+.chip{background:var(--chip); color:var(--accent-dark); padding:5px 12px; border-radius:999px; font-size:.85rem;}
+.btn{
+  background:var(--accent); color:#fff; border:none; padding:11px 20px;
+  border-radius:9px; font-size:.95rem; cursor:pointer; font-weight:600;
+}
+.btn:hover{background:var(--accent-dark);}
+.btn.secondary{background:none; color:var(--accent-dark); border:1px solid var(--border);}
+.section{display:none;}
+.section.active{display:block;}
+.progress{
+  height:6px; background:var(--chip); border-radius:4px; overflow:hidden; margin-bottom:16px;
+}
+.progress-bar{height:100%; background:var(--accent); transition:width .2s;}
+.q-count{font-size:.85rem; color:var(--muted); margin-bottom:4px;}
+.q-text{font-size:1.08rem; margin:10px 0 16px;}
+.option{
+  display:block; width:100%; text-align:left; background:var(--chip);
+  border:1px solid transparent; padding:12px 14px; border-radius:10px;
+  margin-bottom:10px; cursor:pointer; font-size:.96rem; color:var(--text);
+}
+.option:hover{border-color:var(--accent);}
+.option.selected{border-color:var(--accent); background:#dff2ea;}
+.option.correct{background:#dff2e2; border-color:var(--correct); color:#0d4b28;}
+.option.incorrect{background:#fbe2df; border-color:var(--wrong); color:#7a1f13;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .option.selected{background:#173a30;}
+  :root:not([data-theme="light"]) .option.correct{background:#123a24; color:#8be3ac;}
+  :root:not([data-theme="light"]) .option.incorrect{background:#3a1a16; color:#f0a99c;}
+}
+:root[data-theme="dark"] .option.selected{background:#173a30;}
+:root[data-theme="dark"] .option.correct{background:#123a24; color:#8be3ac;}
+:root[data-theme="dark"] .option.incorrect{background:#3a1a16; color:#f0a99c;}
+.explain{font-size:.88rem; color:var(--muted); margin-top:-4px; margin-bottom:14px; padding-left:2px;}
+.nav-row{display:flex; justify-content:space-between; margin-top:16px; gap:10px;}
+.score-big{font-size:2.6rem; font-weight:800; color:var(--accent-dark); margin:6px 0;}
+.review-item{border-top:1px solid var(--border); padding:14px 0;}
+.review-item:first-child{border-top:none;}
+footer{text-align:center; color:var(--muted); font-size:.82rem; padding:20px; padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">🩺 J. Alvarez, SN</div>
+  <nav>
+    <button data-target="home" class="active">Home</button>
+    <button data-target="exam">MCQ Exam</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME / PORTFOLIO -->
+  <section id="home" class="section active">
+    <div class="card">
+      <div class="tag">Nursing Student Portfolio</div>
+      <h1>Jordan Alvarez</h1>
+      <p class="muted">BSN Candidate, Class of 2027 · Clinical rotations in Med-Surg, Pediatrics &amp; OB</p>
+      <div class="chips">
+        <span class="chip">NCLEX Prep</span>
+        <span class="chip">Pharmacology</span>
+        <span class="chip">Patient Care Plans</span>
+        <span class="chip">Clinical Skills Lab</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>About Me</h2>
+      <p>I'm a third-year nursing student passionate about patient-centered care and evidence-based practice. This site tracks my coursework highlights and lets me self-test with practice MCQs as I prepare for exams and NCLEX.</p>
+    </div>
+
+    <div class="card">
+      <h2>Clinical Experience</h2>
+      <p><strong>Med-Surg Rotation</strong> — Regional General Hospital, 2026<br>
+      <span class="muted">Managed post-op care, wound assessment, and medication administration for a 6-patient caseload.</span></p>
+      <p><strong>Pediatric Rotation</strong> — Children's Community Hospital, 2026<br>
+      <span class="muted">Assisted with growth &amp; development assessments and family-centered care planning.</span></p>
+    </div>
+
+    <div class="card">
+      <h2>Ready to test yourself?</h2>
+      <p class="muted">Take a quick 8-question practice exam covering fundamentals, pharmacology, and med-surg.</p>
+      <button class="btn" onclick="showSection('exam')">Start MCQ Exam →</button>
+    </div>
+  </section>
+
+  <!-- EXAM -->
+  <section id="exam" class="section">
+    <div class="card" id="examCard">
+      <div id="quizArea"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Practice questions are for self-study only and do not represent official NCLEX content.</footer>
+
+<script>
+const questions = [
+  {q:"A patient is prescribed furosemide (Lasix). Which electrolyte imbalance should the nurse monitor for?",
+   options:["Hyperkalemia","Hypokalemia","Hypercalcemia","Hypernatremia"], correct:1,
+   explain:"Loop diuretics like furosemide promote potassium excretion, risking hypokalemia."},
+  {q:"Which vital sign change is an early sign of hypovolemic shock?",
+   options:["Bradycardia","Increased blood pressure","Tachycardia","Decreased respiratory rate"], correct:2,
+   explain:"Tachycardia is an early compensatory response to decreased circulating volume."},
+  {q:"What is the normal range for adult resting heart rate?",
+   options:["40–60 bpm","60–100 bpm","100–120 bpm","120–140 bpm"], correct:1,
+   explain:"Normal adult resting heart rate is 60–100 beats per minute."},
+  {q:"A nurse is teaching a patient about insulin administration. Which site rotation is recommended?",
+   options:["Same site every time for consistency","Rotate within one anatomical area","Rotate randomly across the whole body","Only use the abdomen once daily"], correct:1,
+   explain:"Rotating within one anatomical region maintains consistent absorption while preventing lipodystrophy."},
+  {q:"Which lab value would the nurse expect to be elevated in a patient with acute pancreatitis?",
+   options:["Serum amylase","Serum calcium","Hemoglobin","Platelet count"], correct:0,
+   explain:"Serum amylase and lipase typically rise sharply in acute pancreatitis."},
+  {q:"Before administering digoxin, the nurse should assess which of the following?",
+   options:["Blood glucose","Apical pulse for one full minute","Respiratory rate for 15 seconds","Deep tendon reflexes"], correct:1,
+   explain:"Digoxin is held if apical pulse is below 60 bpm due to risk of bradycardia/toxicity."},
+  {q:"Which nursing action best prevents catheter-associated urinary tract infections (CAUTI)?",
+   options:["Routine catheter irrigation","Keeping the drainage bag above bladder level","Maintaining a closed, sterile drainage system","Changing the catheter every 24 hours"], correct:2,
+   explain:"A closed sterile system minimizes pathogen entry and is the primary CAUTI prevention strategy."},
+  {q:"A patient with COPD should be positioned how to ease breathing?",
+   options:["Supine, flat","High Fowler's or tripod position","Trendelenburg","Left lateral recumbent"], correct:1,
+   explain:"High Fowler's or tripod position maximizes lung expansion and reduces work of breathing."}
+];
+
+let current = 0;
+let selections = new Array(questions.length).fill(null);
+let answered = new Array(questions.length).fill(false);
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.target===id));
+  if(id==='exam') renderQuestion();
+}
+document.querySelectorAll('nav button').forEach(b=>{
+  b.addEventListener('click', ()=>showSection(b.dataset.target));
+});
+
+function renderQuestion(){
+  const area = document.getElementById('quizArea');
+  if(current >= questions.length){ renderResults(); return; }
+  const q = questions[current];
+  const pct = Math.round((current/questions.length)*100);
+  let optsHtml = q.options.map((opt,i)=>{
+    let cls = 'option';
+    if(answered[current]){
+      if(i === q.correct) cls += ' correct';
+      else if(i === selections[current]) cls += ' incorrect';
+    } else if(selections[current]===i){
+      cls += ' selected';
+    }
+    return `<button class="${cls}" onclick="selectOption(${i})">${opt}</button>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="progress"><div class="progress-bar" style="width:${pct}%"></div></div>
+    <div class="q-count">Question ${current+1} of ${questions.length}</div>
+    <div class="q-text">${q.q}</div>
+    ${optsHtml}
+    ${answered[current] ? `<div class="explain">💡 ${q.explain}</div>` : ''}
+    <div class="nav-row">
+      <button class="btn secondary" onclick="prevQ()" ${current===0?'disabled':''}>Back</button>
+      <button class="btn" onclick="nextQ()" ${answered[current]?'':'disabled'} id="nextBtn">
+        ${current===questions.length-1 ? 'See Results' : 'Next'}
+      </button>
+    </div>
+  `;
+}
+
+function selectOption(i){
+  if(answered[current]) return;
+  selections[current] = i;
+  answered[current] = true;
+  renderQuestion();
+}
+function nextQ(){ current++; renderQuestion(); }
+function prevQ(){ if(current>0){ current--; renderQuestion(); } }
+
+function renderResults(){
+  const area = document.getElementById('quizArea');
+  let score = 0;
+  questions.forEach((q,i)=>{ if(selections[i]===q.correct) score++; });
+  let reviewHtml = questions.map((q,i)=>{
+    const got = selections[i];
+    const ok = got === q.correct;
+    return `<div class="review-item">
+      <div class="q-text" style="font-size:.98rem;">${i+1}. ${q.q}</div>
+      <div style="color:${ok ? 'var(--correct)' : 'var(--wrong)'}; font-weight:600; font-size:.9rem;">
+        ${ok ? '✓ Correct' : '✗ Incorrect'} — your answer: ${q.options[got]}
+      </div>
+      ${!ok ? `<div class="explain">Correct answer: ${q.options[q.correct]}. ${q.explain}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  area.innerHTML = `
+    <div style="text-align:center;">
+      <div class="muted">Your Score</div>
+      <div class="score-big">${score}/${questions.length}</div>
+      <button class="btn" onclick="restartQuiz()">Retake Exam</button>
+    </div>
+    <div style="margin-top:20px;">${reviewHtml}</div>
+  `;
+}
+
+function restartQuiz(){
+  current = 0;
+  selections = new Array(questions.length).fill(null);
+  answered = new Array(questions.length).fill(false);
+  renderQuestion();
+}
+</script>
+</body>
+</html>
