@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shell Eco-marathon Prototype BEV — Structural Analysis | Dhan Prasad Pradhan</title>
+  <meta name="description" content="Static structural analysis in ANSYS of Team Shireto's aluminium Prototype BEV chassis for Shell Eco-marathon Asia 2021 — roll bar 700 N tests, safety harness lift and a 1G + 3G driver bump case, all checked against the competition rules before Virtual Technical Inspection."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style-v1.1.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="blog.html">Learnings</a></li>
+      <li><a href="ongoing.html">Ongoing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- ── Header ── -->
+    <div class="proj-header">
+      <a href="projects.html" class="proj-back">← All projects</a>
+      <div class="page-label">Project 03 · Structural Analysis &amp; Vehicle Design</div>
+      <h1>Shell Eco-marathon Prototype BEV — Structural Analysis</h1>
+      <p class="lede">
+        In 2021, Team Shireto from IOE Thapathali Campus became the first electric-vehicle team from
+        Nepal to enter the Shell Eco-marathon, competing in the Asia regional in the battery-electric
+        Prototype class. As technical team lead, I did most of the vehicle design and the structural
+        analysis. This page covers the part I'm proudest of: proving in ANSYS, before inspection, that
+        our welded aluminium frame met every structural requirement in the rulebook.
+      </p>
+
+      <div class="project-meta" style="margin-bottom: 22px;">
+        <span class="tag">ANSYS Mechanical</span>
+        <span class="tag">Static Structural</span>
+        <span class="tag">1D Beam FEA</span>
+        <span class="tag">Chassis Design</span>
+        <span class="tag">Rules Compliance</span>
+        <span class="tag-grey">Aluminium 6063</span>
+        <span class="tag-grey">TIG-welded tube frame</span>
+        <span class="tag-grey">Technical Inspection</span>
+      </div>
+
+      <div class="proj-actions">
+        <a href="#demo" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Watch the VTI video
+        </a>
+        <a href="#results" class="btn btn-outline">Jump to results</a>
+      </div>
+    </div>
+
+    <!-- ── At a glance ── -->
+    <div class="facts-grid">
+      <div class="fact">
+        <div class="fact-label">Competition</div>
+        <div class="fact-value">Shell Eco-marathon Asia 2021</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Class</div>
+        <div class="fact-value">Prototype · BEV</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">My role</div>
+        <div class="fact-value">Technical team lead</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Outcome</div>
+        <div class="fact-value">Passed VTI</div>
+      </div>
+    </div>
+
+    <!-- ── Quick specs ── -->
+    <section class="proj-section" style="padding-top: 8px;">
+      <h2 id="specs">Quick specs</h2>
+
+      <table class="spec-table">
+        <tbody>
+          <tr><td>Vehicle layout</td><td>Three-wheeled single-seater: two steered front wheels, rear hub-motor drive</td></tr>
+          <tr><td>Wheelbase</td><td>1850 mm</td></tr>
+          <tr><td>Frame</td><td>Aluminium 6063 square tube, 25.4 mm × 2 mm wall, TIG-welded</td></tr>
+          <tr><td>Analysis tool</td><td>ANSYS Workbench — Static Structural</td></tr>
+          <tr><td>Element type</td><td>1D beam elements with the real square-tube cross-section</td></tr>
+          <tr><td>Supports</td><td>Remote displacements at the two front wheel mounts and the rear wheel mount</td></tr>
+          <tr><td>Results reported</td><td>Maximum combined stress (axial + bending) and total deformation</td></tr>
+          <tr><td>Load cases</td><td>Roll bar 700 N vertical · Roll bar 700 N side · Harness lift · Driver 1G + 3G bump</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Demo ── -->
+    <section class="proj-section">
+      <h2 id="demo">Virtual Technical Inspection video</h2>
+      <p class="sec-note">Our VTI submission, premiered 15 April 2021.</p>
+
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/u-lxtrEkB98"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          title="Shireto IOE — Virtual Technical Inspection, Shell Eco-marathon 2021"></iframe>
+      </div>
+
+      <div class="callout">
+        <p>
+          <strong>What to watch for:</strong> the bare red frame from the side, with the 1850 mm
+          wheelbase marked, is the same frame modelled in every analysis below. Near the end, the VTI
+          checklist runs through the driver, dimensions, roll bar clearance, brakes, mechanical body
+          design (solid floor and frame, bulkhead rigidity) and electrical safety.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Concept ── -->
+    <section class="proj-section">
+      <h2 id="concept">Concept</h2>
+
+      <p>
+        The Shell Eco-marathon is about one thing: going as far as possible on as little energy as
+        possible. That makes weight the enemy, and the frame is the single biggest structural mass on
+        the car. Ours was 25.4 mm aluminium 6063 square tube with a 2 mm wall, TIG-welded, in a
+        three-wheeled layout with two steered wheels at the front and a hub motor at the rear. Every
+        tube in it had to earn its place.
+      </p>
+      <p>
+        But a light frame is worthless if it can't get through technical inspection. Because of the
+        pandemic, the 2021 inspection was run as a <strong>Virtual Technical Inspection (VTI)</strong>:
+        instead of inspectors pushing on the car in the paddock, we submitted a video walking through
+        the vehicle station by station. A video can show that a roll bar exists; it can't show that the
+        roll bar is strong enough. That evidence had to come from analysis, so I built the structural
+        case in ANSYS directly against the rulebook.
+      </p>
+    </section>
+
+    <!-- ── Requirements ── -->
+    <section class="proj-section">
+      <h2 id="requirements">The structural requirements</h2>
+      <p class="sec-note">What the rules ask of the frame, and the extra case I added.</p>
+
+      <p>
+        Two rules in the Shell Eco-marathon rulebook put a direct load on the chassis. I turned each
+        into a load case, then added a third, tougher case of my own for real-world driving.
+      </p>
+
+      <ul class="bullets">
+        <li><strong>Roll bar strength.</strong> The roll bar must withstand a static load of 700 N applied in a vertical, horizontal or perpendicular direction without deforming. I modelled this as 700 N on top of the hoop, once vertically and once from the side.</li>
+        <li><strong>Safety harness lift.</strong> For Prototype vehicles, the harness check is done by lifting the car with the driver on board, hanging from the safety harness. I modelled this by fixing the frame at the harness anchor and letting every other load hang from it.</li>
+        <li><strong>Driver static bending, 1G + 3G bump (my own design case).</strong> Not in the rulebook, but a frame that only survives inspection isn't good enough. I wanted to know it would survive the driver hitting a bump on track.</li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          <strong>Pass criterion:</strong> "without deforming" means no permanent deformation, so the
+          peak stress in every load case has to stay well inside the elastic range of the aluminium.
+          Elastic deflection that springs back is acceptable; yielding is not. I judged each result
+          against a conservative allowable of <strong>95 MPa</strong>, well below the parent-metal yield
+          of 6063, to leave room for the softer heat-affected zones around the TIG welds.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── Model ── -->
+    <section class="proj-section">
+      <h2 id="model">Building the model</h2>
+      <p class="sec-note">Why a 1D beam model, and how the car sits on its wheels.</p>
+
+      <p>
+        A tube frame is a set of slender members joined at nodes, which is exactly what beam elements
+        are made for. Rather than meshing every tube wall as a solid, I modelled each tube as a line
+        with the real 25.4 × 2 mm square cross-section assigned to it. That keeps the model small and
+        fast to solve, so I could iterate quickly on load cases, and it reports the combined axial and
+        bending stress directly in each member. That's the quantity that matters for a frame like this.
+      </p>
+      <p>
+        The geometry follows the built frame: the floor rails and cross-members of the driver bay, the
+        side bracing, the front section carrying the steering, the roll hoop behind the driver, and the
+        rear stays running back to the hub-motor mount.
+      </p>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/chassis_geometry_1d_beam.png" alt="ANSYS 1D beam geometry of the EV chassis frame with roll hoop and rear stays"/>
+          <div class="ph">
+            <div class="ph-icon">🧩</div>
+            <div class="ph-title">1D beam geometry</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/chassis_geometry_1d_beam.png</div>
+          </div>
+          <figcaption><b>Fig. 1</b> — The frame as 1D beam elements: driver bay, roll hoop and rear stays.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/chassis_mesh.png" alt="ANSYS beam mesh of the EV chassis"/>
+          <div class="ph">
+            <div class="ph-icon">🕸️</div>
+            <div class="ph-title">Beam mesh</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/chassis_mesh.png</div>
+          </div>
+          <figcaption><b>Fig. 2</b> — Beam mesh: each tube split into line elements along its length.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Supports</h3>
+      <p>
+        How you hold a model down decides what answer you get. A three-wheeler sits on exactly three
+        contact points, so I supported the frame with <strong>remote displacements</strong> at the two
+        front wheel mounts and the rear wheel mount. These represent the wheels and axles carrying the
+        frame, rather than welding it rigidly to the ground, which would make it look stiffer than it
+        really is. The same supports are used in all three wheel-supported load cases, so the results
+        compare directly. The harness lift is the exception: there the car hangs from the harness
+        anchor instead.
+      </p>
+    </section>
+
+    <!-- ── Load case 1: roll bar vertical ── -->
+    <section class="proj-section">
+      <h2 id="rollbar-vertical">Load case 1 — Roll bar, 700 N vertical</h2>
+      <p class="sec-note">700 N straight down on top of the roll hoop.</p>
+
+      <p>
+        The first rulebook case pushes straight down on the top of the hoop, as if the car had rolled
+        onto it. The load travels down both legs of the hoop into the floor of the driver bay and
+        back along the rear stays to the motor mount.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/shell-eco-marathon/img/rollbar_vertical_loading.png" alt="Roll bar vertical load setup: 700 N downward on the hoop, remote displacements at three wheels"/>
+        <div class="ph">
+          <div class="ph-icon">⬇️</div>
+          <div class="ph-title">Roll bar vertical — loading</div>
+          <div class="ph-path">assets/projects/shell-eco-marathon/img/rollbar_vertical_loading.png</div>
+        </div>
+        <figcaption><b>Fig. 3</b> — 700 N applied vertically on the hoop; supports at the three wheel mounts.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/rollbar_vertical_stress.png" alt="Roll bar vertical load: maximum combined stress, peak 15.2 MPa"/>
+          <div class="ph">
+            <div class="ph-icon">📊</div>
+            <div class="ph-title">Roll bar vertical — combined stress</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/rollbar_vertical_stress.png</div>
+          </div>
+          <figcaption><b>Fig. 4</b> — Peak combined stress 15.2 MPa, in the rear stays toward the rear-wheel mount.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/rollbar_vertical_deformation.png" alt="Roll bar vertical load: total deformation, peak 0.92 mm at the top of the hoop"/>
+          <div class="ph">
+            <div class="ph-icon">📈</div>
+            <div class="ph-title">Roll bar vertical — deformation</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/rollbar_vertical_deformation.png</div>
+          </div>
+          <figcaption><b>Fig. 5</b> — Peak deformation 0.92 mm, at the top of the hoop.</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        Peak stress was <strong>15.2 MPa</strong>, in the rear stays that carry the hoop load back to the rear-wheel mount. The
+        largest movement, <strong>0.92 mm</strong>, was at the very top of the hoop, and it's entirely
+        elastic. That's a factor of safety of about <strong>6</strong> against my allowable.
+        <strong>Requirement met.</strong>
+      </p>
+    </section>
+
+    <!-- ── Load case 2: roll bar side ── -->
+    <section class="proj-section">
+      <h2 id="rollbar-side">Load case 2 — Roll bar, 700 N side load</h2>
+      <p class="sec-note">The same 700 N, now pushing sideways on the hoop.</p>
+
+      <p>
+        The side load is the harder case for a roll hoop. Pushing down, the hoop's two legs share the
+        load in compression. Pushed sideways, the hoop acts like a cantilever sticking up out of the
+        floor, and the rear stays bracing it have to resist that bending all the way back to the rear-wheel mount.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/shell-eco-marathon/img/rollbar_side_loading.png" alt="Roll bar side load setup: 700 N lateral on the hoop"/>
+        <div class="ph">
+          <div class="ph-icon">➡️</div>
+          <div class="ph-title">Roll bar side — loading</div>
+          <div class="ph-path">assets/projects/shell-eco-marathon/img/rollbar_side_loading.png</div>
+        </div>
+        <figcaption><b>Fig. 6</b> — 700 N applied laterally on top of the hoop, same three-wheel supports.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/rollbar_side_stress.png" alt="Roll bar side load: maximum combined stress, peak 27.2 MPa"/>
+          <div class="ph">
+            <div class="ph-icon">📊</div>
+            <div class="ph-title">Roll bar side — combined stress</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/rollbar_side_stress.png</div>
+          </div>
+          <figcaption><b>Fig. 7</b> — Peak combined stress 27.2 MPa, in the rear stays at the rear-wheel mount.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/rollbar_side_deformation.png" alt="Roll bar side load: total deformation, peak 5.27 mm at the top of the hoop"/>
+          <div class="ph">
+            <div class="ph-icon">📈</div>
+            <div class="ph-title">Roll bar side — deformation</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/rollbar_side_deformation.png</div>
+          </div>
+          <figcaption><b>Fig. 8</b> — Peak deformation 5.27 mm at the top of the hoop, elastic.</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        As expected, this was the worst case of the whole study. Peak stress rose to
+        <strong>27.2 MPa</strong>, in the rear stays where they meet the rear-wheel mount, and the top of
+        the hoop moved <strong>5.27 mm</strong> sideways. That's a noticeable amount of give, but it's
+        still well inside the elastic range, so the hoop springs back with no permanent deformation.
+        The factor of safety is about <strong>3.5</strong>. <strong>Requirement met</strong>, and this
+        case sets the margin for the frame.
+      </p>
+    </section>
+
+    <!-- ── Load case 3: harness ── -->
+    <section class="proj-section">
+      <h2 id="harness">Load case 3 — Safety harness buckle lift</h2>
+      <p class="sec-note">The whole car, driver included, hanging from the harness anchor.</p>
+
+      <p>
+        This case flips the problem around. Instead of sitting on its wheels, the car hangs from the
+        harness, so I fixed the frame at the harness anchor point and let everything else hang from
+        it. The loads were:
+      </p>
+
+      <ul class="bullets">
+        <li><strong>Driver:</strong> 750 N, which is a 500 N driver with a 1.5× safety factor</li>
+        <li><strong>Rear motor and battery:</strong> 150 N at the rear</li>
+        <li><strong>The frame's own weight:</strong> standard earth gravity</li>
+      </ul>
+
+      <figure class="figure">
+        <img src="assets/projects/shell-eco-marathon/img/harness_loading.png" alt="Harness lift setup: anchor point, gravity, 750 N driver load and 150 N rear motor and battery load"/>
+        <div class="ph">
+          <div class="ph-icon">🪝</div>
+          <div class="ph-title">Harness lift — anchor and loading</div>
+          <div class="ph-path">assets/projects/shell-eco-marathon/img/harness_loading.png</div>
+        </div>
+        <figcaption><b>Fig. 9</b> — Fixed at the harness anchor; driver load (750 N), rear motor and battery (150 N) and gravity.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/harness_stress.png" alt="Harness lift: maximum combined stress, peak 5.56 MPa"/>
+          <div class="ph">
+            <div class="ph-icon">📊</div>
+            <div class="ph-title">Harness lift — combined stress</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/harness_stress.png</div>
+          </div>
+          <figcaption><b>Fig. 10</b> — Peak combined stress 5.56 MPa, on the rear cross-member of the driver bay.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/harness_deformation.png" alt="Harness lift: total deformation, peak 0.21 mm at the front of the frame"/>
+          <div class="ph">
+            <div class="ph-icon">📈</div>
+            <div class="ph-title">Harness lift — deformation</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/harness_deformation.png</div>
+          </div>
+          <figcaption><b>Fig. 11</b> — Peak deformation 0.21 mm, at the front of the frame hanging off the anchor.</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        Peak stress was only <strong>5.56 MPa</strong>, on the rear cross-member of the driver bay. The
+        largest movement was <strong>0.21 mm</strong>, at the front of the frame, which hangs furthest
+        from the anchor. The factor of safety is above <strong>15</strong>.
+        <strong>Requirement met</strong>, by a wide margin.
+      </p>
+    </section>
+
+    <!-- ── Load case 4: bending ── -->
+    <section class="proj-section">
+      <h2 id="bending">Load case 4 — Driver static bending, 1G + 3G bump</h2>
+      <p class="sec-note">Beyond the rulebook: the driver hitting a bump on track.</p>
+
+      <p>
+        Passing inspection only proves the frame survives the inspection. To make sure it would also
+        survive racing, I added a design case for the driver going over a bump. A 500 N driver at
+        1G of static weight plus a 3G bump gives 4 × 500 N = <strong>2000 N</strong>, applied on the
+        floor of the driver bay with the car on its three wheels.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/shell-eco-marathon/img/bending_loading.png" alt="Driver bending setup: 2000 N on the driver bay, remote displacements at the three wheels"/>
+        <div class="ph">
+          <div class="ph-icon">⬇️</div>
+          <div class="ph-title">Driver bending — loading</div>
+          <div class="ph-path">assets/projects/shell-eco-marathon/img/bending_loading.png</div>
+        </div>
+        <figcaption><b>Fig. 12</b> — 2000 N on the driver bay (1G + 3G bump); supports at the three wheel mounts.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/bending_stress.png" alt="Driver bending: maximum combined stress, peak 18.9 MPa"/>
+          <div class="ph">
+            <div class="ph-icon">📊</div>
+            <div class="ph-title">Driver bending — combined stress</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/bending_stress.png</div>
+          </div>
+          <figcaption><b>Fig. 13</b> — Peak combined stress 18.9 MPa, on the lower side rail ahead of the driver bay.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/shell-eco-marathon/img/bending_deformation.png" alt="Driver bending: total deformation, peak 1.67 mm at the centre cross-member"/>
+          <div class="ph">
+            <div class="ph-icon">📈</div>
+            <div class="ph-title">Driver bending — deformation</div>
+            <div class="ph-path">assets/projects/shell-eco-marathon/img/bending_deformation.png</div>
+          </div>
+          <figcaption><b>Fig. 14</b> — Peak deformation 1.67 mm, at the centre cross-member under the driver.</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        Peak stress was <strong>18.9 MPa</strong>, on the lower side rail just ahead of the driver bay,
+        and the centre cross-member directly under the driver sagged <strong>1.67 mm</strong>. With a
+        factor of safety of about <strong>5</strong>, the frame handles a hard bump with plenty to
+        spare.
+      </p>
+    </section>
+
+    <!-- ── Results ── -->
+    <section class="proj-section">
+      <h2 id="results">Results</h2>
+      <p class="sec-note">All four load cases side by side. Factor of safety is against a conservative 95 MPa allowable.</p>
+
+      <div style="overflow-x:auto;">
+      <table class="spec-table">
+        <thead>
+          <tr><th>Load case</th><th>Peak stress</th><th>Peak deformation</th><th>FoS</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Roll bar — 700 N vertical</td><td>15.2 MPa</td><td>0.92 mm</td><td>≈ 6.2</td><td>Met</td></tr>
+          <tr><td>Roll bar — 700 N side</td><td>27.2 MPa</td><td>5.27 mm</td><td>≈ 3.5</td><td>Met</td></tr>
+          <tr><td>Safety harness lift</td><td>5.6 MPa</td><td>0.21 mm</td><td>&gt; 15</td><td>Met</td></tr>
+          <tr><td>Driver 1G + 3G bump (2000 N)</td><td>18.9 MPa</td><td>1.67 mm</td><td>≈ 5.0</td><td>Met</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="callout">
+        <p>
+          <strong>Taken together:</strong> every load case stayed comfortably in the elastic range, so
+          nothing in the frame deforms permanently. The roll bar side load governs the design, at a
+          factor of safety of about 3.5, with the stress concentrated in the rear stays at the
+          rear-wheel mount. That's exactly the joint I'd reinforce first if the car ever needed to carry more.
+        </p>
+      </div>
+
+      <h3>Outcome</h3>
+      <p>
+        With the structural requirements backed by analysis and the rest of the car documented
+        station by station in our inspection video, <strong>Team Shireto passed the Virtual Technical
+        Inspection</strong> at Shell Eco-marathon Asia 2021. That put Nepal's first electric entry
+        in the Shell Eco-marathon through to the competition.
+      </p>
+    </section>
+
+    <!-- ── Lessons Learned ── -->
+    <section class="proj-section">
+      <h2 id="lessons">Lessons learned</h2>
+
+      <ul class="bullets">
+        <li><strong>Turn the rulebook into load cases.</strong> Each structural rule maps to a boundary condition and a load. Writing them out explicitly, the hoop load direction and the harness anchor as the only support, meant the analysis answered the inspector's actual question, not a generic one.</li>
+        <li><strong>Supports matter as much as loads.</strong> Remote displacements at the three real wheel mounts let the frame flex the way the real car does. Rigidly fixing those points would have made the frame look stiffer, and the deflections smaller, than reality.</li>
+        <li><strong>Check the direction that hurts.</strong> The same 700 N produced almost twice the stress and nearly six times the deflection from the side as from above. A hoop that passes vertically tells you very little about the side load.</li>
+        <li><strong>Pick the element that fits the structure.</strong> For a welded tube frame, 1D beam elements give the member stresses that matter at a fraction of the cost of a solid mesh, which made it practical to run every case and iterate quickly.</li>
+        <li><strong>Design past the inspection.</strong> The 1G + 3G bump case isn't in the rules, but it's the load the frame actually sees on track. Passing inspection is the minimum, not the goal.</li>
+      </ul>
+    </section>
+
+    <!-- ── What's Next ── -->
+    <section class="proj-section">
+      <h2 id="next">What's next</h2>
+
+      <p>
+        The rule names three roll bar directions, and I simulated two. The next step is the
+        <strong>fore-aft (front-to-back) 700 N case</strong> to complete the set. Beyond that, a beam
+        model treats every joint as a perfect connection, so I'd like to build a local shell or solid
+        model of the most loaded joint, where the rear stays meet the rear-wheel mount, to look at stress
+        concentration at the welds, and of the harness mounting brackets, which a 1D model can't see.
+      </p>
+    </section>
+
+    <!-- ── Links ── -->
+    <section class="proj-section">
+      <h2 id="downloads">Files &amp; links</h2>
+      <p class="sec-note">Inspection video and the competition rules.</p>
+
+      <div class="dl-grid">
+        <a href="https://www.youtube.com/watch?v=u-lxtrEkB98" class="dl-card" target="_blank" rel="noopener">
+          <span class="dl-icon">🎥</span>
+          <span>
+            <span class="dl-name">VTI video — Team Shireto, SEM Asia 2021</span>
+            <span class="dl-sub">youtube.com</span>
+          </span>
+        </a>
+        <a href="https://www.shellecomarathon.com/about/global-rules.html" class="dl-card" target="_blank" rel="noopener">
+          <span class="dl-icon">📄</span>
+          <span>
+            <span class="dl-name">Shell Eco-marathon official rules</span>
+            <span class="dl-sub">shellecomarathon.com</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <div class="proj-footer-nav">
+      <a href="projects.html" class="btn btn-outline">← All projects</a>
+      <a href="contact.html" class="btn btn-primary">Questions? Get in touch</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    Built with HTML · Hosted on GitHub Pages · <span class="year"></span>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
