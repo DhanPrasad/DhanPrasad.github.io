@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Running fixed what my chair broke | Dhan Prasad Pradhan</title>
+  <meta name="description" content="A year of lower-back pain from long lab hours, four fixes that didn't stick, and 683.7 km of running that did — with an interactive log of every week and milestone."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style-v1.1.css"/>
+  <style>
+    /* ── Page-local styles for post-running.html (style-v1.1.css untouched) ── */
+    :root { --run: #e0782f; --run-lt: #fdf0e6; --run-dk: #a4501a; }
+
+    .run-hero { margin: 8px 0 0; }
+    .run-hero .figure img { aspect-ratio: 1672 / 941; object-fit: cover; }
+
+    /* Big counter + stat strip */
+    .run-total { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 36px 0 6px; }
+    .run-total .num {
+      font-size: clamp(3rem, 9vw, 4.6rem); font-weight: 800; letter-spacing: -2px;
+      line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums;
+    }
+    .run-total .unit { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+    .run-total-sub { color: var(--muted); font-size: 0.92rem; margin-bottom: 24px; }
+    .run-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .run-stats .stat-card .num { font-size: 1.5rem; }
+
+    /* Timeline */
+    .tl { list-style: none; position: relative; margin: 8px 0 0; padding-left: 28px; }
+    .tl::before { content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+    .tl li { position: relative; padding: 0 0 26px; }
+    .tl li:last-child { padding-bottom: 0; }
+    .tl li::before {
+      content: ''; position: absolute; left: -28px; top: 5px; width: 16px; height: 16px;
+      border-radius: 50%; background: #fff; border: 2px solid var(--border);
+    }
+    .tl li.pain::before { border-color: #c9534a; background: #fbeceb; }
+    .tl li.try::before  { border-color: #b9b8b2; }
+    .tl li.run::before  { border-color: var(--accent); background: var(--accent-lt); }
+    .tl li.win::before  { border-color: var(--accent); background: var(--accent); }
+    .tl .when { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 2px; }
+    .tl h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 4px; }
+    .tl p { margin-bottom: 0 !important; }
+
+    .fixes { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; }
+    .fix {
+      font-size: 0.8rem; font-weight: 600; color: var(--muted); background: var(--bg-soft);
+      border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px;
+      display: inline-flex; align-items: center; gap: 6px; cursor: default;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .fix .x { color: #c9534a; font-weight: 800; }
+    .fix:hover { background: #fbeceb; border-color: #f0c3bf; color: #8f2f28; }
+    .fix-note { font-size: 0.8rem; color: var(--muted); min-height: 1.3em; }
+
+    /* Chart card */
+    .log-card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 14px; }
+    .log-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+    .seg { display: inline-flex; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 3px; }
+    .seg button {
+      font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      background: none; border: 0; border-radius: 6px; padding: 6px 12px; cursor: pointer;
+    }
+    .seg button.on { background: var(--accent-lt); color: var(--accent); }
+    .play {
+      font: inherit; font-size: 0.8rem; font-weight: 600; color: #fff; background: var(--accent);
+      border: 0; border-radius: 8px; padding: 8px 14px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center;
+    }
+    .play:hover { background: #256040; }
+    .readout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
+    .readout > div { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; }
+    .readout .rl { font-size: 0.66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .readout .rv { font-size: 1.05rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+    #chart { width: 100%; height: auto; display: block; touch-action: pan-y; cursor: crosshair; }
+    #chart text { font-family: var(--font); }
+    .scrub { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+    .scrub label { font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
+    .scrub input { flex: 1; accent-color: var(--accent); }
+    .log-note { font-size: 0.74rem; color: var(--muted); margin-top: 10px; }
+    .bar { transform-box: fill-box; transform-origin: bottom; transition: transform .7s cubic-bezier(.2,.8,.2,1), fill .2s; }
+    .pre .bar { transform: scaleY(0); }
+
+    /* Milestones */
+    .ms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .ms {
+      position: relative; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px;
+      padding: 16px 16px 14px; transition: border-color .3s, background .3s, opacity .3s, transform .3s;
+    }
+    .ms .ms-k { font-size: 0.66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .ms .ms-v { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; margin: 2px 0; }
+    .ms .ms-d { font-size: 0.8rem; color: var(--muted); }
+    .ms .ms-badge {
+      position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800;
+      background: #eeeeea; color: #aaa; transition: background .3s, color .3s;
+    }
+    .ms.unlocked { border-color: #f3c7a6; background: var(--run-lt); }
+    .ms.unlocked .ms-v { color: var(--run-dk); }
+    .ms.unlocked .ms-badge { background: var(--run); color: #fff; }
+    .ms.locked { opacity: .45; }
+    .ms.pop { transform: scale(1.04); }
+    .ms.next .ms-v { color: var(--text); }
+    .ms-prog { height: 6px; background: #e9e9e4; border-radius: 99px; overflow: hidden; margin-top: 8px; }
+    .ms-prog i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+    .ms-sub { font-size: 0.72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
+
+    /* Gear */
+    .gear-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .gear {
+      display: block; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
+      padding: 18px 20px; color: var(--text); transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .gear:hover { border-color: var(--accent-md); box-shadow: 0 4px 20px rgba(45,122,79,0.08); text-decoration: none; transform: translateY(-2px); }
+    .gear .g-k { font-size: 0.66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    .gear h4 { font-size: 1rem; font-weight: 800; margin: 4px 0 6px; }
+    .gear p { font-size: 0.86rem !important; margin-bottom: 10px !important; }
+    .gear .g-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .gear .g-go { font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+
+    @media (max-width: 760px) {
+      .run-stats { grid-template-columns: 1fr 1fr; }
+      .ms-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .gear-grid { grid-template-columns: 1fr; }
+      .readout { grid-template-columns: 1fr 1fr; }
+      .readout > div:last-child { grid-column: 1 / -1; }
+      .log-card { padding: 14px 12px 12px; }
+    }
+    @media (max-width: 340px) {
+      .ms-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bar, .ms, .ms-prog i { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="blog.html">Learnings</a></li>
+      <li><a href="ongoing.html">Ongoing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!--
+  ══════════════════════════════════════════════════════════
+  POST PAGE — running
+
+  The weekly log lives in RUN_WEEKS at the bottom of this file.
+  Each number is one Monday-to-Sunday week, starting Apr 27, 2026.
+  To add a week, append its km to the array — the chart, the
+  running total, the 100 km milestones and the "next milestone"
+  card all recalculate themselves. Update TOTAL_KM to Strava's
+  exact figure when you do.
+  ══════════════════════════════════════════════════════════
+-->
+
+<main>
+  <div class="container">
+
+    <div class="proj-header">
+      <a href="blog.html" class="proj-back">← All learnings</a>
+      <div class="page-label">Running · Health</div>
+      <h1>Chairs, pillows and patches didn't fix my back. Running did.</h1>
+      <p class="lede">
+        A year of lower-back pain from long days in a lab chair, four fixes that only worked for a while,
+        and the one thing that actually helped. The numbers are below, week by week. Drag through them, or press play.
+      </p>
+      <div class="project-meta" style="margin-bottom: 22px;">
+        <span class="tag">Running</span>
+        <span class="tag">Back pain</span>
+        <span class="tag">Habit building</span>
+        <span class="tag-grey">Strava log</span>
+        <span class="tag-grey">Apr – Oct 2026</span>
+      </div>
+      <div class="proj-actions">
+        <a href="#log" class="btn btn-primary">Explore the log</a>
+        <a href="#milestones" class="btn btn-outline">Jump to milestones</a>
+      </div>
+    </div>
+
+    <div class="run-hero">
+      <figure class="figure">
+        <img src="assets/about/running/running.JPG" alt="Dhan running past concrete bridge pillars at golden hour, wearing a hydration vest and yellow racing shoes" width="1672" height="941"/>
+        <div class="ph">
+          <div class="ph-title">Running photo</div>
+          <div class="ph-path">assets/about/running/running.JPG</div>
+        </div>
+        <figcaption>Vest on, yellow Zoom Flys on. Golden-hour miles under the bridge.</figcaption>
+      </figure>
+    </div>
+
+    <div class="run-total" aria-live="polite">
+      <span class="num" id="totalCounter" data-target="683.7">683.7</span><span class="unit">km</span>
+    </div>
+    <p class="run-total-sub">run since April 27, 2026 — and counting.</p>
+
+    <div class="run-stats">
+      <div class="stat-card"><div class="num">2</div><div class="label">Half-marathon-distance runs</div></div>
+      <div class="stat-card"><div class="num">10K+</div><div class="label">Runs: lots of them</div></div>
+      <div class="stat-card"><div class="num">56.5</div><div class="label">km in my biggest week</div></div>
+      <div class="stat-card"><div class="num">13 wk</div><div class="label">straight weeks of 30+ km</div></div>
+    </div>
+
+    <!-- ── The problem ── -->
+    <section class="proj-section" id="story">
+      <h2>How it started: a chair problem</h2>
+      <p class="sec-note">Summer 2025 to summer 2026.</p>
+
+      <ol class="tl">
+        <li class="pain">
+          <span class="when">Summer 2025</span>
+          <h4>The back pain shows up</h4>
+          <p>Grad school means long hours in the lab, and most of them sitting in a chair. By summer 2025 my lower back had started to hurt, and it kept hurting.</p>
+        </li>
+        <li class="try">
+          <span class="when">2025 – 2026</span>
+          <h4>I tried buying my way out of it</h4>
+          <p>Every fix helped for a little while, and then the pain came back. Hover over each one to see how it went:</p>
+          <div class="fixes" id="fixes">
+            <span class="fix" tabindex="0" data-note="Pain-relief patches: they helped for a while, then the pain came back."><span class="x">✕</span> Patches</span>
+            <span class="fix" tabindex="0" data-note="A better chair: it felt better at first, but I was still sitting just as long."><span class="x">✕</span> Better chair</span>
+            <span class="fix" tabindex="0" data-note="A better bed: it helped for a while, then the pain came back."><span class="x">✕</span> Better bed</span>
+            <span class="fix" tabindex="0" data-note="A better pillow: same story. It only helped for a while."><span class="x">✕</span> Better pillow</span>
+          </div>
+          <div class="fix-note" id="fixNote">Four purchases, four temporary fixes.</div>
+        </li>
+        <li class="run">
+          <span class="when">May 2026</span>
+          <h4>I started running instead</h4>
+          <p>I stopped looking for a product and tried moving more instead. I began with a few short runs in mid-May, then started running properly in the last week of the month.</p>
+        </li>
+        <li class="win">
+          <span class="when">About one month in · late June 2026</span>
+          <h4>My lower back hurt less</h4>
+          <p>About a month after I started, I noticed my back was hurting less. That was the first thing all year that kept working, so I kept running.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ── Interactive log ── -->
+    <section class="proj-section" id="log">
+      <h2>The log, week by week</h2>
+      <p class="sec-note">Hover or tap the chart, drag the slider, or press play to watch the season build. The milestones further down unlock as you go.</p>
+
+      <div class="log-card pre" id="logCard">
+        <div class="log-top">
+          <div class="seg" role="tablist" aria-label="Chart view">
+            <button class="on" data-mode="week" role="tab" aria-selected="true">Weekly km</button>
+            <button data-mode="cum" role="tab" aria-selected="false">Running total</button>
+          </div>
+          <button class="play" id="playBtn" aria-label="Replay the season"><span id="playIcon">▶</span> <span id="playTxt">Replay the season</span></button>
+        </div>
+
+        <div class="readout">
+          <div><div class="rl" id="rWeekLbl">Week of</div><div class="rv" id="rWeek">—</div></div>
+          <div><div class="rl">That week</div><div class="rv" id="rKm">—</div></div>
+          <div><div class="rl">Total so far</div><div class="rv" id="rTot">—</div></div>
+        </div>
+
+        <svg id="chart" viewBox="0 0 800 330" role="img" aria-labelledby="chartTitle chartDesc">
+          <title id="chartTitle">Weekly running distance, April 27 to October 11, 2026</title>
+          <desc id="chartDesc">Runs start in mid-May, climb to 42–57 km a week in June, stay between 30 and 52 km through August, dip to about 10 km in early September and recover to around 30 km. Running total passes 100 km on Jun 12, 200 on Jun 27, 300 on Jul 14, 400 on Jul 30, 500 on Aug 16 and 600 on Sep 9, reaching 683.7 km.</desc>
+        </svg>
+
+        <div class="scrub">
+          <label for="scrub">Drag through the season</label>
+          <input type="range" id="scrub" min="0" max="23" step="1" value="22"/>
+        </div>
+        <p class="log-note">Weekly numbers are read from my Strava charts and scaled to the exact 683.7 km total, so each week is within about ±0.5 km. Milestone dates are estimated within the week.</p>
+      </div>
+
+      <div class="callout" style="margin-top: 22px;">
+        <p><strong>The September dip.</strong> After a 13-week run of 30+ km weeks, the first week of September dropped to about 10 km. I eased back in over the next three weeks to around 30 km a week.</p>
+      </div>
+    </section>
+
+    <!-- ── Milestones ── -->
+    <section class="proj-section" id="milestones">
+      <h2>Milestones</h2>
+      <p class="sec-note">Every 100 km, plus the runs I'm proudest of. Scrub the chart above to see them unlock.</p>
+
+      <div class="ms-sub">Distance</div>
+      <div class="ms-grid" id="msGrid"></div>
+
+      <div class="ms-sub">Runs</div>
+      <div class="ms-grid">
+        <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">Half-marathon distance</div><div class="ms-v">2 ×</div><div class="ms-d">21.1 km in a single run, twice</div></div>
+        <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">10 km+ runs</div><div class="ms-v">Plenty</div><div class="ms-d">Now just a normal long run</div></div>
+        <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">Biggest week</div><div class="ms-v">56.5 km</div><div class="ms-d">Week of Jun 8, 2026</div></div>
+        <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">Consistency</div><div class="ms-v">13 weeks</div><div class="ms-d">30+ km every week, Jun 1 – Aug 30</div></div>
+        <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">Peak block</div><div class="ms-v">43.1 km/wk</div><div class="ms-d">Average across that streak</div></div>
+        <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">Back pain</div><div class="ms-v">Less</div><div class="ms-d">Which is why I started in the first place</div></div>
+      </div>
+    </section>
+
+    <!-- ── Gear ── -->
+    <section class="proj-section" id="gear">
+      <h2>What I finally spent money on</h2>
+      <p class="sec-note">After a year of buying things for my back, these are the only two purchases I'd make again.</p>
+
+      <div class="gear-grid">
+        <a class="gear" href="https://www.nike.com/t/zoom-fly-6-mens-road-racing-shoes-wn2ALjkm/FN8454-800" target="_blank" rel="noopener">
+          <div class="g-k">Shoes</div>
+          <h4>Nike Zoom Fly 6</h4>
+          <p>The yellow ones in the photo. A light road-racing shoe with a carbon plate.</p>
+          <div class="g-specs">
+            <span class="tag">ZoomX foam</span>
+            <span class="tag">Carbon Flyplate</span>
+            <span class="tag-grey">8 mm drop</span>
+            <span class="tag-grey">~265 g</span>
+          </div>
+          <span class="g-go">View on Nike →</span>
+        </a>
+        <a class="gear" href="https://www.amazon.com/dp/B0FB3GFW4Z" target="_blank" rel="noopener">
+          <div class="g-k">Hydration</div>
+          <h4>Running hydration vest</h4>
+          <p>For the half-marathon-length runs, so I can carry water with me on long routes.</p>
+          <div class="g-specs">
+            <span class="tag">Long runs</span>
+            <span class="tag-grey">Hands free</span>
+          </div>
+          <span class="g-go">View on Amazon →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── Takeaways ── -->
+    <section class="proj-section" id="learned">
+      <h2>What I learned</h2>
+      <ul class="bullets">
+        <li><strong>Equipment can't make up for not moving.</strong> The chair, bed and pillow made sitting more comfortable. They didn't change how much I sat.</li>
+        <li><strong>Give it a month.</strong> It took about a month of running before I noticed my back hurting less.</li>
+        <li><strong>Consistency beats big weeks.</strong> My biggest week was 56.5 km, but I'm prouder of the 13 weeks in a row above 30 km.</li>
+        <li><strong>Watching the total grow keeps me going.</strong> Logging every run and seeing the next 100 km get closer is a big part of why I keep showing up.</li>
+      </ul>
+      <p style="font-size: 0.8rem;">This is what worked for my back. It isn't medical advice. If your back hurts, have someone qualified look at it before you start running.</p>
+    </section>
+
+    <div class="proj-footer-nav">
+      <a href="blog.html" class="post-back">← All learnings</a>
+      <a href="about.html#running" class="post-back">Running on the About page →</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    © Copyright Dhan P. Pradhan · <span class="year"></span>
+  </div>
+</footer>
+<script src="main.js"></script>
+<script>
+(function () {
+  // ── Data: km per Monday-to-Sunday week, starting Apr 27, 2026 ──
+  const RUN_WEEKS = [0, 0, 2.3, 0, 23.9, 42.0, 56.5, 35.3, 55.6, 32.1, 45.6, 43.2,
+                     45.8, 40.4, 52.1, 30.8, 42.8, 37.3, 10.1, 19.3, 31.3, 28.2, 9.1, 0];
+  const TOTAL_KM = 683.7;
+  const START = new Date(2026, 3, 27);
+  const STORY = [
+    { w: 2, label: 'First runs', lvl: 0 },
+    { w: 6, label: 'Biggest week', lvl: 0 },
+    { w: 8, label: 'Back hurts less', lvl: 1 },
+    { w: 18, label: 'September dip', lvl: 0 }
+  ];
+
+  const n = RUN_WEEKS.length;
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const weekStart = i => { const d = new Date(START); d.setDate(d.getDate() + i * 7); return d; };
+  const cum = [0]; RUN_WEEKS.forEach(v => cum.push(Math.round((cum[cum.length - 1] + v) * 10) / 10));
+  const last = () => cum[cum.length - 1];
+
+  // 100 km milestones, interpolated within the week they were crossed
+  const MS = [];
+  for (let m = 100; m <= Math.floor(last() / 100) * 100; m += 100) {
+    for (let i = 1; i < cum.length; i++) {
+      if (cum[i] >= m) {
+        const t = i - 1 + (m - cum[i - 1]) / (cum[i] - cum[i - 1]);
+        const d = new Date(START); d.setDate(d.getDate() + Math.round(t * 7));
+        MS.push({ km: m, t, week: i - 1, date: fmt(d) });
+        break;
+      }
+    }
+  }
+  const NEXT = (Math.floor(TOTAL_KM / 100) + 1) * 100;
+
+  // ── Milestone cards ──
+  const grid = document.getElementById('msGrid');
+  MS.forEach(m => {
+    const el = document.createElement('div');
+    el.className = 'ms unlocked'; el.dataset.week = m.week;
+    el.innerHTML = '<span class="ms-badge">' + (m.km / 100) + '</span><div class="ms-k">Milestone</div>' +
+      '<div class="ms-v">' + m.km + ' km</div><div class="ms-d">Reached around ' + m.date + ', 2026</div>';
+    grid.appendChild(el);
+  });
+  const nextEl = document.createElement('div');
+  nextEl.className = 'ms next';
+  nextEl.innerHTML = '<span class="ms-badge">→</span><div class="ms-k">Next up</div><div class="ms-v">' + NEXT + ' km</div>' +
+    '<div class="ms-d">' + (NEXT - TOTAL_KM).toFixed(1) + ' km to go</div><div class="ms-prog"><i id="nextBar"></i></div>';
+  grid.appendChild(nextEl);
+
+  // ── Chart ──
+  const svg = document.getElementById('chart');
+  const NS = 'http://www.w3.org/2000/svg';
+  let W = 800, H = 330, narrow = false;
+  const L = 40, R = 12, T = 34, B = 34;
+  let band = (W - L - R) / n;
+  function size() {
+    const cw = svg.parentNode.clientWidth || 800;
+    narrow = cw < 600;
+    W = narrow ? Math.max(340, Math.round(cw)) : 800;
+    H = narrow ? 300 : 330;
+    band = (W - L - R) / n;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  }
+  const X = t => L + band * t;
+  let mode = 'week', sel = RUN_WEEKS.reduce((a, v, i) => v > 0 ? i : a, 0);
+  const C = { accent: '#2d7a4f', mid: '#4caf7d', lt: '#cfe8da', grid: '#e8e8e4', muted: '#888', run: '#e0782f', runDk: '#a4501a', text: '#1a1a1a' };
+
+  function el(tag, attrs, parent) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e); return e;
+  }
+  function txt(x, y, s, attrs, parent) { const e = el('text', Object.assign({ x, y }, attrs), parent); e.textContent = s; return e; }
+
+  const gGrid = el('g', {}), gSel = el('g', {}), gData = el('g', {}), gAnn = el('g', {}), gAxis = el('g', {});
+  const months = [['May', 4], ['Jun', 35], ['Jul', 65], ['Aug', 96], ['Sep', 127], ['Oct', 157]];
+  let bars = [], linePath, areaPath, dot, Y, ymax;
+
+  function scaleY(max) { ymax = max; Y = v => T + (H - T - B) * (1 - v / max); }
+
+  function drawAxes() {
+    gGrid.innerHTML = ''; gAxis.innerHTML = '';
+    const step = mode === 'week' ? 20 : 100;
+    for (let v = 0; v <= ymax; v += step) {
+      el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === 0 ? '#cfcfc9' : C.grid, 'stroke-width': 1 }, gGrid);
+      txt(L - 8, Y(v) + 4, v + (v === 0 ? ' km' : ''), { 'text-anchor': 'end', 'font-size': 11, fill: C.muted }, gAxis);
+    }
+    months.forEach(([m, d]) => {
+      const x = X(d / 7);
+      el('line', { x1: x, x2: x, y1: H - B, y2: H - B + 5, stroke: '#cfcfc9' }, gAxis);
+      txt(x + 3, H - B + 18, m, { 'font-size': 11, fill: C.muted }, gAxis);
+    });
+  }
+
+  function flag(x, y, l1, l2, color, parent, above, lift) {
+    const g = el('g', {}, parent);
+    const stem = 12 + (lift || 0), h = l2 ? 30 : 20;
+    const line = el('line', { x1: x, x2: x, y1: y - stem, y2: y, stroke: color, 'stroke-width': 1.2 }, g);
+    const rect = el('rect', { y: y - stem - h, height: h, rx: 5, fill: color }, g);
+    const t1 = txt(0, y - stem - h + 13.5, l1, { 'font-size': 11, 'font-weight': 700, fill: '#fff' }, g);
+    const t2 = l2 ? txt(0, y - stem - h + 25, l2, { 'font-size': 10, fill: '#fff', opacity: .9 }, g) : null;
+    const w = Math.max(t1.getComputedTextLength(), t2 ? t2.getComputedTextLength() : 0) + 14;
+    let bx = x - w / 2; bx = Math.max(L, Math.min(W - R - w, bx));
+    rect.setAttribute('x', bx); rect.setAttribute('width', w);
+    t1.setAttribute('x', bx + 7); if (t2) t2.setAttribute('x', bx + 7);
+    return g;
+  }
+
+  function build() {
+    size();
+    gData.innerHTML = ''; gAnn.innerHTML = ''; bars = [];
+    if (mode === 'week') {
+      scaleY(72); drawAxes();
+      const bw = Math.min(22, band * 0.66);
+      RUN_WEEKS.forEach((v, i) => {
+        const x = X(i + .5) - bw / 2, y = Y(v), h = Math.max(0, Y(0) - y);
+        const r = el('rect', { x, y, width: bw, height: h, rx: 3, class: 'bar', fill: C.mid }, gData);
+        r.style.transitionDelay = (i * 25) + 'ms';
+        bars.push(r);
+      });
+      STORY.forEach(s => {
+        const v = RUN_WEEKS[s.w];
+        flag(X(s.w + .5), Y(v) - 2, s.label, '', s.label === 'Back hurts less' ? C.accent : '#6b6b66', gAnn, true, s.lvl * 28);
+      });
+    } else {
+      scaleY(Math.ceil((last() + 40) / 100) * 100); drawAxes();
+      let d = 'M' + X(0) + ',' + Y(0);
+      for (let i = 1; i < cum.length; i++) d += ' L' + X(i) + ',' + Y(cum[i]);
+      areaPath = el('path', { d: d + ' L' + X(n) + ',' + Y(0) + ' Z', fill: C.accent, opacity: .08 }, gData);
+      linePath = el('path', { d, fill: 'none', stroke: C.accent, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, gData);
+      const len = linePath.getTotalLength();
+      linePath.style.strokeDasharray = len; linePath.style.strokeDashoffset = len;
+      linePath.getBoundingClientRect();
+      linePath.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)';
+      linePath.style.strokeDashoffset = 0;
+      MS.forEach((m, k) => {
+        const x = X(m.t), y = Y(m.km);
+        el('line', { x1: x, x2: x, y1: y, y2: Y(0), stroke: C.run, 'stroke-dasharray': '3 4', opacity: .5 }, gAnn);
+        const g = narrow ? flag(x, y, m.km + '', '', C.run, gAnn, true, (k % 2) * 22) : flag(x, y, m.km + ' km', m.date, C.run, gAnn, true);
+        g.dataset.week = m.week; g.classList.add('msflag');
+        el('circle', { cx: x, cy: y, r: 6, fill: C.run, stroke: '#f7f7f5', 'stroke-width': 2.5 }, gAnn).dataset.week = m.week;
+      });
+      dot = el('circle', { r: 7, fill: C.accent, stroke: '#f7f7f5', 'stroke-width': 3 }, gAnn);
+    }
+    paint();
+  }
+
+  // Selection band + highlight
+  const selRect = el('rect', { fill: C.accent, opacity: .07, rx: 4 }, gSel);
+  function paint() {
+    selRect.setAttribute('y', T - 6); selRect.setAttribute('height', H - T - B + 6);
+    selRect.setAttribute('x', X(sel)); selRect.setAttribute('width', band);
+    if (mode === 'week') {
+      bars.forEach((b, i) => b.setAttribute('fill', i === sel ? C.accent : (i > sel ? C.lt : C.mid)));
+    } else {
+      dot.setAttribute('cx', X(sel + 1)); dot.setAttribute('cy', Y(cum[sel + 1]));
+      gAnn.querySelectorAll('[data-week]').forEach(g => g.style.opacity = (+g.dataset.week <= sel ? 1 : .18));
+    }
+    const ws = weekStart(sel);
+    document.getElementById('rWeek').textContent = fmt(ws);
+    document.getElementById('rKm').textContent = RUN_WEEKS[sel].toFixed(1) + ' km';
+    const tot = cum[sel + 1];
+    document.getElementById('rTot').textContent = tot.toFixed(1) + ' km';
+    document.getElementById('scrub').value = sel;
+    // unlock milestone cards
+    document.querySelectorAll('#msGrid .ms[data-week]').forEach(c => {
+      const on = +c.dataset.week <= sel;
+      if (on && c.classList.contains('locked')) { c.classList.add('pop'); setTimeout(() => c.classList.remove('pop'), 300); }
+      c.classList.toggle('unlocked', on); c.classList.toggle('locked', !on);
+    });
+    const nb = document.getElementById('nextBar');
+    if (nb && nb.dataset.ready) nb.style.width = Math.min(100, tot / NEXT * 100) + '%';
+  }
+
+  // Pointer → week
+  function pick(evt) {
+    const p = svg.createSVGPoint(); p.x = evt.clientX; p.y = evt.clientY;
+    const loc = p.matrixTransform(svg.getScreenCTM().inverse());
+    const i = Math.max(0, Math.min(n - 1, Math.floor((loc.x - L) / band)));
+    if (i !== sel) { sel = i; paint(); }
+  }
+  svg.addEventListener('pointermove', e => { stop(); pick(e); });
+  svg.addEventListener('pointerdown', e => { stop(); pick(e); });
+  document.getElementById('scrub').addEventListener('input', e => { stop(); sel = +e.target.value; paint(); });
+
+  // Mode toggle
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll('.seg button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
+    build();
+  }));
+
+  // Play
+  let timer = null;
+  const playTxt = document.getElementById('playTxt'), playIcon = document.getElementById('playIcon');
+  function stop() { if (timer) { clearInterval(timer); timer = null; playTxt.textContent = 'Replay the season'; playIcon.textContent = '▶'; } }
+  document.getElementById('playBtn').addEventListener('click', () => {
+    if (timer) return stop();
+    sel = 0; paint(); playTxt.textContent = 'Pause'; playIcon.textContent = '❚❚';
+    timer = setInterval(() => { if (sel >= n - 1) return stop(); sel++; paint(); }, 280);
+  });
+
+  build();
+  let rw = svg.parentNode.clientWidth;
+  addEventListener('resize', () => { const w = svg.parentNode.clientWidth; if (Math.abs(w - rw) > 30) { rw = w; build(); } });
+
+  // ── Reveal animations ──
+  const card = document.getElementById('logCard');
+  const counter = document.getElementById('totalCounter');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    if (e.target === card) card.classList.remove('pre');
+    if (e.target === counter && !reduce) {
+      const target = +counter.dataset.target, t0 = performance.now();
+      (function tick(t) {
+        const p = Math.min(1, (t - t0) / 1500), k = 1 - Math.pow(1 - p, 3);
+        counter.textContent = (target * k).toFixed(1);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+    if (e.target === grid) { const nb = document.getElementById('nextBar'); nb.dataset.ready = 1; nb.style.width = Math.min(100, TOTAL_KM / NEXT * 100) + '%'; }
+    io.unobserve(e.target);
+  }), { threshold: 0.25 });
+  [card, counter, grid].forEach(x => io.observe(x));
+  if (reduce) card.classList.remove('pre');
+
+  // ── "Fixes" hover notes ──
+  const note = document.getElementById('fixNote'), base = note.textContent;
+  document.querySelectorAll('.fix').forEach(f => {
+    const show = () => note.textContent = f.dataset.note;
+    f.addEventListener('mouseenter', show); f.addEventListener('focus', show); f.addEventListener('click', show);
+    f.addEventListener('mouseleave', () => note.textContent = base);
+    f.addEventListener('blur', () => note.textContent = base);
+  });
+})();
+</script>
+</body>
+</html>
