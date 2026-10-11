@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aero Portfolio | Dhan Prasad Pradhan</title>
+  <meta name="description" content="Aerospace projects from my engineering studies in Nepal (IOE): a glass-fibre composite monocoque fuselage for a 3 m wingspan RC aircraft, a Pixhawk autonomous quadcopter, a final-year autonomous fixed-wing UAS for wildlife patrols, and the Boeing Aeromodelling Competition at IIT Bombay (2019 as a competitor, 2023 as a mentor)."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style-v1.1.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">dpp<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="blog.html">Learnings</a></li>
+      <li><a href="ongoing.html">Ongoing</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- ── Header ── -->
+    <div class="proj-header">
+      <a href="projects.html" class="proj-back">← All projects</a>
+      <div class="page-label">Project 04 · Aerospace &amp; UAVs</div>
+      <h1>Aero Portfolio</h1>
+      <p class="lede">
+        Aircraft are where I first fell for engineering. This page collects the aerospace work I did
+        as an undergraduate engineering student at Thapathali Campus in Nepal: a <strong>glass-fibre composite monocoque fuselage</strong> for a
+        3-metre wingspan RC aircraft, a <strong>Pixhawk-powered autonomous quadcopter</strong>, my
+        final-year <strong>autonomous fixed-wing UAS for wildlife patrols</strong>, and the
+        <strong>Boeing Aeromodelling Competition</strong> at IIT Bombay, first as a competitor in 2019
+        and then as a mentor in 2023.
+      </p>
+
+      <div class="project-meta" style="margin-bottom: 22px;">
+        <span class="tag">Aircraft Design</span>
+        <span class="tag">Composites</span>
+        <span class="tag">Autonomous Flight</span>
+        <span class="tag">Flight Stability</span>
+        <span class="tag">Mission Planning</span>
+        <span class="tag-grey">XFLR5</span>
+        <span class="tag-grey">Pixhawk</span>
+        <span class="tag-grey">Mission Planner</span>
+        <span class="tag-grey">CAD</span>
+        <span class="tag-grey">3D Printing</span>
+      </div>
+
+      <div class="proj-actions">
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7141820812956741633/" class="btn btn-primary" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Watch the 2023 flight video
+        </a>
+        <a href="#specs" class="btn btn-outline">Jump to projects</a>
+      </div>
+    </div>
+
+    <!-- ── At a glance ── -->
+    <div class="facts-grid">
+      <div class="fact">
+        <div class="fact-label">Where</div>
+        <div class="fact-value">IOE, Nepal</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Projects</div>
+        <div class="fact-value">4 aero builds</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Largest airframe</div>
+        <div class="fact-value">3000 mm wingspan</div>
+      </div>
+      <div class="fact">
+        <div class="fact-label">Best result</div>
+        <div class="fact-value">4th · IIT Bombay 2023 (mentor)</div>
+      </div>
+    </div>
+
+    <!-- ── Quick specs ── -->
+    <section class="proj-section" style="padding-top: 8px;">
+      <h2 id="specs">The projects</h2>
+
+      <div style="overflow-x:auto;">
+      <table class="spec-table">
+        <thead>
+          <tr><th>Project</th><th>What it is</th><th>Key tools</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="#monocoque">Composite monocoque</a></td><td>Glass-fibre monocoque fuselage for a 3000 mm wingspan RC aircraft, made from a 3D-printed mold core</td><td>CAD · 3D printing · 250 GSM glass fibre</td></tr>
+          <tr><td><a href="#quadcopter">Autonomous quadcopter</a></td><td>Pixhawk quadcopter flying manual and GPS-based autonomous missions</td><td>Pixhawk · GPS · flight planning</td></tr>
+          <tr><td><a href="#wildlife-uas">Wildlife UAS</a></td><td>Final-year autonomous fixed-wing UAV for national-park patrol support, 20+ test flights</td><td>XFLR5 · Pixhawk · Mission Planner</td></tr>
+          <tr><td><a href="#boeing">Boeing Aeromodelling</a></td><td>IIT Bombay: top 20 as a competitor (2019), 4th as a mentor with a 600 g payload (2023)</td><td>Aircraft design · fabrication</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ── 1. Monocoque ── -->
+    <section class="proj-section">
+      <h2 id="monocoque">Glass-fibre composite monocoque body</h2>
+      <p class="sec-note">A hollow, one-piece fuselage for a 3 m wingspan RC aircraft. Guided by Lecturer Biman Rimal, Pulchowk Campus, IOE.</p>
+
+      <p>
+        The goal was to fabricate a lightweight <strong>monocoque composite body</strong> for an RC
+        model with a <strong>3-metre wingspan</strong>. In a monocoque the skin itself carries the
+        load, so there's no internal frame adding weight. We set out three objectives:
+      </p>
+
+      <ul class="bullets">
+        <li><strong>Mold design.</strong> Test what the mold has to get right for a glass-fibre part.</li>
+        <li><strong>Manufacturing.</strong> Explore methods for building a glass-fibre RC aircraft.</li>
+        <li><strong>Performance.</strong> Evaluate the strength, stiffness and weight of the finished part.</li>
+      </ul>
+
+      <h3>From surface to mold core</h3>
+      <p>
+        The fuselage started as a surface model built on a wireframe of cross-sections. Initial design
+        sketches were developed alongside it, and the mold was visualised in CAD before the
+        <strong>mold core</strong>, a positive of the fuselage, was sent for 3D printing.
+      </p>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/monocoque_surface_wireframe.jpg" alt="CAD wireframe of fuselage cross-sections used to build the monocoque surface"/>
+          <div class="ph">
+            <div class="ph-icon">🧩</div>
+            <div class="ph-title">Surface wireframe</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/monocoque_surface_wireframe.jpg</div>
+          </div>
+          <figcaption><b>Fig. 1</b> — Fuselage surface built on a wireframe of cross-sections.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/monocoque_concept_cad.jpg" alt="Concept CAD of the split mold with hand-written manufacturing notes"/>
+          <div class="ph">
+            <div class="ph-icon">✏️</div>
+            <div class="ph-title">Concept CAD</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/monocoque_concept_cad.jpg</div>
+          </div>
+          <figcaption><b>Fig. 2</b> — Concept CAD of the mold, marked up with the manufacturing steps.</figcaption>
+        </figure>
+      </div>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/mold_core_3d_printing.jpg" alt="Mold core sections being 3D printed with support structures"/>
+          <div class="ph">
+            <div class="ph-icon">🖨️</div>
+            <div class="ph-title">3D printing the core</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/mold_core_3d_printing.jpg</div>
+          </div>
+          <figcaption><b>Fig. 3</b> — Printing the mold core in sections.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/mold_core_printed.jpg" alt="The assembled 3D-printed fuselage mold core"/>
+          <div class="ph">
+            <div class="ph-icon">✈️</div>
+            <div class="ph-title">Printed mold core</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/mold_core_printed.jpg</div>
+          </div>
+          <figcaption><b>Fig. 4</b> — The finished 3D-printed mold core.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Negative mold and layup</h3>
+      <p>
+        The printed core was used to pull a <strong>negative half mold</strong>, made from glass-fibre
+        mat. That negative mold was then used to lay up the hollow monocoque itself in
+        <strong>250 GSM glass-fibre cloth</strong>. The demolded body comes out with the vertical
+        stabiliser built in, plus mounts for the horizontal stabiliser and the wing.
+      </p>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/negative_half_mold.jpg" alt="Negative half mold being prepared from the 3D-printed core"/>
+          <div class="ph">
+            <div class="ph-icon">🧪</div>
+            <div class="ph-title">Negative half mold</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/negative_half_mold.jpg</div>
+          </div>
+          <figcaption><b>Fig. 5</b> — Preparing the negative half mold from the printed core.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/monocoque_demolded.jpg" alt="Yellow glass-fibre monocoque fuselage taken out of the mold"/>
+          <div class="ph">
+            <div class="ph-icon">🟡</div>
+            <div class="ph-title">Demolded monocoque</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/monocoque_demolded.jpg</div>
+          </div>
+          <figcaption><b>Fig. 6</b> — The monocoque out of the mold, with vertical stabiliser and HS and wing mounts.</figcaption>
+        </figure>
+      </div>
+
+      <h3>The finished aircraft</h3>
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/rc_plane_team.jpg" alt="The team standing behind the finished 3 m wingspan RC aircraft"/>
+          <div class="ph">
+            <div class="ph-icon">👥</div>
+            <div class="ph-title">Team with the aircraft</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/rc_plane_team.jpg</div>
+          </div>
+          <figcaption><b>Fig. 7</b> — The team with the finished aircraft.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/rc_plane_fuselage_wings.jpg" alt="Painted blue monocoque fuselage standing between the two wing panels"/>
+          <div class="ph">
+            <div class="ph-icon">🛩️</div>
+            <div class="ph-title">Fuselage and wings</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/rc_plane_fuselage_wings.jpg</div>
+          </div>
+          <figcaption><b>Fig. 8</b> — Painted fuselage with the two wing panels.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="figure">
+        <img src="assets/projects/aero-portfolio/img/rc_plane_full_size.jpg" alt="Person lying next to the RC aircraft on grass for scale"/>
+        <div class="ph">
+          <div class="ph-icon">📏</div>
+          <div class="ph-title">Size check</div>
+          <div class="ph-path">assets/projects/aero-portfolio/img/rc_plane_full_size.jpg</div>
+        </div>
+        <figcaption><b>Fig. 9</b> — For scale: a 3000 mm wingspan next to a person.</figcaption>
+      </figure>
+
+      <table class="spec-table">
+        <tbody>
+          <tr><td>Wingspan</td><td>3000 mm</td></tr>
+          <tr><td>Body length</td><td>1200 mm</td></tr>
+          <tr><td>Body weight</td><td>2000 g</td></tr>
+          <tr><td>Skin</td><td>250 GSM glass-fibre cloth, hollow monocoque</td></tr>
+          <tr><td>Tooling</td><td>3D-printed mold core → glass-fibre-mat negative half molds</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── 2. Quadcopter ── -->
+    <section class="proj-section">
+      <h2 id="quadcopter">Autonomous quadcopter</h2>
+      <p class="sec-note">A Pixhawk quadcopter that flies manual and GPS-based autonomous missions.</p>
+
+      <p>
+        This quadcopter runs on a <strong>Pixhawk flight board</strong> and can fly both manually and
+        <strong>autonomously from GPS waypoints</strong>. It uses the same flight board I used for
+        autonomous flight in the fixed-wing UAV of my final-year project (below), so with that
+        experience behind me I built a quadcopter with flight-planning capability. It flew its
+        planned missions without a problem.
+      </p>
+
+      <div class="figure-grid" style="grid-template-columns: 2.3fr 1fr; align-items: start;">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/quadcopter.jpg" alt="Quadcopter with Pixhawk flight board on a red and white frame"/>
+          <div class="ph">
+            <div class="ph-icon">🚁</div>
+            <div class="ph-title">The quadcopter</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/quadcopter.jpg</div>
+          </div>
+          <figcaption><b>Fig. 10</b> — The Pixhawk-powered quadcopter.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/quadcopter_autonomous_flight.jpg" alt="Quadcopter in flight above the planned mission path"/>
+          <div class="ph">
+            <div class="ph-icon">🛰️</div>
+            <div class="ph-title">Autonomous flight</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/quadcopter_autonomous_flight.jpg</div>
+          </div>
+          <figcaption><b>Fig. 11</b> — In flight, with the planned path and a normal take-off.</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        The project also got me looking past GPS: I learned about <strong>navigation in GPS-denied
+        environments</strong> and explored other navigation techniques.
+      </p>
+
+      <div class="callout">
+        <p>
+          <strong>Outreach:</strong> the quadcopter was built for education. We used it for
+          demonstrations to secondary-school students and presented it at an exhibition.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 3. Wildlife UAS ── -->
+    <section class="proj-section">
+      <h2 id="wildlife-uas">Final-year project — autonomous UAS for wildlife patrols</h2>
+      <p class="sec-note">A locally built fixed-wing UAV to give national-park patrols cheap eyes in the sky.</p>
+
+      <p>
+        The idea came from a visit to a national park, where we learned how important the imported
+        drones that had been deployed there were to the security teams. Our final-year project set out
+        to build a <strong>locally produced autonomous UAV</strong> that could give security personnel
+        the same kind of aerial support on patrol, at much lower cost.
+      </p>
+
+      <h3>Design and stability in XFLR5</h3>
+      <p>
+        The conceptual design modelled the fixed-wing aircraft at real size, with the mass distributed
+        through the body and the other model parameters defined. Using <strong>XFLR5</strong>, we
+        confirmed both the <strong>static and dynamic stability</strong> of the aircraft. Only once
+        stability was confirmed did the project move on to building and testing a prototype.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/aero-portfolio/img/uas_xflr5_model.jpg" alt="XFLR5 model of the fixed-wing UAV with mass distribution and model parameters"/>
+        <div class="ph">
+          <div class="ph-icon">✈️</div>
+          <div class="ph-title">XFLR5 model</div>
+          <div class="ph-path">assets/projects/aero-portfolio/img/uas_xflr5_model.jpg</div>
+        </div>
+        <figcaption><b>Fig. 12</b> — Real-size XFLR5 model with mass distribution and model parameters.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/uas_xflr5_polars.jpg" alt="XFLR5 polar plots for the aircraft"/>
+          <div class="ph">
+            <div class="ph-icon">📈</div>
+            <div class="ph-title">Polars</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/uas_xflr5_polars.jpg</div>
+          </div>
+          <figcaption><b>Fig. 13</b> — XFLR5 polar plots.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/uas_dynamic_stability.jpg" alt="XFLR5 time responses showing oscillations damping out"/>
+          <div class="ph">
+            <div class="ph-icon">〰️</div>
+            <div class="ph-title">Dynamic stability</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/uas_dynamic_stability.jpg</div>
+          </div>
+          <figcaption><b>Fig. 14</b> — Dynamic-stability time responses: the oscillations damp out.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Prototype, programming and flight testing</h3>
+      <p>
+        After building the prototype, we programmed the <strong>Pixhawk flight board</strong> and
+        tested it for autonomous flight. Telemetry and GPS antennas on the aircraft handled data
+        acquisition and navigation. Path planning was uploaded with <strong>Mission Planner</strong>,
+        which gives a visual of the mission along with key flight data such as terrain altitude.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/projects/aero-portfolio/img/uas_prototype.jpg" alt="Fixed-wing UAS prototype on grass, with telemetry and GPS antennas"/>
+        <div class="ph">
+          <div class="ph-icon">🛩️</div>
+          <div class="ph-title">UAS prototype</div>
+          <div class="ph-path">assets/projects/aero-portfolio/img/uas_prototype.jpg</div>
+        </div>
+        <figcaption><b>Fig. 15</b> — The prototype, with its telemetry and GPS antennas.</figcaption>
+      </figure>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/uas_mission_plan.jpg" alt="Mission Planner screen with waypoints over satellite imagery"/>
+          <div class="ph">
+            <div class="ph-icon">🗺️</div>
+            <div class="ph-title">Mission plan</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/uas_mission_plan.jpg</div>
+          </div>
+          <figcaption><b>Fig. 16</b> — The mission planned in Mission Planner.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/uas_flight_log.jpg" alt="Logged flight paths plotted over the waypoints"/>
+          <div class="ph">
+            <div class="ph-icon">📍</div>
+            <div class="ph-title">Logged flight path</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/uas_flight_log.jpg</div>
+          </div>
+          <figcaption><b>Fig. 17</b> — Flight paths from the onboard log, plotted over the waypoints.</figcaption>
+        </figure>
+      </div>
+
+      <p>
+        Real-time telemetry was recorded and then pulled from the <strong>onboard data logger</strong>.
+        That let us analyse the flight path and judge how well the flight board carried out the
+        mission it was given.
+      </p>
+
+      <div class="callout">
+        <p>
+          <strong>Outcome:</strong> this prototype became our test mule for <strong>more than 20
+          flights</strong>, and those flights gave us the data we needed to improve the mission
+          planning and tune the flight board.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 4. Boeing ── -->
+    <section class="proj-section">
+      <h2 id="boeing">Boeing Aeromodelling Competition, IIT Bombay</h2>
+      <p class="sec-note">2019 as a competitor, 2023 as a mentor.</p>
+
+      <h3>2019 — competitor</h3>
+      <p>
+        The Boeing Aeromodelling Competition at IIT Bombay in 2019 was my first international event,
+        and our team finished in the <strong>top 20</strong>. It taught me a great deal about aircraft
+        design, flight dynamics and how aviation really works. It's also why I went on to take
+        electives in <strong>aircraft structure design, aircraft dynamics and avionics</strong>, and
+        it led directly to our final-year autonomous wildlife UAV.
+      </p>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/boeing2019_hand_launch.jpg" alt="Team preparing to hand-launch the aircraft at IIT Bombay, 2019"/>
+          <div class="ph">
+            <div class="ph-icon">🤾</div>
+            <div class="ph-title">Hand launch, 2019</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/boeing2019_hand_launch.jpg</div>
+          </div>
+          <figcaption><b>Fig. 18</b> — Getting ready to hand-launch, IIT Bombay 2019.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/boeing2019_flight.jpg" alt="The 2019 aircraft in flight over the field"/>
+          <div class="ph">
+            <div class="ph-icon">🛫</div>
+            <div class="ph-title">In flight, 2019</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/boeing2019_flight.jpg</div>
+          </div>
+          <figcaption><b>Fig. 19</b> — Our aircraft in flight.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="figure">
+        <img src="assets/projects/aero-portfolio/img/boeing2019_team.jpg" alt="The 2019 team with their banner and aircraft"/>
+        <div class="ph">
+          <div class="ph-icon">👥</div>
+          <div class="ph-title">Team, 2019</div>
+          <div class="ph-path">assets/projects/aero-portfolio/img/boeing2019_team.jpg</div>
+        </div>
+        <figcaption><b>Fig. 20</b> — The 2019 team.</figcaption>
+      </figure>
+
+      <h3>2023 — mentor</h3>
+      <p>
+        After graduating, I got the chance to mentor aeromodelling on campus and supervised
+        undergraduate students for the same competition in 2023. My team finished
+        <strong>4th, carrying a 600 g payload</strong>, and earned a lot of appreciation from the
+        campus.
+      </p>
+
+      <div class="figure-grid">
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/boeing2023_build.jpg" alt="Build photos: body, wing, release mechanism, full model and servo connection"/>
+          <div class="ph">
+            <div class="ph-icon">🔧</div>
+            <div class="ph-title">Build, 2023</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/boeing2023_build.jpg</div>
+          </div>
+          <figcaption><b>Fig. 21</b> — The 2023 build: body, wing, release mechanism, full model and servo connection.</figcaption>
+        </figure>
+        <figure class="figure">
+          <img src="assets/projects/aero-portfolio/img/boeing2023_team.jpg" alt="The 2023 team holding their aircraft at IIT Bombay"/>
+          <div class="ph">
+            <div class="ph-icon">🏆</div>
+            <div class="ph-title">Team, 2023</div>
+            <div class="ph-path">assets/projects/aero-portfolio/img/boeing2023_team.jpg</div>
+          </div>
+          <figcaption><b>Fig. 22</b> — The 2023 team at IIT Bombay.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ── Lessons Learned ── -->
+    <section class="proj-section">
+      <h2 id="lessons">What I took away</h2>
+
+      <ul class="bullets">
+        <li><strong>Prove stability before you build.</strong> On the wildlife UAS, nothing was cut until XFLR5 showed the aircraft was statically and dynamically stable.</li>
+        <li><strong>Tooling is half the part.</strong> For the monocoque, the quality of the fuselage came down to the chain from CAD surface to printed core to negative mold.</li>
+        <li><strong>Fly a mule, read the logs.</strong> Twenty-plus test flights and the onboard logs, not the plan on screen, are what tuned the flight board and improved our missions.</li>
+        <li><strong>One flight stack, many airframes.</strong> The Pixhawk experience from the fixed-wing UAS carried straight over to the quadcopter.</li>
+        <li><strong>Competitions compound.</strong> One competition in 2019 shaped my electives and my final-year project, and later let me mentor a team to 4th place.</li>
+      </ul>
+    </section>
+
+    <!-- ── Links ── -->
+    <section class="proj-section">
+      <h2 id="downloads">Files &amp; links</h2>
+      <p class="sec-note">Flight video and where to find more.</p>
+
+      <div class="dl-grid">
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7141820812956741633/" class="dl-card" target="_blank" rel="noopener">
+          <span class="dl-icon">🎥</span>
+          <span>
+            <span class="dl-name">Boeing Aeromodelling 2023 — flight video</span>
+            <span class="dl-sub">linkedin.com</span>
+          </span>
+        </a>
+        <a href="https://www.youtube.com/channel/UCZa5Z7vMZ7FOLK-RrJdBAPQ" class="dl-card" target="_blank" rel="noopener">
+          <span class="dl-icon">▶️</span>
+          <span>
+            <span class="dl-name">My YouTube channel</span>
+            <span class="dl-sub">youtube.com</span>
+          </span>
+        </a>
+        <a href="https://www.linkedin.com/in/dhanpradhan/" class="dl-card" target="_blank" rel="noopener">
+          <span class="dl-icon">💼</span>
+          <span>
+            <span class="dl-name">LinkedIn profile</span>
+            <span class="dl-sub">linkedin.com/in/dhanpradhan</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <div class="proj-footer-nav">
+      <a href="projects.html" class="btn btn-outline">← All projects</a>
+      <a href="contact.html" class="btn btn-primary">Questions? Get in touch</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    Built with HTML · Hosted on GitHub Pages · <span class="year"></span>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body>
+</html>
