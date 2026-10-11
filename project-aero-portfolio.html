@@ -8,6 +8,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style-v1.1.css"/>
+  <style>
+    /* Aero page: side-by-side figures share one height. Each figure's flex-grow is its
+       image aspect ratio (--ar), so every image in a row ends up exactly the same height. */
+    .fig-row { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 4px; }
+    .fig-row > .figure { flex: var(--ar, 1) 1 0; min-width: 0; }
+    .figure img { object-fit: cover; }
+    .figure.fig-wide { max-width: 100%; }
+    @media (max-width: 640px) {
+      .fig-row { flex-direction: column; gap: 0; }
+      .fig-row > .figure { flex: none; width: 100%; }
+      .fig-row > .figure.fig-narrow { width: 60%; margin-left: auto; margin-right: auto; }
+    }
+  </style>
 </head>
 <body>
 
@@ -68,7 +81,7 @@
     <div class="facts-grid">
       <div class="fact">
         <div class="fact-label">Where</div>
-        <div class="fact-value">IOE, Nepal</div>
+        <div class="fact-value">Thapathali Campus, IOE</div>
       </div>
       <div class="fact">
         <div class="fact-label">Projects</div>
@@ -106,7 +119,7 @@
     <!-- ── 1. Monocoque ── -->
     <section class="proj-section">
       <h2 id="monocoque">Glass-fibre composite monocoque body</h2>
-      <p class="sec-note">A hollow, one-piece fuselage for a 3 m wingspan RC aircraft. Guided by Lecturer Biman Rimal, Pulchowk Campus, IOE.</p>
+      <p class="sec-note">A hollow, one-piece fuselage for a 3 m wingspan RC aircraft. I designed and fabricated it at Thapathali Campus, IOE, under the guidance of Lecturer Biman Rimal.</p>
 
       <p>
         The goal was to fabricate a lightweight <strong>monocoque composite body</strong> for an RC
@@ -127,9 +140,9 @@
         <strong>mold core</strong>, a positive of the fuselage, was sent for 3D printing.
       </p>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/monocoque_surface_wireframe.jpg" alt="CAD wireframe of fuselage cross-sections used to build the monocoque surface"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.501">
+          <img src="assets/projects/aero-portfolio/img/monocoque_surface_wireframe.jpg" width="1142" height="761" loading="lazy" alt="CAD wireframe of fuselage cross-sections used to build the monocoque surface"/>
           <div class="ph">
             <div class="ph-icon">🧩</div>
             <div class="ph-title">Surface wireframe</div>
@@ -137,8 +150,8 @@
           </div>
           <figcaption><b>Fig. 1</b> — Fuselage surface built on a wireframe of cross-sections.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/monocoque_concept_cad.jpg" alt="Concept CAD of the split mold with hand-written manufacturing notes"/>
+        <figure class="figure" style="--ar:1.501">
+          <img src="assets/projects/aero-portfolio/img/monocoque_concept_cad.jpg" width="1229" height="819" loading="lazy" alt="Concept CAD of the split mold with hand-written manufacturing notes"/>
           <div class="ph">
             <div class="ph-icon">✏️</div>
             <div class="ph-title">Concept CAD</div>
@@ -148,9 +161,9 @@
         </figure>
       </div>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/mold_core_3d_printing.jpg" alt="Mold core sections being 3D printed with support structures"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.499">
+          <img src="assets/projects/aero-portfolio/img/mold_core_3d_printing.jpg" width="550" height="367" loading="lazy" alt="Mold core sections being 3D printed with support structures"/>
           <div class="ph">
             <div class="ph-icon">🖨️</div>
             <div class="ph-title">3D printing the core</div>
@@ -158,8 +171,8 @@
           </div>
           <figcaption><b>Fig. 3</b> — Printing the mold core in sections.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/mold_core_printed.jpg" alt="The assembled 3D-printed fuselage mold core"/>
+        <figure class="figure" style="--ar:1.501">
+          <img src="assets/projects/aero-portfolio/img/mold_core_printed.jpg" width="1600" height="1066" loading="lazy" alt="The assembled 3D-printed fuselage mold core"/>
           <div class="ph">
             <div class="ph-icon">✈️</div>
             <div class="ph-title">Printed mold core</div>
@@ -177,9 +190,9 @@
         stabiliser built in, plus mounts for the horizontal stabiliser and the wing.
       </p>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/negative_half_mold.jpg" alt="Negative half mold being prepared from the 3D-printed core"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:2.000">
+          <img src="assets/projects/aero-portfolio/img/negative_half_mold.jpg" width="1600" height="800" loading="lazy" alt="Negative half mold being prepared from the 3D-printed core"/>
           <div class="ph">
             <div class="ph-icon">🧪</div>
             <div class="ph-title">Negative half mold</div>
@@ -187,8 +200,8 @@
           </div>
           <figcaption><b>Fig. 5</b> — Preparing the negative half mold from the printed core.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/monocoque_demolded.jpg" alt="Yellow glass-fibre monocoque fuselage taken out of the mold"/>
+        <figure class="figure" style="--ar:2.000">
+          <img src="assets/projects/aero-portfolio/img/monocoque_demolded.jpg" width="958" height="479" loading="lazy" alt="Yellow glass-fibre monocoque fuselage taken out of the mold"/>
           <div class="ph">
             <div class="ph-icon">🟡</div>
             <div class="ph-title">Demolded monocoque</div>
@@ -199,9 +212,9 @@
       </div>
 
       <h3>The finished aircraft</h3>
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/rc_plane_team.jpg" alt="The team standing behind the finished 3 m wingspan RC aircraft"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:0.800">
+          <img src="assets/projects/aero-portfolio/img/rc_plane_team.jpg" width="1536" height="1920" loading="lazy" alt="The team standing behind the finished 3 m wingspan RC aircraft"/>
           <div class="ph">
             <div class="ph-icon">👥</div>
             <div class="ph-title">Team with the aircraft</div>
@@ -209,8 +222,8 @@
           </div>
           <figcaption><b>Fig. 7</b> — The team with the finished aircraft.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/rc_plane_fuselage_wings.jpg" alt="Painted blue monocoque fuselage standing between the two wing panels"/>
+        <figure class="figure" style="--ar:0.800">
+          <img src="assets/projects/aero-portfolio/img/rc_plane_fuselage_wings.jpg" width="1536" height="1920" loading="lazy" alt="Painted blue monocoque fuselage standing between the two wing panels"/>
           <div class="ph">
             <div class="ph-icon">🛩️</div>
             <div class="ph-title">Fuselage and wings</div>
@@ -220,8 +233,8 @@
         </figure>
       </div>
 
-      <figure class="figure">
-        <img src="assets/projects/aero-portfolio/img/rc_plane_full_size.jpg" alt="Person lying next to the RC aircraft on grass for scale"/>
+      <figure class="figure" style="--ar:1.778">
+        <img src="assets/projects/aero-portfolio/img/rc_plane_full_size.jpg" width="1600" height="900" loading="lazy" alt="Person lying next to the RC aircraft on grass for scale"/>
         <div class="ph">
           <div class="ph-icon">📏</div>
           <div class="ph-title">Size check</div>
@@ -254,9 +267,9 @@
         planned missions without a problem.
       </p>
 
-      <div class="figure-grid" style="grid-template-columns: 2.3fr 1fr; align-items: start;">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/quadcopter.jpg" alt="Quadcopter with Pixhawk flight board on a red and white frame"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.159">
+          <img src="assets/projects/aero-portfolio/img/quadcopter.jpg" width="1600" height="1380" loading="lazy" alt="Quadcopter with Pixhawk flight board on a red and white frame"/>
           <div class="ph">
             <div class="ph-icon">🚁</div>
             <div class="ph-title">The quadcopter</div>
@@ -264,8 +277,8 @@
           </div>
           <figcaption><b>Fig. 10</b> — The Pixhawk-powered quadcopter.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/quadcopter_autonomous_flight.jpg" alt="Quadcopter in flight above the planned mission path"/>
+        <figure class="figure fig-narrow" style="--ar:0.417">
+          <img src="assets/projects/aero-portfolio/img/quadcopter_autonomous_flight.jpg" width="379" height="909" loading="lazy" alt="Quadcopter in flight above the planned mission path"/>
           <div class="ph">
             <div class="ph-icon">🛰️</div>
             <div class="ph-title">Autonomous flight</div>
@@ -308,8 +321,8 @@
         stability was confirmed did the project move on to building and testing a prototype.
       </p>
 
-      <figure class="figure">
-        <img src="assets/projects/aero-portfolio/img/uas_xflr5_model.jpg" alt="XFLR5 model of the fixed-wing UAV with mass distribution and model parameters"/>
+      <figure class="figure" style="--ar:1.456">
+        <img src="assets/projects/aero-portfolio/img/uas_xflr5_model.jpg" width="872" height="599" loading="lazy" alt="XFLR5 model of the fixed-wing UAV with mass distribution and model parameters"/>
         <div class="ph">
           <div class="ph-icon">✈️</div>
           <div class="ph-title">XFLR5 model</div>
@@ -318,9 +331,9 @@
         <figcaption><b>Fig. 12</b> — Real-size XFLR5 model with mass distribution and model parameters.</figcaption>
       </figure>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/uas_xflr5_polars.jpg" alt="XFLR5 polar plots for the aircraft"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.754">
+          <img src="assets/projects/aero-portfolio/img/uas_xflr5_polars.jpg" width="982" height="560" loading="lazy" alt="XFLR5 polar plots for the aircraft"/>
           <div class="ph">
             <div class="ph-icon">📈</div>
             <div class="ph-title">Polars</div>
@@ -328,8 +341,8 @@
           </div>
           <figcaption><b>Fig. 13</b> — XFLR5 polar plots.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/uas_dynamic_stability.jpg" alt="XFLR5 time responses showing oscillations damping out"/>
+        <figure class="figure" style="--ar:1.486">
+          <img src="assets/projects/aero-portfolio/img/uas_dynamic_stability.jpg" width="927" height="624" loading="lazy" alt="XFLR5 time responses showing oscillations damping out"/>
           <div class="ph">
             <div class="ph-icon">〰️</div>
             <div class="ph-title">Dynamic stability</div>
@@ -347,8 +360,8 @@
         which gives a visual of the mission along with key flight data such as terrain altitude.
       </p>
 
-      <figure class="figure">
-        <img src="assets/projects/aero-portfolio/img/uas_prototype.jpg" alt="Fixed-wing UAS prototype on grass, with telemetry and GPS antennas"/>
+      <figure class="figure" style="--ar:2.219">
+        <img src="assets/projects/aero-portfolio/img/uas_prototype.jpg" width="1156" height="521" loading="lazy" alt="Fixed-wing UAS prototype on grass, with telemetry and GPS antennas"/>
         <div class="ph">
           <div class="ph-icon">🛩️</div>
           <div class="ph-title">UAS prototype</div>
@@ -357,9 +370,9 @@
         <figcaption><b>Fig. 15</b> — The prototype, with its telemetry and GPS antennas.</figcaption>
       </figure>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/uas_mission_plan.jpg" alt="Mission Planner screen with waypoints over satellite imagery"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.872">
+          <img src="assets/projects/aero-portfolio/img/uas_mission_plan.jpg" width="1086" height="580" loading="lazy" alt="Mission Planner screen with waypoints over satellite imagery"/>
           <div class="ph">
             <div class="ph-icon">🗺️</div>
             <div class="ph-title">Mission plan</div>
@@ -367,8 +380,8 @@
           </div>
           <figcaption><b>Fig. 16</b> — The mission planned in Mission Planner.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/uas_flight_log.jpg" alt="Logged flight paths plotted over the waypoints"/>
+        <figure class="figure" style="--ar:1.438">
+          <img src="assets/projects/aero-portfolio/img/uas_flight_log.jpg" width="840" height="584" loading="lazy" alt="Logged flight paths plotted over the waypoints"/>
           <div class="ph">
             <div class="ph-icon">📍</div>
             <div class="ph-title">Logged flight path</div>
@@ -407,9 +420,9 @@
         it led directly to our final-year autonomous wildlife UAV.
       </p>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/boeing2019_hand_launch.jpg" alt="Team preparing to hand-launch the aircraft at IIT Bombay, 2019"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.857">
+          <img src="assets/projects/aero-portfolio/img/boeing2019_hand_launch.jpg" width="1114" height="600" loading="lazy" alt="Team preparing to hand-launch the aircraft at IIT Bombay, 2019"/>
           <div class="ph">
             <div class="ph-icon">🤾</div>
             <div class="ph-title">Hand launch, 2019</div>
@@ -417,8 +430,8 @@
           </div>
           <figcaption><b>Fig. 18</b> — Getting ready to hand-launch, IIT Bombay 2019.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/boeing2019_flight.jpg" alt="The 2019 aircraft in flight over the field"/>
+        <figure class="figure" style="--ar:1.772">
+          <img src="assets/projects/aero-portfolio/img/boeing2019_flight.jpg" width="1184" height="668" loading="lazy" alt="The 2019 aircraft in flight over the field"/>
           <div class="ph">
             <div class="ph-icon">🛫</div>
             <div class="ph-title">In flight, 2019</div>
@@ -428,8 +441,8 @@
         </figure>
       </div>
 
-      <figure class="figure">
-        <img src="assets/projects/aero-portfolio/img/boeing2019_team.jpg" alt="The 2019 team with their banner and aircraft"/>
+      <figure class="figure" style="--ar:1.778">
+        <img src="assets/projects/aero-portfolio/img/boeing2019_team.jpg" width="1600" height="900" loading="lazy" alt="The 2019 team with their banner and aircraft"/>
         <div class="ph">
           <div class="ph-icon">👥</div>
           <div class="ph-title">Team, 2019</div>
@@ -446,9 +459,9 @@
         campus.
       </p>
 
-      <div class="figure-grid">
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/boeing2023_build.jpg" alt="Build photos: body, wing, release mechanism, full model and servo connection"/>
+      <div class="fig-row">
+        <figure class="figure" style="--ar:1.760">
+          <img src="assets/projects/aero-portfolio/img/boeing2023_build.jpg" width="1600" height="909" loading="lazy" alt="Build photos: body, wing, release mechanism, full model and servo connection"/>
           <div class="ph">
             <div class="ph-icon">🔧</div>
             <div class="ph-title">Build, 2023</div>
@@ -456,8 +469,8 @@
           </div>
           <figcaption><b>Fig. 21</b> — The 2023 build: body, wing, release mechanism, full model and servo connection.</figcaption>
         </figure>
-        <figure class="figure">
-          <img src="assets/projects/aero-portfolio/img/boeing2023_team.jpg" alt="The 2023 team holding their aircraft at IIT Bombay"/>
+        <figure class="figure" style="--ar:1.333">
+          <img src="assets/projects/aero-portfolio/img/boeing2023_team.jpg" width="800" height="600" loading="lazy" alt="The 2023 team holding their aircraft at IIT Bombay"/>
           <div class="ph">
             <div class="ph-icon">🏆</div>
             <div class="ph-title">Team, 2023</div>
