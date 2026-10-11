@@ -108,15 +108,18 @@
     /* Gear */
     .gear-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .gear {
-      display: block; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
-      padding: 18px 20px; color: var(--text); transition: border-color .2s, box-shadow .2s, transform .2s;
+      background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px 6px; color: var(--text);
     }
-    .gear:hover { border-color: var(--accent-md); box-shadow: 0 4px 20px rgba(45,122,79,0.08); text-decoration: none; transform: translateY(-2px); }
+    .gear .gear-shot { margin: 0 0 14px; }
+    .gear .gear-shot img { aspect-ratio: 1 / 1; object-fit: cover; background: #fff; }
+    .gear .gear-shot.missing .ph { aspect-ratio: 1 / 1; min-height: 0; }
     .gear .g-k { font-size: 0.66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
     .gear h4 { font-size: 1rem; font-weight: 800; margin: 4px 0 6px; }
     .gear p { font-size: 0.86rem !important; margin-bottom: 10px !important; }
-    .gear .g-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-    .gear .g-go { font-size: 0.8rem; font-weight: 600; color: var(--accent); }
+    .gear-specs { font-size: 0.8rem; margin-bottom: 8px; }
+    .gear-specs td { padding: 7px 8px; }
+    .gear-specs td:first-child { width: 34%; }
 
     @media (max-width: 760px) {
       .run-stats { grid-template-columns: 1fr 1fr; }
@@ -301,32 +304,52 @@
 
     <!-- ── Gear ── -->
     <section class="proj-section" id="gear">
-      <h2>What I finally spent money on</h2>
+      <h2>My running gear</h2>
       <p class="sec-note">After a year of buying things for my back, these are the only two purchases I'd make again.</p>
 
       <div class="gear-grid">
-        <a class="gear" href="https://www.nike.com/t/zoom-fly-6-mens-road-racing-shoes-wn2ALjkm/FN8454-800" target="_blank" rel="noopener">
+        <article class="gear">
+          <figure class="figure gear-shot">
+            <img src="assets/about/running/gear/zoom-fly-6.jpg" alt="My Nike Zoom Fly 6 running shoes, seen from above" width="900" height="900" loading="lazy"/>
+            <div class="ph">
+              <div class="ph-icon">👟</div>
+              <div class="ph-title">Shoe photo</div>
+              <div class="ph-path">assets/about/running/gear/zoom-fly-6.jpg</div>
+            </div>
+          </figure>
           <div class="g-k">Shoes</div>
           <h4>Nike Zoom Fly 6</h4>
-          <p>The yellow ones in the photo. A light road-racing shoe with a carbon plate.</p>
-          <div class="g-specs">
-            <span class="tag">ZoomX foam</span>
-            <span class="tag">Carbon Flyplate</span>
-            <span class="tag-grey">8 mm drop</span>
-            <span class="tag-grey">~265 g</span>
-          </div>
-          <span class="g-go">View on Nike →</span>
-        </a>
-        <a class="gear" href="https://www.amazon.com/dp/B0FB3GFW4Z" target="_blank" rel="noopener">
+          <p>The yellow pair in the photo at the top. It's a light road-racing shoe with a carbon plate.</p>
+          <table class="spec-table gear-specs">
+            <tr><td>Type</td><td>Men's road-racing shoe</td></tr>
+            <tr><td>Colourway</td><td>Citron Pulse / Volt Ice / Hyper Violet / Indigo Burst</td></tr>
+            <tr><td>Midsole</td><td>ZoomX foam</td></tr>
+            <tr><td>Plate</td><td>Full-length carbon-fibre Flyplate</td></tr>
+            <tr><td>Drop</td><td>8 mm (heel to toe)</td></tr>
+            <tr><td>Weight</td><td>About 265 g per shoe (men's US 10)</td></tr>
+          </table>
+        </article>
+        <article class="gear">
+          <figure class="figure gear-shot">
+            <img src="assets/about/running/gear/hydration-vest.jpg" alt="Maelstrom running hydration vest with its 2 L water bladder" width="480" height="480" loading="lazy"/>
+            <div class="ph">
+              <div class="ph-icon">🎒</div>
+              <div class="ph-title">Vest photo</div>
+              <div class="ph-path">assets/about/running/gear/hydration-vest.jpg</div>
+            </div>
+          </figure>
           <div class="g-k">Hydration</div>
-          <h4>Running hydration vest</h4>
-          <p>For the half-marathon-length runs, so I can carry water with me on long routes.</p>
-          <div class="g-specs">
-            <span class="tag">Long runs</span>
-            <span class="tag-grey">Hands free</span>
-          </div>
-          <span class="g-go">View on Amazon →</span>
-        </a>
+          <h4>Maelstrom hydration vest</h4>
+          <p>For the half-marathon-length runs. It carries 2 L of water on my back, with a drinking hose at my shoulder.</p>
+          <table class="spec-table gear-specs">
+            <tr><td>Bladder</td><td>2 L, in an insulated, aluminium-lined sleeve</td></tr>
+            <tr><td>Drinking</td><td>Hose runs through a port on the shoulder strap</td></tr>
+            <tr><td>Storage</td><td>4 pockets</td></tr>
+            <tr><td>Fit</td><td>Adjustable chest straps, 22.4 – 61 in</td></tr>
+            <tr><td>Build</td><td>Nylon, ventilated back panel, reflective strips</td></tr>
+            <tr><td>Weight</td><td>About 0.5 kg (1.1 lb)</td></tr>
+          </table>
+        </article>
       </div>
     </section>
 
