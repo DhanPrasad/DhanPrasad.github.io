@@ -251,7 +251,7 @@
     <!-- ── Interactive log ── -->
     <section class="proj-section" id="log">
       <h2>The log, week by week</h2>
-      <p class="sec-note">Hover or tap the chart, drag the slider, or press play to watch the season build. The milestones further down unlock as you go.</p>
+      <p class="sec-note">Hover or tap the chart, drag the slider, or press play to watch the season build. Switch to the running total to see a flag at every 100 km.</p>
 
       <div class="log-card pre" id="logCard">
         <div class="log-top">
@@ -288,12 +288,8 @@
     <!-- ── Milestones ── -->
     <section class="proj-section" id="milestones">
       <h2>Milestones</h2>
-      <p class="sec-note">Every 100 km, plus the runs I'm proudest of. Scrub the chart above to see them unlock.</p>
+      <p class="sec-note">The runs and weeks I'm proudest of.</p>
 
-      <div class="ms-sub">Distance</div>
-      <div class="ms-grid" id="msGrid"></div>
-
-      <div class="ms-sub">Runs</div>
       <div class="ms-grid">
         <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">Half-marathon distance</div><div class="ms-v">2 ×</div><div class="ms-d">21.1 km in a single run, twice</div></div>
         <div class="ms unlocked"><span class="ms-badge">✓</span><div class="ms-k">10 km+ runs</div><div class="ms-v">Plenty</div><div class="ms-d">Now just a normal long run</div></div>
@@ -395,8 +391,9 @@
   }
   const NEXT = (Math.floor(TOTAL_KM / 100) + 1) * 100;
 
-  // ── Milestone cards ──
+  // ── Milestone cards (distance cards removed; guarded so the chart still works) ──
   const grid = document.getElementById('msGrid');
+  if (grid) {
   MS.forEach(m => {
     const el = document.createElement('div');
     el.className = 'ms unlocked'; el.dataset.week = m.week;
@@ -409,6 +406,7 @@
   nextEl.innerHTML = '<span class="ms-badge">→</span><div class="ms-k">Next up</div><div class="ms-v">' + NEXT + ' km</div>' +
     '<div class="ms-d">' + (NEXT - TOTAL_KM).toFixed(1) + ' km to go</div><div class="ms-prog"><i id="nextBar"></i></div>';
   grid.appendChild(nextEl);
+  }
 
   // ── Chart ──
   const svg = document.getElementById('chart');
@@ -582,10 +580,10 @@
         if (p < 1) requestAnimationFrame(tick);
       })(t0);
     }
-    if (e.target === grid) { const nb = document.getElementById('nextBar'); nb.dataset.ready = 1; nb.style.width = Math.min(100, TOTAL_KM / NEXT * 100) + '%'; }
+    if (grid && e.target === grid) { const nb = document.getElementById('nextBar'); nb.dataset.ready = 1; nb.style.width = Math.min(100, TOTAL_KM / NEXT * 100) + '%'; }
     io.unobserve(e.target);
   }), { threshold: 0.25 });
-  [card, counter, grid].forEach(x => io.observe(x));
+  [card, counter, grid].filter(Boolean).forEach(x => io.observe(x));
   if (reduce) card.classList.remove('pre');
 
   // ── "Fixes" hover notes ──
